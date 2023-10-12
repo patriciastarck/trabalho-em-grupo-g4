@@ -9,13 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="produto")
+@Table(name = "produto")
 public class Produto {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
 	private String nome;
+	private Boolean ativo;
 	private String descricao;
 	private LocalDate data_fabricacao;
 	private Integer qntd_estoque;
@@ -23,7 +24,18 @@ public class Produto {
 
 	public Produto() {
 		super();
-		// TODO Auto-generated constructor stub
+	}
+
+	public Produto(Integer id, String nome, Boolean ativo, String descricao, LocalDate data_fabricacao,
+			Integer qntd_estoque, Double valor_unitario) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.ativo = ativo;
+		this.descricao = descricao;
+		this.data_fabricacao = data_fabricacao;
+		this.qntd_estoque = qntd_estoque;
+		this.valor_unitario = valor_unitario;
 	}
 
 	public Integer getId() {
@@ -74,21 +86,19 @@ public class Produto {
 		this.valor_unitario = valor_unitario;
 	}
 
-	public Produto(Integer id, String nome, String descricao, LocalDate data_fabricacao, Integer qntd_estoque,
-			Double valor_unitario) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.descricao = descricao;
-		this.data_fabricacao = data_fabricacao;
-		this.qntd_estoque = qntd_estoque;
-		this.valor_unitario = valor_unitario;
+	public boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	@Override
 	public String toString() {
-		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", data_fabricacao="
-				+ data_fabricacao + ", qntd_estoque=" + qntd_estoque + ", valor_unitario=" + valor_unitario + "]";
+		return "Produto [id=" + id + ", nome=" + nome + ", ativo=" + ativo + ", descricao=" + descricao
+				+ ", data_fabricacao=" + data_fabricacao + ", qntd_estoque=" + qntd_estoque + ", valor_unitario="
+				+ valor_unitario + "]";
 	}
 
 }
