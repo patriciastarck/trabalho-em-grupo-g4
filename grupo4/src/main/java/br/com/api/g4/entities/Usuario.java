@@ -16,7 +16,7 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
 	private String nome;
-	private Boolean endereco;
+	private String endereco;
 	private String nomeUsuario;
 	private String email;
 	private String cpf;
@@ -27,7 +27,7 @@ public class Usuario {
 		super();
 	}
 
-	public Usuario(Integer id, String nome, Boolean ativo, Boolean endereco, String nomeUsuario, String email,
+	public Usuario(Integer id, String nome, Boolean ativo, String endereco, String nomeUsuario, String email,
 			String cpf, LocalDate dataNascimento) {
 		super();
 		this.id = id;
@@ -64,11 +64,11 @@ public class Usuario {
 		this.ativo = ativo;
 	}
 	
-	public Boolean getEndereco() {
+	public String getEndereco() {
 		return endereco;
 	}
 	
-	public void setEndereco(Boolean endereco) {
+	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
 	
