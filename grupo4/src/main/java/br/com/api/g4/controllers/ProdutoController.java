@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +16,9 @@ import br.com.api.g4.entities.Produto;
 import br.com.api.g4.services.ProdutoService;
 
 @RestController 
-@RequestMapping("/Produto")
-
+@RequestMapping("/produto")
 public class ProdutoController {
+	
 	@Autowired
 	ProdutoService ProdutoService;
 
@@ -34,13 +35,13 @@ public class ProdutoController {
 	}
 
 	@GetMapping("/{id}")
-	public Produto achar(@PathVariable Integer id) {
-		return ProdutoService.achar(id);
+	public Produto acharId(@PathVariable Integer id) {
+		return ProdutoService.acharId(id);
 	}
 
-	@GetMapping("/lista")
-	public List<Produto> todosObjetos() {
-		return ProdutoService.todosObjetos();
+	@GetMapping("/listar")
+	public List<Produto> listar() {
+		return ProdutoService.listar();
 	}
 
 	@DeleteMapping("/deletar/{id}")
@@ -53,8 +54,8 @@ public class ProdutoController {
 		ProdutoService.deletarlogico(id);
 	}
 
-//	@PutMapping("/atualizar/{id}")
-//	public Produto atualizar(@PathVariable Integer id, @RequestBody Produto objetoProduto) {
-//		return ProdutoService.atualizar(id, objetoProduto);
-//	}
+	@PutMapping("/atualizar/{id}")
+	public Produto atualizar(@PathVariable Integer id, @RequestBody Produto objetoProduto) {
+		return ProdutoService.atualizar(id, objetoProduto);
+	}
 }

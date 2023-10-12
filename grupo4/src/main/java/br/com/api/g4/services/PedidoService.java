@@ -14,9 +14,9 @@ public class PedidoService {
 	@Autowired
 	PedidoRepository pedidoRepository;
 
-//	public Integer getCount() {
-//		return pedidoRepository.contar();
-//	}
+	/*public Integer getCount() {
+		return pedidoRepository.contar();
+	}*/
 
 	public Pedido salvar(Pedido objetoPedido) {
 		return pedidoRepository.save(objetoPedido);
@@ -50,11 +50,10 @@ public class PedidoService {
 			registroAntigo.setAtivo(objetoPedido.getAtivo());
 		}
 
-		if (objetoPedido.getData_pedido() != null) {
-			registroAntigo.setData_pedido(objetoPedido.getData_pedido());
+		if (objetoPedido.getDataPedido() != null) {
+			registroAntigo.setDataPedido(objetoPedido.getDataPedido());
 		}
 		registroAntigo.setId(id);
 		return pedidoRepository.save(registroAntigo);
 	}
-
 }

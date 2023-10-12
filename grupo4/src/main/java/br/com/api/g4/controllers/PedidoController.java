@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.api.g4.entities.Pedido;
 import br.com.api.g4.services.PedidoService;
 
-
-
 @RestController
 @RequestMapping("/pedido")
 public class PedidoController {
@@ -24,14 +22,14 @@ public class PedidoController {
 	@Autowired
 	PedidoService pedidoService;
 
-//	@GetMapping("/count")
-//	public Integer getCount() {
-//		return pedidoService.getCount();
-//	}
+/*
+	@GetMapping("/count")
+	public Integer getCount() {
+		return pedidoService.getCount();
+	}*/
 		
 	@PostMapping("/salvar")
 	public Pedido salvar(@RequestBody Pedido objetoPedido) {
-		System.out.println(objetoPedido.getData_pedido());
 		return pedidoService.salvar(objetoPedido);
 	}
 
@@ -45,13 +43,13 @@ public class PedidoController {
 		return pedidoService.listar();
 	}
 
-	@DeleteMapping("/delete/{id}")
-	public void apagar(@PathVariable Integer id) {
+	@DeleteMapping("/deletar/{id}")
+	public void deletar(@PathVariable Integer id) {
 		pedidoService.apagar(id);
 	}
 	
-	@DeleteMapping("/deleteLogico/{id}")
-	public void apagarLogico(@PathVariable Integer id) {
+	@DeleteMapping("/deletarLogico/{id}")
+	public void deletarLogico(@PathVariable Integer id) {
 		pedidoService.apagarLogico(id);
 	}
 	
@@ -59,5 +57,4 @@ public class PedidoController {
 	public Pedido atualizar(@PathVariable Integer id, @RequestBody Pedido objetoTeste) {
 		return pedidoService.atualizar(id, objetoTeste);
 	}
-
 }

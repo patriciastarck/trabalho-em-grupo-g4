@@ -20,16 +20,16 @@ public class CategoriaService {
 		return categoriaRepository.save(objetoTeste);
 	}
 
-	public Categoria achar(Integer id) {
+	public Categoria acharId(Integer id) {
 		return categoriaRepository.findById(id).get();
 	}
 
-	public List<Categoria> todosObjetos() {
+	public List<Categoria> listar() {
 		return categoriaRepository.findAll();
 	}
 
 	public void deletarlogico(Integer id) {
-		Categoria objTeste = achar(id);
+		Categoria objTeste = acharId(id);
 		if (objTeste != null) {
 			objTeste.setAtivo(false);
 			categoriaRepository.save(objTeste);
@@ -37,7 +37,7 @@ public class CategoriaService {
 	}
 
 	public Categoria atualizar(Integer id, Categoria objetoTeste) {
-		Categoria registroAntigo = achar(id);
+		Categoria registroAntigo = acharId(id);
 
 		if (objetoTeste.getAtivo() != null) {
 			registroAntigo.setAtivo(objetoTeste.getAtivo());

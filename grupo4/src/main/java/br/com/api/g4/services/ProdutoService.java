@@ -12,61 +12,58 @@ import br.com.api.g4.repositories.ProdutoRepository;
 public class ProdutoService {
 
 	@Autowired
-	ProdutoRepository ProdutoRepository;
+	ProdutoRepository produtoRepository;
 
-	public Integer getCount() {
-		return ProdutoRepository.contar();
+	/*public Integer getCount() {
+		return produtoRepository.contar();
+	}*/
+
+	public Produto salvar(Produto objetoproduto) {
+		return produtoRepository.save(objetoproduto);
 	}
 
-	public Produto salvar(Produto objetoProduto) {
-		return ProdutoRepository.save(objetoProduto);
+	public Produto acharId(Integer id) {
+		return produtoRepository.findById(id).get();
 	}
 
-	public Produto achar(Integer id) {
-		return ProdutoRepository.findById(id).get();
-	}
-
-	public List<Produto> todosObjetos() {
-		return ProdutoRepository.findAll();
+	public List<Produto> listar() {
+		return produtoRepository.findAll();
 	}
 
 	public void deletar(Integer id) {
-		ProdutoRepository.deleteById(id);
+		produtoRepository.deleteById(id);
 	}
 
 	public void deletarlogico(Integer id) {
-		Produto objProduto = achar(id);
+		Produto objProduto = acharId(id);
 		if (objProduto != null) {
 			objProduto.setAtivo(false);
-			ProdutoRepository.save(objProduto);
+			produtoRepository.save(objProduto);
 		}
 	}
 
-//	public Produto atualizar(Integer id, Produto objetoProduto) {
-//		Produto registroAntigo = achar(id);
-//
-//		if (objetoProduto.getAtivo() != null) {
-//			registroAntigo.setAtivo(objetoProduto.getAtivo());
-//		}
-//
-//		if (objetoProduto.getNome() != null) {
-//			registroAntigo.setNome(objetoProduto.getNome());
-//		}
-//		if (objetoProduto.getDescricao() != null) {
-//			registroAntigo.setDescricao(objetoProduto.getDescricao());
-//		}
-//		if (objetoProduto.getData_fabricacao() != null) {
-//			registroAntigo.setData_fabricacao(objetoProduto.getData_fabricacao());
-//		}
-//		if (objetoProduto.getQntd_estoque() != null) {
-//			registroAntigo.setQntd_estoque(objetoProduto.getQntd_estoque());
-//		}
-//		if (objetoProduto.getValor_unitario() != null) {
-//			registroAntigo.setValor_unitario(objetoProduto.getValor_unitario());
-//		}
-//		registroAntigo.setId(id);
-//		return ProdutoRepository.save(registroAntigo);
-//		
-// 
-//	}
+	public Produto atualizar(Integer id, Produto objetoproduto) {
+		Produto registroAntigo = acharId(id);
+
+		if (objetoproduto.getAtivo()!= null) {
+			registroAntigo.setAtivo(objetoproduto.getAtivo());
+		}
+		if (objetoproduto.getNome() != null) {
+			registroAntigo.setNome(objetoproduto.getNome());
+		}
+		if (objetoproduto.getDescricao() != null) {
+			registroAntigo.setDescricao(objetoproduto.getDescricao());
+		}
+		if (objetoproduto.getDataFabricacao() != null) {
+			registroAntigo.setDataFabricacao(objetoproduto.getDataFabricacao());
+		}
+		if (objetoproduto.getQntdEstoque() != null) {
+			registroAntigo.setQntdEstoque(objetoproduto.getQntdEstoque());
+		}
+		if (objetoproduto.getValorUnitario() != null) {
+			registroAntigo.setValorUnitario(objetoproduto.getValorUnitario());
+		}
+		registroAntigo.setId(id);
+		return produtoRepository.save(registroAntigo);
+	}
 }

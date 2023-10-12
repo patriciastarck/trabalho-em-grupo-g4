@@ -17,88 +17,97 @@ public class Usuario {
 	private Integer id;
 	private String nome;
 	private Boolean endereco;
-	private String nome_usuario;
+	private String nomeUsuario;
 	private String email;
 	private String cpf;
-	private LocalDate data_nascimento;
-
+	private LocalDate dataNascimento;
+	private Boolean ativo;
+	
 	public Usuario() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", nome=" + nome + ", endereco=" + endereco + ", nome_usuario=" + nome_usuario
-				+ ", email=" + email + ", cpf=" + cpf + ", data_nascimento=" + data_nascimento + "]";
-	}
-
-	public Usuario(Integer id, String nome, Boolean endereco, String nome_usuario, String email, String cpf,
-			LocalDate data_nascimento) {
+	public Usuario(Integer id, String nome, Boolean ativo, Boolean endereco, String nomeUsuario, String email,
+			String cpf, LocalDate dataNascimento) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.ativo = ativo;
 		this.endereco = endereco;
-		this.nome_usuario = nome_usuario;
+		this.nomeUsuario = nomeUsuario;
 		this.email = email;
 		this.cpf = cpf;
-		this.data_nascimento = data_nascimento;
+		this.dataNascimento = dataNascimento;
 	}
 
 	public Integer getId() {
 		return id;
 	}
-
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	
 	public String getNome() {
 		return nome;
 	}
-
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
+	public Boolean getAtivo() {
+		return ativo;
+	}
+	
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+	
 	public Boolean getEndereco() {
 		return endereco;
 	}
-
+	
 	public void setEndereco(Boolean endereco) {
 		this.endereco = endereco;
 	}
-
-	public String getNome_usuario() {
-		return nome_usuario;
+	
+	public String getNomeUsuario() {
+		return nomeUsuario;
 	}
-
-	public void setNome_usuario(String nome_usuario) {
-		this.nome_usuario = nome_usuario;
+	
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
 	}
-
+	
 	public String getEmail() {
 		return email;
 	}
-
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
 	public String getCpf() {
 		return cpf;
 	}
-
+	
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-
-	public LocalDate getData_nascimento() {
-		return data_nascimento;
+	
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+	
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
-	public void setData_nascimento(LocalDate data_nascimento) {
-		this.data_nascimento = data_nascimento;
+	
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nome=" + nome + ", ativo=" + ativo + ", endereco=" + endereco + ", nomeUsuario="
+				+ nomeUsuario + ", email=" + email + ", cpf=" + cpf + ", dataNascimento=" + dataNascimento + "]";
 	}
-
 }

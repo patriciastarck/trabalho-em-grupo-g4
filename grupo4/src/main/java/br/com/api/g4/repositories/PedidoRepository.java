@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import br.com.api.g4.entities.Pedido;
 
-
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido,Integer> {
 	

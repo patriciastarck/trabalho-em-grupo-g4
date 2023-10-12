@@ -13,9 +13,9 @@ public class Categoria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
-	private Boolean ativo;
 	private String nome;
 	private String descricao;
+	private Boolean ativo;
 
 	public Categoria() {
 		super();
@@ -65,5 +65,4 @@ public class Categoria {
 	public String toString() {
 		return "Categoria [id=" + id + ", ativo=" + ativo + ", nome=" + nome + ", descricao=" + descricao + "]";
 	}
-
 }

@@ -16,27 +16,28 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
 	private String nome;
-	private Boolean ativo;
 	private String descricao;
-	private LocalDate data_fabricacao;
-	private Integer qntd_estoque;
-	private Double valor_unitario;
+	private LocalDate dataFabricacao;
+	private Integer qntdEstoque;
+	private Double valorUnitario;
+	private Boolean ativo;
 
 	public Produto() {
 		super();
 	}
 
-	public Produto(Integer id, String nome, Boolean ativo, String descricao, LocalDate data_fabricacao,
-			Integer qntd_estoque, Double valor_unitario) {
+	public Produto(Integer id, String nome, Boolean ativo, String descricao, LocalDate dataFabricacao,
+			Integer qntdEstoque, Double valorUnitario) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.ativo = ativo;
 		this.descricao = descricao;
-		this.data_fabricacao = data_fabricacao;
-		this.qntd_estoque = qntd_estoque;
-		this.valor_unitario = valor_unitario;
+		this.dataFabricacao = dataFabricacao;
+		this.qntdEstoque = qntdEstoque;
+		this.valorUnitario = valorUnitario;
 	}
+	
 
 	public Integer getId() {
 		return id;
@@ -54,6 +55,14 @@ public class Produto {
 		this.nome = nome;
 	}
 
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
 	public String getDescricao() {
 		return descricao;
 	}
@@ -62,43 +71,34 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
-	public LocalDate getData_fabricacao() {
-		return data_fabricacao;
+	public LocalDate getDataFabricacao() {
+		return dataFabricacao;
 	}
 
-	public void setData_fabricacao(LocalDate data_fabricacao) {
-		this.data_fabricacao = data_fabricacao;
+	public void setDataFabricacao(LocalDate dataFabricacao) {
+		this.dataFabricacao = dataFabricacao;
 	}
 
-	public Integer getQntd_estoque() {
-		return qntd_estoque;
+	public Integer getQntdEstoque() {
+		return qntdEstoque;
 	}
 
-	public void setQntd_estoque(Integer qntd_estoque) {
-		this.qntd_estoque = qntd_estoque;
+	public void setQntdEstoque(Integer qntdEstoque) {
+		this.qntdEstoque = qntdEstoque;
 	}
 
-	public Double getValor_unitario() {
-		return valor_unitario;
+	public Double getValorUnitario() {
+		return valorUnitario;
 	}
 
-	public void setValor_unitario(Double valor_unitario) {
-		this.valor_unitario = valor_unitario;
-	}
-
-	public boolean getAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
+	public void setValorUnitario(Double valorUnitario) {
+		this.valorUnitario = valorUnitario;
 	}
 
 	@Override
 	public String toString() {
 		return "Produto [id=" + id + ", nome=" + nome + ", ativo=" + ativo + ", descricao=" + descricao
-				+ ", data_fabricacao=" + data_fabricacao + ", qntd_estoque=" + qntd_estoque + ", valor_unitario="
-				+ valor_unitario + "]";
+				+ ", dataFabricacao=" + dataFabricacao + ", qntdEstoque=" + qntdEstoque + ", valorUnitario="
+				+ valorUnitario + "]";
 	}
-
 }

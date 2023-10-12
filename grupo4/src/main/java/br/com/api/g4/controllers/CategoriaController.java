@@ -16,7 +16,7 @@ import br.com.api.g4.entities.Categoria;
 import br.com.api.g4.services.CategoriaService;
 
 @RestController
-@RequestMapping("/Categoria")
+@RequestMapping("/categoria")
 public class CategoriaController {
 	
 	@Autowired
@@ -31,12 +31,12 @@ public class CategoriaController {
 
 	@GetMapping("/{id}")
 	public Categoria acharId(@PathVariable Integer id) {
-		return categoriaService.achar(id);
+		return categoriaService.acharId(id);
 	}
 
-	@GetMapping("/lista")
-	public List<Categoria> todosObjetos() {
-		return categoriaService.todosObjetos();
+	@GetMapping("/listar")
+	public List<Categoria> listar() {
+		return categoriaService.listar();
 	}
 
 	@DeleteMapping("/deletarLogico/{id}")
