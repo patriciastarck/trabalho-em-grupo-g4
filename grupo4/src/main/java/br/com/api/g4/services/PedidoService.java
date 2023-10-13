@@ -14,9 +14,9 @@ public class PedidoService {
 	@Autowired
 	PedidoRepository pedidoRepository;
 
-	/*public Integer getCount() {
+	public Integer getCount() {
 		return pedidoRepository.contar();
-	}*/
+	}
 
 	public Pedido salvar(Pedido objetoPedido) {
 		return pedidoRepository.save(objetoPedido);

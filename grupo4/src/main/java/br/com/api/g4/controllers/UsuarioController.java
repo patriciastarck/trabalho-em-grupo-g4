@@ -22,10 +22,10 @@ public class UsuarioController {
 	@Autowired
 	UsuarioService usuarioService;
 
-//	@GetMapping("/count")
-//	public Integer getCount() {
-//		return usuarioService.getCount();
-//	}
+	@GetMapping("/count")
+	public Integer getCount() {
+		return usuarioService.getCount();
+	}
 
 	@PostMapping("/salvar")
 	public List<Usuario> salvar(@RequestBody List<Usuario> objetousuario) {

@@ -22,12 +22,12 @@ public class ProdutoController {
 	@Autowired
 	ProdutoService ProdutoService;
 
-	/*
+	
 	@GetMapping("/count")
 	public Integer getCount() {
 		return ProdutoService.getCount();
 	}
- */
+ 
 
 	@PostMapping("/salvar")
 	public Produto salvar(@RequestBody Produto objetoProduto) {

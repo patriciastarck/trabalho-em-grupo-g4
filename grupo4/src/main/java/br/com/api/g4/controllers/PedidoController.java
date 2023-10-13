@@ -22,11 +22,11 @@ public class PedidoController {
 	@Autowired
 	PedidoService pedidoService;
 
-/*
+
 	@GetMapping("/count")
 	public Integer getCount() {
 		return pedidoService.getCount();
-	}*/
+	}
 		
 	@PostMapping("/salvar")
 	public Pedido salvar(@RequestBody Pedido objetoPedido) {

@@ -14,7 +14,9 @@ public class CategoriaService {
 	@Autowired
 	CategoriaRepository categoriaRepository;
 
-	// TODO contar
+	public Integer getCount() {
+		return categoriaRepository.contar();
+	}
 	
 	public Categoria salvar(Categoria objetoTeste) {
 		return categoriaRepository.save(objetoTeste);

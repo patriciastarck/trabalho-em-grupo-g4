@@ -22,7 +22,10 @@ public class CategoriaController {
 	@Autowired
 	CategoriaService categoriaService;
 
-//	TODO contar
+	@GetMapping("/count")
+	public Integer getCount() {
+		return categoriaService.getCount();
+	}
 	
 	@PostMapping("/salvar")
 	public Categoria salvar(@RequestBody Categoria objetoTeste) {

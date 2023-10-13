@@ -14,9 +14,9 @@ public class ProdutoService {
 	@Autowired
 	ProdutoRepository produtoRepository;
 
-	/*public Integer getCount() {
+	public Integer getCount() {
 		return produtoRepository.contar();
-	}*/
+	}
 
 	public Produto salvar(Produto objetoproduto) {
 		return produtoRepository.save(objetoproduto);

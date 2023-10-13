@@ -14,9 +14,9 @@ public class UsuarioService {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 
-//	public Integer getCount() {
-//		return usuarioRepository.contar();
-//	}
+	public Integer getCount() {
+		return usuarioRepository.contar();
+	}
 
 	public List<Usuario> salvar(List<Usuario> objetoUsuario) {
 		return usuarioRepository.saveAll(objetoUsuario);
