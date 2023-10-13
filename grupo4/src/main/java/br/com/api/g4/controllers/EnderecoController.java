@@ -15,34 +15,34 @@ import br.com.api.g4.entities.Endereco;
 import br.com.api.g4.services.EnderecoService;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/endereco")
 public class EnderecoController {
 
 	@Autowired
-	EnderecoService usuarioService;
+	EnderecoService enderecoService;
 
 	@GetMapping("/count")
 	public Integer getCount() {
-		return usuarioService.getCount();
+		return enderecoService.getCount();
 	}
 
 	@PostMapping("/salvar")
-	public List<Endereco> salvar(@RequestBody List<Endereco> objetousuario) {
-		return usuarioService.salvar(objetousuario);
+	public List<Endereco> salvar(@RequestBody List<Endereco> objetoEndereco) {
+		return enderecoService.salvar(objetoEndereco);
 	}
 
 	@GetMapping("/{id}")
 	public Endereco acharId(@PathVariable Integer id) {
-		return usuarioService.acharId(id);
+		return enderecoService.acharId(id);
 	}
 
 	@GetMapping("/listar")
 	public List<Endereco> listar() {
-		return usuarioService.listar();
+		return enderecoService.listar();
 	}
 
 	@PutMapping("/atualizar/{id}")
-	public Endereco atualizar(@PathVariable Integer id, @RequestBody Endereco objetousuario) {
-		return usuarioService.atualizar(id, objetousuario);
+	public Endereco atualizar(@PathVariable Integer id, @RequestBody Endereco objetoEndereco) {
+		return enderecoService.atualizar(id, objetoEndereco);
 	}
 }

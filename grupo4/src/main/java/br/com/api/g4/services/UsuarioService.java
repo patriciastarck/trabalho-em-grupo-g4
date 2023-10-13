@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.api.g4.entities.Endereco;
 import br.com.api.g4.entities.Usuario;
 import br.com.api.g4.repositories.UsuarioRepository;
 
@@ -46,9 +47,6 @@ public class UsuarioService {
 		if (objetoUsuario.getNome() != null) {
 			registroAntigo.setNome(objetoUsuario.getNome());
 		}
-		if (objetoUsuario.getEndereco() != null) {
-			registroAntigo.setEndereco(objetoUsuario.getEndereco());
-		}
 		if (objetoUsuario.getNomeUsuario() != null) {
 			registroAntigo.setNomeUsuario(objetoUsuario.getNomeUsuario());
 		}
@@ -64,4 +62,14 @@ public class UsuarioService {
 		registroAntigo.setId(id);
 		return usuarioRepository.save(registroAntigo);
 	}
+
+	EnderecoService listarEndereco;
+	
+	public List<Endereco> listarEndereco() {
+		// TODO Auto-generated method stub
+	return listarEndereco.listar();
+	}
+	
+	
+	
 }

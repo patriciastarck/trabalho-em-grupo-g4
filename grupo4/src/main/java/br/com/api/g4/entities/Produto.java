@@ -1,11 +1,14 @@
 package br.com.api.g4.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +24,10 @@ public class Produto {
 	private Integer qntdEstoque;
 	private Double valorUnitario;
 	private Boolean ativo;
+	
+	@OneToMany
+	@JoinColumn(name="produto_id")
+	private List<Categoria> categorias; 
 
 	public Produto() {
 		super();

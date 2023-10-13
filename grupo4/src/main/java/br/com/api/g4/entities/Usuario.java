@@ -1,11 +1,14 @@
 package br.com.api.g4.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,24 +19,35 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
 	private String nome;
-	private String endereco;
 	private String nomeUsuario;
 	private String email;
 	private String cpf;
 	private LocalDate dataNascimento;
 	private Boolean ativo;
+
+	
+	@OneToMany
+	@JoinColumn(name="usuario_id")
+	private List<Pedido> pedidos; 
+	
+	@OneToMany
+	@JoinColumn(name="usuario_id")
+	private List<Produto> produtos; 
+	
+	@OneToMany
+	@JoinColumn(name="usuario_id")
+	private List<Endereco> endereco;
 	
 	public Usuario() {
 		super();
 	}
 
-	public Usuario(Integer id, String nome, Boolean ativo, String endereco, String nomeUsuario, String email,
+	public Usuario(Integer id, String nome, Boolean ativo, String nomeUsuario, String email,
 			String cpf, LocalDate dataNascimento) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.ativo = ativo;
-		this.endereco = endereco;
 		this.nomeUsuario = nomeUsuario;
 		this.email = email;
 		this.cpf = cpf;
@@ -62,14 +76,6 @@ public class Usuario {
 	
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
-	}
-	
-	public String getEndereco() {
-		return endereco;
-	}
-	
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
 	}
 	
 	public String getNomeUsuario() {
@@ -107,7 +113,11 @@ public class Usuario {
 	
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nome=" + nome + ", ativo=" + ativo + ", endereco=" + endereco + ", nomeUsuario="
+		return "Usuario [id=" + id + ", nome=" + nome + ", ativo=" + ativo + ", nomeUsuario="
 				+ nomeUsuario + ", email=" + email + ", cpf=" + cpf + ", dataNascimento=" + dataNascimento + "]";
 	}
+	
+	
+	
+	
 }

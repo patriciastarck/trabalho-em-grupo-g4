@@ -1,11 +1,15 @@
 package br.com.api.g4.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +21,14 @@ public class Pedido {
 	private Integer id;
 	private LocalDate dataPedido;
 	private Boolean ativo;	
+	
+	@ManyToMany //relacionamento muitos pra muitos
+	@JoinTable( //cria a tabela de ligacao
+			name="pedido_produto", //nomeia a tabela de ligacao
+				joinColumns=@JoinColumn(name="pedido_id"), //referencia de chave estrangeira da tabela atual(pedido)
+				inverseJoinColumns=@JoinColumn(name="produto_id") //referencia de chave estrangeira da tabela de associacao(produto)
+				)
+	private List<Produto> produtos;
 	
 	
 	public Pedido() {
