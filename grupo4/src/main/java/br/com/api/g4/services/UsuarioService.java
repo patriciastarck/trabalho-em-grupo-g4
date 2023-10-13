@@ -8,14 +8,12 @@ import org.springframework.stereotype.Service;
 import br.com.api.g4.entities.Usuario;
 import br.com.api.g4.repositories.UsuarioRepository;
 
-
-
 @Service
 public class UsuarioService {
 
 	@Autowired
 	UsuarioRepository usuarioRepository;
-	
+
 //	public Integer getCount() {
 //		return usuarioRepository.contar();
 //	}
@@ -42,25 +40,25 @@ public class UsuarioService {
 
 	public Usuario atualizar(Integer id, Usuario objetoUsuario) {
 		Usuario registroAntigo = acharId(id);
-		if(objetoUsuario.getAtivo() != null) {
+		if (objetoUsuario.getAtivo() != null) {
 			registroAntigo.setAtivo(objetoUsuario.getAtivo());
 		}
-		if(objetoUsuario.getNome() != null) {
+		if (objetoUsuario.getNome() != null) {
 			registroAntigo.setNome(objetoUsuario.getNome());
 		}
-		if(objetoUsuario.getEndereco() != null) {
+		if (objetoUsuario.getEndereco() != null) {
 			registroAntigo.setEndereco(objetoUsuario.getEndereco());
 		}
-		if(objetoUsuario.getNomeUsuario() != null) {
+		if (objetoUsuario.getNomeUsuario() != null) {
 			registroAntigo.setNomeUsuario(objetoUsuario.getNomeUsuario());
 		}
-		if(objetoUsuario.getEmail() != null) {
+		if (objetoUsuario.getEmail() != null) {
 			registroAntigo.setEmail(objetoUsuario.getEmail());
 		}
-		if(objetoUsuario.getCpf() != null) {
+		if (objetoUsuario.getCpf() != null) {
 			registroAntigo.setCpf(objetoUsuario.getCpf());
 		}
-		if(objetoUsuario.getDataNascimento() != null) {
+		if (objetoUsuario.getDataNascimento() != null) {
 			registroAntigo.setDataNascimento(objetoUsuario.getDataNascimento());
 		}
 		registroAntigo.setId(id);

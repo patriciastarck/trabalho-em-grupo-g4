@@ -21,31 +21,34 @@ public class UsuarioController {
 
 	@Autowired
 	UsuarioService usuarioService;
-	
+
 //	@GetMapping("/count")
 //	public Integer getCount() {
 //		return usuarioService.getCount();
 //	}
-	
+
 	@PostMapping("/salvar")
 	public List<Usuario> salvar(@RequestBody List<Usuario> objetousuario) {
 		return usuarioService.salvar(objetousuario);
 	}
+
 	@GetMapping("/{id}")
 	public Usuario acharId(@PathVariable Integer id) {
 		return usuarioService.acharId(id);
 	}
+
 	@GetMapping("/listar")
-	public List<Usuario> listar(){
+	public List<Usuario> listar() {
 		return usuarioService.listar();
 	}
+
 	@DeleteMapping("/deletarLogico/{id}")
 	public void apagar(@PathVariable Integer id) {
 		usuarioService.apagar(id);
 	}
+
 	@PutMapping("/atualizar/{id}")
 	public Usuario atualizar(@PathVariable Integer id, @RequestBody Usuario objetousuario) {
 		return usuarioService.atualizar(id, objetousuario);
 	}
-
 }
