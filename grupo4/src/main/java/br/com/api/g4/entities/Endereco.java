@@ -28,8 +28,9 @@ public class Endereco {
     @Column(length = 2,nullable = false)
     private String uf;
     
-    
-	public Endereco() {
+    //@JsonProperty(access=JsonProperty.Access.READ_ONLY)
+	
+    public Endereco() {
 		super();
 	}
 
