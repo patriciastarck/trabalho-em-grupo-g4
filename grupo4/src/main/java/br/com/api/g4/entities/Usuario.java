@@ -3,6 +3,7 @@ package br.com.api.g4.entities;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,11 +19,17 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
+	@Column(nullable = false,length = 40)
 	private String nome;
+	@Column(nullable = false, length = 20)
 	private String nomeUsuario;
+	@Column(nullable = false)
 	private String email;
+	@Column(nullable = false, length = 11)
 	private String cpf;
+	@Column(nullable = false, length = 10)
 	private LocalDate dataNascimento;
+	@Column(nullable = false)
 	private Boolean ativo;
 
 	

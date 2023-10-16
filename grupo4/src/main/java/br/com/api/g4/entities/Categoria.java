@@ -1,5 +1,6 @@
 package br.com.api.g4.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,9 +13,13 @@ public class Categoria {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
+	@Column(nullable = false, unique = true)
 	private Integer id;
+	@Column(nullable = false, unique = true, length = 20)
 	private String nome;
+	@Column(nullable = false)
 	private String descricao;
+	@Column(nullable = false)
 	private Boolean ativo;
 
 	public Categoria() {

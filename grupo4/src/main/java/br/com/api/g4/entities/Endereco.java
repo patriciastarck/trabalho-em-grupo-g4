@@ -1,5 +1,6 @@
 package br.com.api.g4.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,12 +13,18 @@ public class Endereco {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
+    @Column(nullable = false, unique = true)
     private Integer id;
+    @Column(length = 9, nullable = false)
     private String cep;
-    private String logradouro; 
-    private String complemento;
+    @Column(length = 60,nullable = false)
+    private String logradouro;
+    private Character complemento;
+    @Column(length = 30,nullable = false)
     private String bairro;
+    @Column(length = 30,nullable = false)
     private String localidade;
+    @Column(length = 2,nullable = false)
     private String uf;
     
     
@@ -26,7 +33,7 @@ public class Endereco {
 	}
 
 
-	public Endereco(Integer id, String cep, String logradouro, String complemento, String bairro, String localidade,
+	public Endereco(Integer id, String cep, String logradouro, Character complemento, String bairro, String localidade,
 			String uf) {
 		super();
 		this.id = id;
@@ -69,12 +76,12 @@ public class Endereco {
 	}
 
 
-	public String getComplemento() {
+	public Character getComplemento() {
 		return complemento;
 	}
 
 
-	public void setComplemento(String complemento) {
+	public void setComplemento(Character complemento) {
 		this.complemento = complemento;
 	}
 
