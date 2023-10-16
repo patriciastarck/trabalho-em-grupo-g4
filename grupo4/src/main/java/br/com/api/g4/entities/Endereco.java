@@ -19,7 +19,8 @@ public class Endereco {
     private String cep;
     @Column(length = 60,nullable = false)
     private String logradouro;
-    private Character complemento;
+    @Column(length = 40)
+    private String complemento;
     @Column(length = 30,nullable = false)
     private String bairro;
     @Column(length = 30,nullable = false)
@@ -33,7 +34,7 @@ public class Endereco {
 	}
 
 
-	public Endereco(Integer id, String cep, String logradouro, Character complemento, String bairro, String localidade,
+	public Endereco(Integer id, String cep, String logradouro, String complemento, String bairro, String localidade,
 			String uf) {
 		super();
 		this.id = id;
@@ -76,12 +77,12 @@ public class Endereco {
 	}
 
 
-	public Character getComplemento() {
+	public String getComplemento() {
 		return complemento;
 	}
 
 
-	public void setComplemento(Character complemento) {
+	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
 
