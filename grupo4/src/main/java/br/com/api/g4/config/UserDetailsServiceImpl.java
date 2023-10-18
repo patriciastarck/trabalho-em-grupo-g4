@@ -12,14 +12,14 @@ import org.springframework.stereotype.Component;
 
 import br.com.api.g4.entities.Usuario;
 import br.com.api.g4.repositories.RoleRepository;
-import br.com.api.g4.repositories.UserRepository;
+import br.com.api.g4.repositories.UsuarioRepository;
 import br.com.api.g4.services.UsuarioService;
 
 	@Component
 	public class UserDetailsServiceImpl implements UserDetailsService {
 
 	    @Autowired 
-	    UserRepository userRepo;
+	    UsuarioRepository userRepo;
 
 	    @Autowired
 	    UsuarioService userService;
