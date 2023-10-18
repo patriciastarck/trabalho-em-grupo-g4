@@ -2,8 +2,8 @@ package br.com.api.g4.enums;
 
 public enum TipoRoleEnum {
 
-	ROLE_USER("USUARIO"),
-	ROLE_ADMIN("ADMINISTRADOR");
+	ROLE_COMPRADOR("COMPRADOR"),
+	ROLE_VENDEDOR("VENDEDOR");
 
 	private String tipo;
 

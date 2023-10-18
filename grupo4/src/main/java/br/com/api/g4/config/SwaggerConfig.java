@@ -19,12 +19,14 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
-@Configuration // anotacao para poder startar primeiro, antes que os outros
+@Configuration 
 public class SwaggerConfig {
-	public static final String AUTHORIZATION_HEADER = "Authorization";
+	public static final String AUTHORIZATION_HEADER = "Authorization";//Cria uma constante contendo a chamada de
+	//uma classe. Essa classe é responsável por enviar credenciais autentificação em uma solicitação http.
 
 	private ApiKey apiKey() {
-		return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
+		return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");//cria um metodo que retorna um autentificação 
+		//por chave no swagger
 	}
 
 	private SecurityContext securityContext() {
@@ -37,14 +39,14 @@ public class SwaggerConfig {
 		return securityReferences;
 	}
 
-	@Bean // vai ser chamado pelo spring
+	@Bean
 	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()) // 1- metodo de config do docket, o 2 é o
+		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()) 
 				.securityContexts(Collections.singletonList(securityContext())).securitySchemes(Arrays.asList(apiKey()))
 
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("br.com.api.g4.controllers")) 
-				.paths(PathSelectors.any()) // seleciona todas as urls
+				.paths(PathSelectors.any()) 
 				.build();
 	}
 

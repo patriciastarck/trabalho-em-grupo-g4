@@ -3,6 +3,7 @@ package br.com.api.g4.config;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -12,9 +13,10 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.api.g4.entities.User;
+import br.com.api.g4.entities.Usuario;
 import io.jsonwebtoken.Jwts;
 
+@Component
 public class JWTUtil {
 
 	@Value("${jwt-secret}")
@@ -43,7 +45,7 @@ public class JWTUtil {
 		}
 	}
 
-	public String generateTokenWithUserData(User user) throws IllegalArgumentException, JWTCreationException {
+	public String generateTokenWithUserData(Usuario user) throws IllegalArgumentException, JWTCreationException {
 		ObjectMapper mapper = new ObjectMapper();
 		String userJson = null;
 		try {
@@ -61,9 +63,9 @@ public class JWTUtil {
 		JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret)).withSubject(subject)
 				.withIssuer(companyProjectName).build();
 		DecodedJWT jwt = verifier.verify(token);
-		User user = new User();
+		Usuario user = new Usuario();
 		try {
-			user = mapper.readValue(jwt.getClaim("usuario").asString(), User.class);
+			user = mapper.readValue(jwt.getClaim("usuario").asString(), Usuario.class);
 		} catch (JsonProcessingException e) {
 			throw new Exception("Ocorreu um erro e nao foi possivel converter o usario a partir da string json - " + e);
 		}

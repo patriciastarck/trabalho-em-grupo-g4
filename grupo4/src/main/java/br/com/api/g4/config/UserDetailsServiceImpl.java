@@ -10,10 +10,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import br.com.api.g4.entities.User;
+import br.com.api.g4.entities.Usuario;
 import br.com.api.g4.repositories.RoleRepository;
 import br.com.api.g4.repositories.UserRepository;
-import br.com.api.g4.services.UserService;
+import br.com.api.g4.services.UsuarioService;
 
 	@Component
 	public class UserDetailsServiceImpl implements UserDetailsService {
@@ -22,14 +22,14 @@ import br.com.api.g4.services.UserService;
 	    UserRepository userRepo;
 
 	    @Autowired
-	    UserService userService;
+	    UsuarioService userService;
 
 	    @Autowired 
 	    RoleRepository roleRepo;
 
 		@Override
 	    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-	        Optional<User> userRes = userRepo.findByEmail(email);
+	        Optional<Usuario> userRes = userRepo.findByEmail(email);
 	        if(userRes.isEmpty()) {
 	            throw new UsernameNotFoundException("Não foi possível encontrar usuário com o email = " + email);
 	        }
