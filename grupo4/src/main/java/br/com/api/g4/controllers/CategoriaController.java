@@ -29,7 +29,6 @@ public class CategoriaController {
 
 	@GetMapping("/count")
 	public Integer getCount() {
-		emailService.envioEmailCadastro();
 		return categoriaService.getCount();
 	}
 	

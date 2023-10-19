@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.g4.entities.Endereco;
 import br.com.api.g4.entities.Usuario;
+import br.com.api.g4.services.EmailService;
 import br.com.api.g4.services.UsuarioService;
 
 @RestController
@@ -22,9 +23,13 @@ public class UsuarioController {
 
 	@Autowired
 	UsuarioService usuarioService;
+	
+	@Autowired
+	EmailService emailService;
 
 	@GetMapping("/count")
 	public Integer getCount() {
+		emailService.envioEmailCadastro(acharId(1));
 		return usuarioService.getCount();
 	}
 
