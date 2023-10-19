@@ -1,5 +1,9 @@
 package br.com.api.g4.services;
 
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.MessagingException;
@@ -14,11 +18,14 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import br.com.api.g4.dto.UserDTO;
+import br.com.api.g4.entities.Usuario;
 
 @Configuration
 @Service
 public class EmailService {
+	
+	@Autowired 
+	UsuarioService usuarioService;
 
 	private JavaMailSender emailSender;
 
@@ -85,4 +92,68 @@ public class EmailService {
 
 	}
 	
+	public void envioEmailTeste() {
+		MimeMessage mensagemCadastro = emailSender.createMimeMessage();
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(mensagemCadastro, true);
+			helper.setFrom("gp4api.serratec@gmail.com");
+			helper.setTo("patriciastarck@gmail.com");
+			helper.setSubject("Me chama que eu vou!!");	
+			
+			LocalDate localDate=LocalDate.now();
+			DateTimeFormatter format=DateTimeFormatter.ofPattern("dd/MM/yyyy");			
+			String dataEntrega=localDate.plusDays(7).format(format);
+			
+			Double valor=15.9;
+			DecimalFormat df=new DecimalFormat("R$ ,##0.00");
+			
+			StringBuilder builder=new StringBuilder();
+			builder.append("<html>\r\n");
+			builder.append("<body>\r\n");
+			builder.append("<div align=\"center\">\r\n");
+			builder.append("<h1>Convite</h1>\r\n");
+			builder.append("</div>\r\n");
+			builder.append("<br/> \r\n");
+			
+			builder.append("<center>");
+			builder.append("<table border='2' cellpadding='4'> \r\n");
+			builder.append("<tr> <th> Nome </th> <\r\n");
+			builder.append("<tr> <th> Nome</th> <th> Email</th> <th>Perfis</th><th> Data de entrega</th> </tr>\r\n");
+			
+			List<Usuario>listaUsuarios=usuarioService.listar();
+			for(Usuario usuario : listaUsuarios) {
+			builder.append(" <tr>\r\n"); 
+			builder.append(" <td>\r\n"); 
+			builder.append(usuario.getNomeUsuario()); 
+			builder.append(" </td>\r\n"); 
+			builder.append(" <td>\r\n"); 
+			builder.append(usuario.getEmail()); 
+			builder.append(" </td>\r\n"); 
+			builder.append(" <td>\r\n"); 
+//			builder.append(usuario.getRoles()); 
+			builder.append(" </td>\r\n"); 
+			builder.append(" <td>\r\n"); 
+			builder.append(dataEntrega); 
+			builder.append(" </td>\r\n");
+		
+		}
+			builder.append(" </table>\r\n"); 
+			builder.append(" </center>\r\n"); 
+			builder.append(" <table border='1' cellpadding='1' >\r\n"); 
+			builder.append("<tr><th>Valor Total</th></tr>\r\n"); 
+			builder.append(" <td>\r\n"); 
+			builder.append(df.format(valor)); 
+			builder.append(" </td>\r\n"); 
+			builder.append(" </table>\r\n"); 
+			builder.append(" </body>\r\n"); 
+			builder.append("</html>");
+
+			helper.setText(builder.toString(), true); 
+			emailSender.send(mensagemCadastro);						
+
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+	
+	}
 }
