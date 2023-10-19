@@ -21,18 +21,24 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration 
 public class SwaggerConfig {
-	public static final String AUTHORIZATION_HEADER = "Authorization";//Cria uma constante contendo a chamada de
-	//uma classe. Essa classe é responsável por enviar credenciais autentificação em uma solicitação http.
-
+	
+	/*Esta constante define o cabeçalho de autorização que será usado para autenticar usuários 
+	 * na documentação gerada pelo Swagger.*/
+	public static final String AUTHORIZATION_HEADER = "Authorization";
+	
+	/*Este método define uma chave de API que será usada para proteger a documentação do Swagger.*/
 	private ApiKey apiKey() {
-		return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");//cria um metodo que retorna um autentificação 
-		//por chave no swagger
+		return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
 	}
-
+	
+	/* Este método define um contexto de segurança que será usado para exigir autenticação para 
+	 * acessar a documentação do Swagger.*/
 	private SecurityContext securityContext() {
 		return SecurityContext.builder().securityReferences(defaultAuth()).build();
 	}
-
+	
+	/*Este método define uma lista de referências de segurança que serão usadas para autenticar 
+	 * usuários para acessar a documentação do Swagger.*/
 	private List<SecurityReference> defaultAuth() {
 		List<SecurityReference> securityReferences = new ArrayList<>();
 		securityReferences.add(new SecurityReference("JWT", new AuthorizationScope[0]));

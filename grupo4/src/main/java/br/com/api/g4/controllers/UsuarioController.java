@@ -29,13 +29,20 @@ public class UsuarioController {
 
 	@GetMapping("/count")
 	public Integer getCount() {
-		emailService.envioEmailCadastro(acharId(1));
+		
 		return usuarioService.getCount();
 	}
 
 	@PostMapping("/salvar")
-	public List<Usuario> salvar(@RequestBody List<Usuario> objetousuario) {
+	public Usuario salvar(@RequestBody Usuario objetousuario) {
+		try {
+		
 		return usuarioService.salvar(objetousuario);
+		}catch(Exception e){
+			return usuarioService.salvar(objetousuario);
+		}finally {
+			emailService.envioEmailCadastro(objetousuario);
+		}
 	}
 
 	@GetMapping("/{id}")

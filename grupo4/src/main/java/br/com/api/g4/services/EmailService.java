@@ -68,7 +68,7 @@ public class EmailService {
 			MimeMessageHelper helper = new MimeMessageHelper(mensagemCadastro, true);
 			helper.setFrom("gp4api.serratec@gmail.com");
 			helper.setTo("oliveiraagall@gmail.com");
-			String nome = usuario.getNomeUsuario();
+			String nome = usuario.getNome();
 			helper.setSubject("Olá "+nome+" sua conta foi criada com sucesso.");
 
 			StringBuilder builder = new StringBuilder();

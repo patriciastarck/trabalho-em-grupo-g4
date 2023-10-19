@@ -19,8 +19,8 @@ public class UsuarioService {
 		return usuarioRepository.contar();
 	}
 
-	public List<Usuario> salvar(List<Usuario> objetoUsuario) {
-		return usuarioRepository.saveAll(objetoUsuario);
+	public Usuario salvar(Usuario objetoUsuario) {
+		return usuarioRepository.save(objetoUsuario);
 	}
 
 	public Usuario acharId(Integer id) {
