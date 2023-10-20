@@ -23,26 +23,20 @@ public class UsuarioController {
 
 	@Autowired
 	UsuarioService usuarioService;
-	
+
 	@Autowired
 	EmailService emailService;
 
 	@GetMapping("/count")
 	public Integer getCount() {
-		
+
 		return usuarioService.getCount();
 	}
 
 	@PostMapping("/salvar")
 	public Usuario salvar(@RequestBody Usuario objetousuario) {
-		try {
-		
+		emailService.envioEmailCadastro(objetousuario);
 		return usuarioService.salvar(objetousuario);
-		}catch(Exception e){
-			return usuarioService.salvar(objetousuario);
-		}finally {
-			emailService.envioEmailCadastro(objetousuario);
-		}
 	}
 
 	@GetMapping("/{id}")
@@ -64,10 +58,10 @@ public class UsuarioController {
 	public Usuario atualizar(@PathVariable Integer id, @RequestBody Usuario objetousuario) {
 		return usuarioService.atualizar(id, objetousuario);
 	}
-	
+
 	@GetMapping("/listarEndereco/{id}")
-	public List<Endereco> getEndereco (@PathVariable Integer id){
+	public List<Endereco> getEndereco(@PathVariable Integer id) {
 		return usuarioService.listarEndereco();
 	}
-	
+
 }

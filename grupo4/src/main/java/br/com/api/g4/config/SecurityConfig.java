@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/teste/login", "/teste/count", "/categoria/count").permitAll()
                 .antMatchers("/teste/ola").hasRole("USER")
                 .antMatchers("/teste/delete/**").hasRole("ADMIN")
-                .antMatchers("/teste/listar").hasRole("ADMIN")
+                .antMatchers("/teste/listar").hasAnyRole("USER","ADMIN")
                 .and()
                 .userDetailsService(uds)
                 .exceptionHandling()
