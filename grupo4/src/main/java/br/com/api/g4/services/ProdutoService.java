@@ -1,6 +1,7 @@
 package br.com.api.g4.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,5 +66,9 @@ public class ProdutoService {
 		}
 		registroAntigo.setId(id);
 		return produtoRepository.save(registroAntigo);
+	}
+
+	public Map<String,Double> promocao() {
+		return produtoRepository.promocao();
 	}
 }

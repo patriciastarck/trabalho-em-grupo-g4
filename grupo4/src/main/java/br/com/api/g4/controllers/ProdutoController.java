@@ -1,6 +1,7 @@
 package br.com.api.g4.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -60,5 +61,10 @@ public class ProdutoController {
 	@PutMapping("/atualizar/{id}")
 	public Produto atualizar(@PathVariable Integer id, @RequestBody Produto objetoProduto) {
 		return ProdutoService.atualizar(id, objetoProduto);
+	}
+	
+	@GetMapping("/Promocao")
+	public Map<String,Double> promocao() {
+		return ProdutoService.promocao();
 	}
 }
