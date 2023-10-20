@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.api.g4.dto.UsuarioDTO;
 import br.com.api.g4.entities.Endereco;
 import br.com.api.g4.entities.Usuario;
 import br.com.api.g4.services.EmailService;
@@ -34,7 +35,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/salvar")
-	public Usuario salvar(@RequestBody Usuario objetousuario) {
+	public Usuario salvar(@RequestBody UsuarioDTO objetousuario) {
 		emailService.envioEmailCadastro(objetousuario);
 		return usuarioService.salvar(objetousuario);
 	}
@@ -50,8 +51,8 @@ public class UsuarioController {
 	}
 
 	@DeleteMapping("/deletarLogico/{id}")
-	public void apagar(@PathVariable Integer id) {
-		usuarioService.apagar(id);
+	public void deletarLogico(@PathVariable Integer id) {
+		usuarioService.deletarLogico(id);
 	}
 
 	@PutMapping("/atualizar/{id}")

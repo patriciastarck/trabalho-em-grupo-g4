@@ -18,6 +18,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import br.com.api.g4.dto.UsuarioDTO;
 import br.com.api.g4.entities.Usuario;
 
 @Configuration
@@ -61,7 +62,7 @@ public class EmailService {
 		return emailSender;
 	}
 	
-	public void envioEmailCadastro(Usuario usuario) {
+	public void envioEmailCadastro(UsuarioDTO usuario) {
 		MimeMessage mensagemCadastro = emailSender.createMimeMessage();
 		
 		try {
