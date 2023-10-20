@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.api</groupId>
 	<artifactId>g4</artifactId>
-	<version>14.2.0</version>
+	<version>14.7.0</version>
 	<name>grupo4</name>
 	<description>Projeto Grupo 4</description>
 	<properties>
@@ -94,6 +94,11 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>br.com.api</groupId>
+			<artifactId>aula</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

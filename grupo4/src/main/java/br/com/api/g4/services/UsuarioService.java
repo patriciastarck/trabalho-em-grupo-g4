@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.api.g4.dto.UsuarioDTO;
 import br.com.api.g4.entities.Endereco;
 import br.com.api.g4.entities.Usuario;
 import br.com.api.g4.repositories.UsuarioRepository;
@@ -19,8 +20,16 @@ public class UsuarioService {
 		return usuarioRepository.contar();
 	}
 
-	public List<Usuario> salvar(List<Usuario> objetoUsuario) {
-		return usuarioRepository.saveAll(objetoUsuario);
+	public Usuario salvar(UsuarioDTO objetoUsuario) {
+		Usuario usuarioNovo = new Usuario();
+		usuarioNovo.setNome(objetoUsuario.getNome());
+		usuarioNovo.setNomeUsuario(objetoUsuario.getNomeUsuario());
+		usuarioNovo.setEmail(objetoUsuario.getEmail());
+		usuarioNovo.setPassword(objetoUsuario.getPassword());
+		usuarioNovo.setCpf(objetoUsuario.getCpf());
+		usuarioNovo.setDataNascimento(objetoUsuario.getDataNascimento());
+		usuarioNovo.setAtivo(objetoUsuario.getAtivo());
+		return usuarioRepository.save(usuarioNovo);
 	}
 
 	public Usuario acharId(Integer id) {
@@ -31,7 +40,7 @@ public class UsuarioService {
 		return usuarioRepository.findAll();
 	}
 
-	public void apagar(Integer id) {
+	public void deletarLogico(Integer id) {
 		Usuario obgUsuario = acharId(id);
 		if (obgUsuario != null) {
 			obgUsuario.setAtivo(false);

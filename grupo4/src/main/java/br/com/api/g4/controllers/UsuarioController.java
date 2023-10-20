@@ -12,24 +12,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.api.g4.dto.UsuarioDTO;
 import br.com.api.g4.entities.Endereco;
 import br.com.api.g4.entities.Usuario;
+import br.com.api.g4.services.EmailService;
 import br.com.api.g4.services.UsuarioService;
 
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
+	
 
 	@Autowired
 	UsuarioService usuarioService;
 
+	@Autowired
+	EmailService emailService;
+
 	@GetMapping("/count")
 	public Integer getCount() {
+
 		return usuarioService.getCount();
 	}
 
 	@PostMapping("/salvar")
-	public List<Usuario> salvar(@RequestBody List<Usuario> objetousuario) {
+	public Usuario salvar(@RequestBody UsuarioDTO objetousuario) {
+		emailService.envioEmailCadastro(objetousuario);
 		return usuarioService.salvar(objetousuario);
 	}
 
@@ -44,18 +52,19 @@ public class UsuarioController {
 	}
 
 	@DeleteMapping("/deletarLogico/{id}")
-	public void apagar(@PathVariable Integer id) {
-		usuarioService.apagar(id);
+	public void deletarLogico(@PathVariable Integer id) {
+		emailService.envioEmailDelete(acharId(id));
+		usuarioService.deletarLogico(id);
 	}
 
 	@PutMapping("/atualizar/{id}")
 	public Usuario atualizar(@PathVariable Integer id, @RequestBody Usuario objetousuario) {
 		return usuarioService.atualizar(id, objetousuario);
 	}
-	
+
 	@GetMapping("/listarEndereco/{id}")
-	public List<Endereco> getEndereco (@PathVariable Integer id){
+	public List<Endereco> getEndereco(@PathVariable Integer id) {
 		return usuarioService.listarEndereco();
 	}
-	
+
 }
