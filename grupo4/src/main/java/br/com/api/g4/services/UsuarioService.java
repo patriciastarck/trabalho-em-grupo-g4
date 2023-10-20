@@ -73,12 +73,25 @@ public class UsuarioService {
 	}
 
 	EnderecoService listarEndereco;
-	
+
 	public List<Endereco> listarEndereco() {
 		// TODO Auto-generated method stub
-	return listarEndereco.listar();
+		return listarEndereco.listar();
 	}
-	
-	
-	
+
+	public void recuperarSenha(Integer id, String senha) {
+		Usuario objTeste = acharId(id);
+		if (objTeste != null) {
+			objTeste.setPassword(senha);
+			usuarioRepository.save(objTeste);
+		}
+	}
+
+	public void recuperarConta(Integer id) {
+		Usuario obgUsuario = acharId(id);
+		if (obgUsuario != null) {
+			obgUsuario.setAtivo(true);
+			usuarioRepository.save(obgUsuario);
+		}
+	}
 }

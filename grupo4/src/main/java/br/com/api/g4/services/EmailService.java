@@ -140,22 +140,24 @@ public class EmailService {
 
 			StringBuilder builder = new StringBuilder();
 			builder.append("<html>\r\n");
-			builder.append("	<body>\r\n");
-			builder.append("		<div align=\"center\">\r\n");
-			builder.append("			<h1>Conta criada com sucesso</h1>\r\n");
-			builder.append("		</div>\r\n");
-			builder.append("		<br/>\r\n");
-			builder.append("		<div align=\"center\">\r\n");
+			builder.append("<body>\r\n");
+			builder.append("");
+			builder.append("<div align=\"center\">\r\n");
+			builder.append("<h1>Conta criada com sucesso</h1>\r\n");
+			builder.append("</div>\r\n");
+			builder.append("");
+			builder.append("<div align=\"center\">\r\n");
 			builder.append("<img src=\"cid:logo\">");
-			builder.append("		</div>\r\n");
-			builder.append("		<div align=\"center\">\r\n");
+			builder.append("</div>\r\n");
+			builder.append("");
+			builder.append("<div align=\"center\">\r\n");
 			builder.append("<p>Parabéns " + nome + " por agora fazer parte do melhor marketplace do mundo!!!</p>");
 			builder.append("<p>Esperamos que tenha uma boa experiência conosco.</p>");
-			builder.append(
-					"<a href=http:\"//localhost:8080/api/swagger-ui/index.html#/\"\"\">Clique aqui para voltar ao site </a>\r\n");
+			builder.append("<a href=http:\"//localhost:8080/api/swagger-ui/index.html#/\"\"\">Clique aqui para voltar ao site </a>\r\n");
 			builder.append("<p>Atenciosamente Grupo 4.\r\n</p>");
-			builder.append("		</div>\r\n");
-			builder.append("	</body>\r\n");
+			builder.append("");
+			builder.append("</div>\r\n");
+			builder.append("</body>\r\n");
 			builder.append("</html>\r\n");
 
 			helper.setText(builder.toString(), true);
@@ -169,7 +171,7 @@ public class EmailService {
 			e.printStackTrace();
 		}
 	}
-	//TODO alinhar texto
+	
 	public void envioEmailDelete(Usuario usuario) {
 		MimeMessage mensagemCadastro = emailSender.createMimeMessage();
 
@@ -181,12 +183,24 @@ public class EmailService {
 			helper.setSubject("Olá " + nome + " sua conta foi apagada com sucesso.");
 
 			StringBuilder builder = new StringBuilder();
-			builder.append("<html>\r\n" + "<body>\r\n" + "" + "<div align=\"center\">\r\n"
-					+ "<h1>Conta apagada com sucesso</h1>\r\n" + "</div>\r\n" + "<br/>\r\n" + ""
-					+ "<div align=\"center\">\r\n" + "<img src=\"cid:logo\">" + "</div>\r\n"
+			builder.append("<html>\r\n" 
+					+ "<body>\r\n" 
+					+ "" 
+					+ "<div align=\"center\">\r\n"
+					+ "<h1>Conta apagada com sucesso</h1>\r\n" 
+					+ "</div>\r\n" 
+					+ "<br/>\r\n" 
+					+ ""
+					+ "<div align=\"center\">\r\n" 
+					+ "<img src=\"cid:logo\">" 
+					+ "</div>\r\n"
+					+ ""
+					+ "<div align=\"center\">\r\n" + "" 
 					+ "<p>Agradecemos por utilizar nossos serviços, sua conta foi finalizada.</p>"
-					+ "<p>Esperamos que você tenha tido uma boa experiência conosco! Até a próxima ;)</p>" + ""
-					+ "<p>Atenciosamente Grupo 4.</p>" + "<div align=\"center\">\r\n" + "" + "</div>" + "</body>\r\n"
+					+ "<p>Esperamos que você tenha tido uma boa experiência conosco! Até a próxima ;)</p>" 
+					+ "<p>Atenciosamente Grupo 4.</p>" 
+					+ "</div>" 
+					+ "</body>\r\n"
 					+ "</html>\r\n");
 
 			helper.setText(builder.toString(), true);
@@ -213,13 +227,24 @@ public class EmailService {
 			helper.setSubject("Olá " + nome + " segue os produtos promocionais da semana.\r\n");
 
 			StringBuilder builder = new StringBuilder();
-			builder.append("<html>\r\n" + "<body>\r\n" + "" + "<div align=\"center\">\r\n"
-					+ "<h1>Os 5 produtos da semana são</h1>\r\n" + "</div>\r\n" + "<br/>\r\n" + ""
-					+ "<div align=\"center\">\r\n" + "<img src=\"cid:logo\">" + "</div>\r\n"
+			builder.append("<html>\r\n" 
+					+ "<body>\r\n" 
+					+ "" 
+					+ "<div align=\"center\">\r\n"
+					+ "<h1>Os 5 produtos da semana são</h1>\r\n" 
+					+ "</div>\r\n" + "<br/>\r\n" 
+					+ ""
+					+ "<div align=\"center\">\r\n" 
+					+ "<img src=\"cid:logo\">" 
+					+ "</div>\r\n"
+					+ "" 
+					+ "<div align=\"center\">\r\n" 
 					+ "<p>Não perca essas ofertas que estão no site.</p>"
-					+ "<p>É por tempo limitado! Não vai perder essa chance, ein?!</p>"
+					+ "<p>é por tempo limitado! Não vai perder essa chance, ein?!</p>"
 					+ "<a href=\"http://localhost:8080/api/swagger-ui/index.html#/\">Clique aqui para ver essas ofertas </a>"
-					+ "<p>Atenciosamente Grupo 4.</p>" + "<div align=\"center\">\r\n" + "" + "</div>" + "</body>\r\n"
+					+ "<p>Atenciosamente Grupo 4.</p>" 
+					+ "</div>" 
+					+ "</body>\r\n"
 					+ "</html>\r\n");
 
 			helper.setText(builder.toString(), true);
@@ -234,7 +259,6 @@ public class EmailService {
 		}
 	}
 
-	// TODO botar no usuario
 	public void envioEmailRecuperacaoSenha(Usuario usuario) {
 		MimeMessage mensagemCadastro = emailSender.createMimeMessage();
 
@@ -256,11 +280,11 @@ public class EmailService {
 					+ "<div align=\"center\">\r\n" 
 					+ "<img src=\"cid:logo\">" 
 					+ "</div>\r\n"
-					+ "<p>Se você pediu a redefinição de senha<a href=\"http://localhost:8080/api/swagger-ui/index.html#/\"> clique aqui</a>.</p>"
-					+ "<p>Se você não reconhece essa requisição ignore esse email.</p>"
-					+ "<p>Atenciosamente Grupo 4.</p>" 
-					+ "<div align=\"center\">\r\n" 
 					+ "" 
+					+ "<div align=\"center\">\r\n" 
+					+ "<p>Se vocé pediu a redefinição de senha<a href=\"http://localhost:8080/api/swagger-ui/index.html#/\"> clique aqui</a>.</p>"
+					+ "<p>Se vocé não reconhece essa requisição ignore esse email.</p>"
+					+ "<p>Atenciosamente Grupo 4.</p>" 
 					+ "</div>" 
 					+ "</body>\r\n"
 					+ "</html>\r\n");
@@ -277,7 +301,6 @@ public class EmailService {
 		}
 	}
 
-	// TODO botar no usuario
 	public void envioEmailRecuperacaoConta(Usuario usuario) {
 		MimeMessage mensagemCadastro = emailSender.createMimeMessage();
 
@@ -299,11 +322,11 @@ public class EmailService {
 					+ "<div align=\"center\">\r\n" 
 					+ "<img src=\"cid:logo\">" 
 					+ "</div>\r\n"
-					+ "<p>SSe você está tentando recuperar sua conta, <a href=\"http://localhost:8080/api/swagger-ui/index.html#/\">clique aqui</a> para ver o e-mail cadastrado.</p>"
-					+ "<p>Se você não reconhece essa requisição ignore esse email.</p>"
-					+ "<p>Atenciosamente Grupo 4.</p>" 
-					+ "<div align=\"center\">\r\n" 
 					+ "" 
+					+ "<div align=\"center\">\r\n" 
+					+ "<p>Se vocé estáá tentando recuperar sua conta, <a href=\"http://localhost:8080/api/swagger-ui/index.html#/\">clique aqui</a> para ver o e-mail cadastrado.</p>"
+					+ "<p>Se vocé não reconhece essa requisição ignore esse email.</p>"
+					+ "<p>Atenciosamente Grupo 4.</p>" 
 					+ "</div>" 
 					+ "</body>\r\n"
 					+ "</html>\r\n");

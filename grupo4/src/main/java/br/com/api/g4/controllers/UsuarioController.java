@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.g4.dto.UsuarioDTO;
@@ -21,7 +22,6 @@ import br.com.api.g4.services.UsuarioService;
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
-	
 
 	@Autowired
 	UsuarioService usuarioService;
@@ -66,5 +66,16 @@ public class UsuarioController {
 	public List<Endereco> getEndereco(@PathVariable Integer id) {
 		return usuarioService.listarEndereco();
 	}
+	//TODO verificar a mensagem de recuperaçao de senha é valida
+	@PutMapping("recuperarSenha/{id}")
+	public void recuperarSenha(@PathVariable Integer id, @RequestParam String senha) {
+		usuarioService.recuperarSenha(id, senha);
+		emailService.envioEmailRecuperacaoSenha(acharId(id));
+	}
 
+	@PutMapping("recuperarConta/{id}")
+	public void recuperarConta(@PathVariable Integer id) {
+		usuarioService.recuperarConta(id);
+		emailService.envioEmailRecuperacaoConta(acharId(id));
+	}
 }
