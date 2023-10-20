@@ -21,6 +21,7 @@ import br.com.api.g4.services.UsuarioService;
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
+	
 
 	@Autowired
 	UsuarioService usuarioService;
@@ -52,6 +53,7 @@ public class UsuarioController {
 
 	@DeleteMapping("/deletarLogico/{id}")
 	public void deletarLogico(@PathVariable Integer id) {
+		emailService.envioEmailDelete(acharId(id));
 		usuarioService.deletarLogico(id);
 	}
 

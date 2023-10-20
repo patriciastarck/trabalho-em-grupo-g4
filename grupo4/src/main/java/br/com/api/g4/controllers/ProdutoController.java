@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.g4.entities.Produto;
+import br.com.api.g4.services.EmailService;
 import br.com.api.g4.services.ProdutoService;
 
 @RestController 
@@ -20,9 +21,11 @@ import br.com.api.g4.services.ProdutoService;
 public class ProdutoController {
 	
 	@Autowired
+	EmailService emailService;
+	
+	@Autowired
 	ProdutoService ProdutoService;
 
-	
 	@GetMapping("/count")
 	public Integer getCount() {
 		return ProdutoService.getCount();
