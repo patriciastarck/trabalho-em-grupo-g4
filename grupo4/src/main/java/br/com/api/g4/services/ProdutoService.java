@@ -1,13 +1,15 @@
 package br.com.api.g4.services;
 
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.api.g4.dto.PromocaoDTO;
 import br.com.api.g4.entities.Produto;
 import br.com.api.g4.repositories.ProdutoRepository;
+import net.bytebuddy.dynamic.scaffold.TypeWriter.FieldPool.Record;
 
 @Service
 public class ProdutoService {
@@ -46,7 +48,7 @@ public class ProdutoService {
 	public Produto atualizar(Integer id, Produto objetoproduto) {
 		Produto registroAntigo = acharId(id);
 
-		if (objetoproduto.getAtivo()!= null) {
+		if (objetoproduto.getAtivo() != null) {
 			registroAntigo.setAtivo(objetoproduto.getAtivo());
 		}
 		if (objetoproduto.getNome() != null) {
@@ -68,7 +70,9 @@ public class ProdutoService {
 		return produtoRepository.save(registroAntigo);
 	}
 
-	public Map<String,Double> promocao() {
-		return produtoRepository.promocao();
+	public List<PromocaoDTO> promocao() {
+		return produtoRepository.promocao().stream()
+				.map(record -> new PromocaoDTO(String.valueOf(record[0]), String.valueOf(record[1])))
+				.collect(Collectors.toList());
 	}
 }
