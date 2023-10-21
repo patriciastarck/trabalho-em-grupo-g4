@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.api.g4.dto.ProdutoDTO;
 import br.com.api.g4.dto.PromocaoDTO;
 import br.com.api.g4.entities.Produto;
 import br.com.api.g4.services.EmailService;
@@ -34,7 +35,7 @@ public class ProdutoController {
  
 
 	@PostMapping("/salvar")
-	public Produto salvar(@RequestBody Produto objetoProduto) {
+	public Produto salvar(@RequestBody ProdutoDTO objetoProduto) {
 		return produtoService.salvar(objetoProduto);
 	}
 
@@ -59,7 +60,7 @@ public class ProdutoController {
 	}
 
 	@PutMapping("/atualizar/{id}")
-	public Produto atualizar(@PathVariable Integer id, @RequestBody Produto objetoProduto) {
+	public Produto atualizar(@PathVariable Integer id, @RequestBody ProdutoDTO objetoProduto) {
 		return produtoService.atualizar(id, objetoProduto);
 	}
 	

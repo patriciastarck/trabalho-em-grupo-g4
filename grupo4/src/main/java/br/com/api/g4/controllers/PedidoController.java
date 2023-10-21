@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.api.g4.dto.PedidoDTO;
 import br.com.api.g4.entities.Pedido;
 import br.com.api.g4.services.PedidoService;
 
@@ -29,7 +30,7 @@ public class PedidoController {
 	}
 		
 	@PostMapping("/salvar")
-	public Pedido salvar(@RequestBody Pedido objetoPedido) {
+	public Pedido salvar(@RequestBody PedidoDTO objetoPedido) {
 		return pedidoService.salvar(objetoPedido);
 	}
 
@@ -54,7 +55,7 @@ public class PedidoController {
 	}
 	
 	@PutMapping("/atualizar/{id}")
-	public Pedido atualizar(@PathVariable Integer id, @RequestBody Pedido objetoTeste) {
+	public Pedido atualizar(@PathVariable Integer id, @RequestBody PedidoDTO objetoTeste) {
 		return pedidoService.atualizar(id, objetoTeste);
 	}
 }

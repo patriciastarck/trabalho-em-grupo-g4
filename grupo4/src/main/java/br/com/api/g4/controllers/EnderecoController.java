@@ -49,7 +49,7 @@ public class EnderecoController {
 	}
 	
 	@PutMapping("/atualizar/{id}")
-	public Endereco atualizar(@PathVariable Integer id, @RequestBody Endereco objetoEndereco) {
+	public Endereco atualizar(@PathVariable Integer id, @RequestBody EnderecoDTO objetoEndereco) {
 		return enderecoService.atualizar(id, objetoEndereco);
 	}
 }

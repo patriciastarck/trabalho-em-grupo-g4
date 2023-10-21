@@ -31,10 +31,9 @@ public class Produto {
 	private Double valorUnitario;
 	@Column(nullable = false)
 	private Boolean ativo;
-	
 	@OneToMany
-	@JoinColumn(name="produto_id")
-	private List<Categoria> categorias; 
+	@JoinColumn(name = "produto_id")
+	private List<Categoria> categorias;
 
 	public Produto() {
 		super();
@@ -51,7 +50,6 @@ public class Produto {
 		this.qntdEstoque = qntdEstoque;
 		this.valorUnitario = valorUnitario;
 	}
-	
 
 	public Integer getId() {
 		return id;
@@ -107,6 +105,14 @@ public class Produto {
 
 	public void setValorUnitario(Double valorUnitario) {
 		this.valorUnitario = valorUnitario;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 
 	@Override

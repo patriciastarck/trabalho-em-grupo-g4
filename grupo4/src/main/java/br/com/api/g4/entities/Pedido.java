@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "pedido")
 public class Pedido {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	@Column(nullable = false, unique = true)
@@ -24,21 +24,20 @@ public class Pedido {
 	@Column(nullable = false, length = 10)
 	private LocalDate dataPedido;
 	@Column(nullable = false)
-	private Boolean ativo;	
-	
-	@ManyToMany //relacionamento muitos pra muitos
-	@JoinTable( //cria a tabela de ligacao
-			name="pedido_produto", //nomeia a tabela de ligacao
-				joinColumns=@JoinColumn(name="pedido_id"), //referencia de chave estrangeira da tabela atual(pedido)
-				inverseJoinColumns=@JoinColumn(name="produto_id") //referencia de chave estrangeira da tabela de associacao(produto)
-				)
+	private Boolean ativo;
+	@ManyToMany // relacionamento muitos pra muitos
+	@JoinTable( // cria a tabela de ligacao
+			name = "pedido_produto", // nomeia a tabela de ligacao
+			joinColumns = @JoinColumn(name = "pedido_id"), // referencia de chave estrangeira da tabela atual(pedido)
+			inverseJoinColumns = @JoinColumn(name = "produto_id") // referencia de chave estrangeira da tabela de
+																	// associacao(produto)
+	)
 	private List<Produto> produtos;
-	
-	
+
 	public Pedido() {
 		super();
 	}
-	
+
 	public Pedido(Integer id, LocalDate dataPedido, Boolean ativo) {
 		super();
 		this.id = id;
@@ -68,6 +67,14 @@ public class Pedido {
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 
 	@Override

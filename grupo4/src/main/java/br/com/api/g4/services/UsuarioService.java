@@ -16,21 +16,27 @@ public class UsuarioService {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 
+	public Usuario parseDeUsuario(UsuarioDTO objeto) {
+		Usuario usuarioNovo = new Usuario();
+		usuarioNovo.setNome(objeto.getNome());
+		usuarioNovo.setNomeUsuario(objeto.getNomeUsuario());
+		usuarioNovo.setRoles(objeto.getRoles());
+		usuarioNovo.setEmail(objeto.getEmail());
+		usuarioNovo.setPassword(objeto.getPassword());
+		usuarioNovo.setCpf(objeto.getCpf());
+		usuarioNovo.setDataNascimento(objeto.getDataNascimento());
+		usuarioNovo.setAtivo(objeto.getAtivo());
+
+		return usuarioNovo;
+	}
+
 	public Integer getCount() {
 		return usuarioRepository.contar();
 	}
 
 	public Usuario salvar(UsuarioDTO objetoUsuario) {
-		Usuario usuarioNovo = new Usuario();
-		usuarioNovo.setNome(objetoUsuario.getNome());
-		usuarioNovo.setNomeUsuario(objetoUsuario.getNomeUsuario());
-		usuarioNovo.setRoles(objetoUsuario.getRoles());
-		usuarioNovo.setEmail(objetoUsuario.getEmail());
-		usuarioNovo.setPassword(objetoUsuario.getPassword());
-		usuarioNovo.setCpf(objetoUsuario.getCpf());
-		usuarioNovo.setDataNascimento(objetoUsuario.getDataNascimento());
-		usuarioNovo.setAtivo(objetoUsuario.getAtivo());
-		return usuarioRepository.save(usuarioNovo);
+
+		return usuarioRepository.save(parseDeUsuario(objetoUsuario));
 	}
 
 	public Usuario acharId(Integer id) {

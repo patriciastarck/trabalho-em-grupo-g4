@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.api.g4.dto.ProdutoDTO;
 import br.com.api.g4.dto.PromocaoDTO;
 import br.com.api.g4.entities.Produto;
 import br.com.api.g4.repositories.ProdutoRepository;
-import net.bytebuddy.dynamic.scaffold.TypeWriter.FieldPool.Record;
 
 @Service
 public class ProdutoService {
@@ -17,12 +17,27 @@ public class ProdutoService {
 	@Autowired
 	ProdutoRepository produtoRepository;
 
+	public Produto parseDeProduto(ProdutoDTO objeto) {
+		Produto produto = new Produto();
+		
+		produto.setNome(objeto.getNome());
+		produto.setDescricao(objeto.getDescricao());
+		produto.setDataFabricacao(objeto.getDataFabricacao());
+		produto.setQntdEstoque(objeto.getQntdEstoque());
+		produto.setValorUnitario(objeto.getValorUnitario());
+		produto.setCategorias(objeto.getCategorias());
+		
+		return produto;
+	}
+	
 	public Integer getCount() {
 		return produtoRepository.contar();
 	}
 
-	public Produto salvar(Produto objetoproduto) {
-		return produtoRepository.save(objetoproduto);
+	public Produto salvar(ProdutoDTO objetoproduto) {
+		Produto produto = parseDeProduto(objetoproduto);
+		produto.setAtivo(true);
+		return produtoRepository.save(produto);
 	}
 
 	public Produto acharId(Integer id) {
@@ -45,26 +60,27 @@ public class ProdutoService {
 		}
 	}
 
-	public Produto atualizar(Integer id, Produto objetoproduto) {
+	public Produto atualizar(Integer id, ProdutoDTO objetoproduto) {
 		Produto registroAntigo = acharId(id);
+		Produto produto =parseDeProduto(objetoproduto);
 
-		if (objetoproduto.getAtivo() != null) {
-			registroAntigo.setAtivo(objetoproduto.getAtivo());
+		if (produto.getAtivo() != null) {
+			registroAntigo.setAtivo(produto.getAtivo());
 		}
-		if (objetoproduto.getNome() != null) {
-			registroAntigo.setNome(objetoproduto.getNome());
+		if (produto.getNome() != null) {
+			registroAntigo.setNome(produto.getNome());
 		}
-		if (objetoproduto.getDescricao() != null) {
-			registroAntigo.setDescricao(objetoproduto.getDescricao());
+		if (produto.getDescricao() != null) {
+			registroAntigo.setDescricao(produto.getDescricao());
 		}
-		if (objetoproduto.getDataFabricacao() != null) {
-			registroAntigo.setDataFabricacao(objetoproduto.getDataFabricacao());
+		if (produto.getDataFabricacao() != null) {
+			registroAntigo.setDataFabricacao(produto.getDataFabricacao());
 		}
-		if (objetoproduto.getQntdEstoque() != null) {
-			registroAntigo.setQntdEstoque(objetoproduto.getQntdEstoque());
+		if (produto.getQntdEstoque() != null) {
+			registroAntigo.setQntdEstoque(produto.getQntdEstoque());
 		}
-		if (objetoproduto.getValorUnitario() != null) {
-			registroAntigo.setValorUnitario(objetoproduto.getValorUnitario());
+		if (produto.getValorUnitario() != null) {
+			registroAntigo.setValorUnitario(produto.getValorUnitario());
 		}
 		registroAntigo.setId(id);
 		return produtoRepository.save(registroAntigo);
