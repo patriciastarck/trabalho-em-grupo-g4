@@ -26,19 +26,25 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
 	@Column( length = 40)
+	@NotBlank
 	private String nome;
 	@Column( length = 20)
+	@NotBlank
 	private String nomeUsuario;
 	@Column()
 	@NotBlank
 	private String email;
 	@Column( length = 11)
+	@NotBlank
 	private String cpf;
 	@Column( length = 10)
+	@NotBlank
 	private LocalDate dataNascimento;
 	@Column(nullable = false)
+	@NotBlank
 	private Boolean ativo;
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@NotBlank
 	private String password;
 	@OneToMany
 	@JoinColumn(name = "usuario_id")

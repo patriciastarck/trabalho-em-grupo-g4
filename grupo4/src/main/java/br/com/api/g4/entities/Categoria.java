@@ -8,9 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "categoria")
@@ -20,11 +20,14 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	@Column(nullable = false, unique = true)
 	private Integer id;
-	@Column(nullable = false, unique = true, length = 20)
+	@Column( unique = true, length = 20)
+	@NotBlank
 	private String nome;
-	@Column(nullable = false)
+	@Column()
+	@NotBlank
 	private String descricao;
-	@Column(nullable = false)
+	@Column()
+	@NotBlank
 	private Boolean ativo;
 	@OneToMany
 	@JoinColumn(name = "categoria_id")

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "produto")
@@ -17,16 +18,21 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	@Column(nullable = false, unique = true)
 	private Integer id;
-	@Column(nullable = false, length = 60)
+	@Column( length = 60)
+	@NotBlank
 	private String nome;
 	private String descricao;
-	@Column(nullable = false, length = 10)
+	@Column( length = 10)
+	@NotBlank
 	private LocalDate dataFabricacao;
-	@Column(nullable = false)
+	@Column()
+	@NotBlank
 	private Integer qntdEstoque;
-	@Column(nullable = false)
+	@Column()
+	@NotBlank
 	private Double valorUnitario;
-	@Column(nullable = false)
+	@Column()
+	@NotBlank
 	private Boolean ativo;
 
 	public Produto() {

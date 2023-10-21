@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "endereco")
@@ -15,21 +16,28 @@ public class Endereco {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
     @Column(nullable = false, unique = true)
     private Integer id;
-    @Column(length = 9, nullable = false)
+    @Column(length = 9)
+    @NotBlank
     private String cep;
-    @Column(length = 60,nullable = false)
+    @Column(length = 60)
+    @NotBlank
     private String logradouro;
     @Column(length = 40)
     private String complemento;
-    @Column(length = 30,nullable = false)
+    @Column(length = 30)
+    @NotBlank
     private String bairro;
-    @Column(length = 30,nullable = false)
+    @Column(length = 30)
+    @NotBlank
     private String localidade;
-    @Column(length = 2,nullable = false)
+    @Column(length = 2)
+    @NotBlank
     private String uf;
-    @Column(nullable = false)
+    @Column()
+    @NotBlank
     private Boolean ativo;
-    @Column(length = 10,nullable = false)
+    @Column(length = 10)
+    @NotBlank
     private String numero;
     
     //@JsonProperty(access=JsonProperty.Access.READ_ONLY)
