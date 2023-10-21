@@ -66,6 +66,7 @@ public class ProdutoController {
 	
 	@GetMapping("/promocao")
 	public List<PromocaoDTO> promocao() {
+		emailService.envioEmailPromo();
 		return produtoService.promocao();
 	}
 }

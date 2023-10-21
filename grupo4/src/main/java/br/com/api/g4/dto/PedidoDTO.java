@@ -7,24 +7,24 @@ import br.com.api.g4.entities.Produto;
 
 public class PedidoDTO {
 
-	private List<Produto> produtos;
+	private List<ProdutoDTO> produtos;
 	
 
 	public PedidoDTO() {
 		super();
 	}
-
-	public PedidoDTO(LocalDate dataPedido, List<Produto> produtos) {
+ 
+	public PedidoDTO(LocalDate dataPedido, List<ProdutoDTO> produtos) {
 		super();
 		this.produtos = produtos;
 	}
 
 
-	public List<Produto> getProdutos() {
+	public List<ProdutoDTO> getProdutos() {
 		return produtos;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
+	public void setProdutos(List<ProdutoDTO> produtos) {
 		this.produtos = produtos;
 	}
 

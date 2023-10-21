@@ -1,6 +1,7 @@
 package br.com.api.g4.services;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.api.g4.dto.PedidoDTO;
 import br.com.api.g4.entities.Pedido;
+import br.com.api.g4.entities.Produto;
 import br.com.api.g4.repositories.PedidoRepository;
 
 @Service
@@ -15,14 +17,20 @@ public class PedidoService {
 
 	@Autowired
 	PedidoRepository pedidoRepository;
+	@Autowired
+	ProdutoService produtoService;
 
 	public Pedido parseDePedido(PedidoDTO objeto) {
-		Pedido pedido = new Pedido();
-		
-		pedido.setProdutos(objeto.getProdutos());
-		
-		return pedido;
-	}
+        Pedido pedido = new Pedido();
+        List<Produto> prod = new ArrayList<Produto>();
+
+        for(int i = 0; i <objeto.getProdutos().size();i++) {
+            prod.add(produtoService.parseDeProduto(objeto.getProdutos().get(i)));
+        }
+        pedido.setProdutos(prod);
+
+        return pedido;
+    }
 	
 	public Integer getCount() {
 		return pedidoRepository.contar();

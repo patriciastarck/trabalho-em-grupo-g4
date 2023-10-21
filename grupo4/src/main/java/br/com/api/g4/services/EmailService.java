@@ -19,6 +19,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import br.com.api.g4.dto.PromocaoDTO;
 import br.com.api.g4.dto.UsuarioDTO;
 import br.com.api.g4.entities.Usuario;
 
@@ -28,7 +29,9 @@ public class EmailService {
 
 	@Autowired
 	UsuarioService usuarioService;
-
+	@Autowired
+	ProdutoService produtoService;
+	
 	private JavaMailSender emailSender;
 
 	@Autowired
@@ -63,7 +66,7 @@ public class EmailService {
 		return emailSender;
 	}
 
-	//TODO tereminar metodo e botar no pedido
+	//TODO terminar metodo e botar no pedido
 	public void envioEmailPedido() {
 		MimeMessage mensagemCadastro = emailSender.createMimeMessage();
 		try {
@@ -102,7 +105,6 @@ public class EmailService {
 				builder.append(usuario.getEmail());
 				builder.append(" </td>\r\n");
 				builder.append(" <td>\r\n");
-//			builder.append(usuario.getRoles()); 
 				builder.append(" </td>\r\n");
 				builder.append(" <td>\r\n");
 				builder.append(dataEntrega);
@@ -195,7 +197,8 @@ public class EmailService {
 					+ "<img src=\"cid:logo\">" 
 					+ "</div>\r\n"
 					+ ""
-					+ "<div align=\"center\">\r\n" + "" 
+					+ "<div align=\"center\">\r\n" 
+					+ "" 
 					+ "<p>Agradecemos por utilizar nossos serviços, sua conta foi finalizada.</p>"
 					+ "<p>Esperamos que você tenha tido uma boa experiência conosco! Até a próxima ;)</p>" 
 					+ "<p>Atenciosamente Grupo 4.</p>" 
@@ -215,17 +218,15 @@ public class EmailService {
 		}
 	}
 
-	// TODO fazer o metodo na classe botar no produto
-	public void envioEmailPromo(Usuario usuario) {
+	public void envioEmailPromo() {
 		MimeMessage mensagemCadastro = emailSender.createMimeMessage();
 
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(mensagemCadastro, true);
 			helper.setFrom("gp4api.serratec@gmail.com");
 			helper.setTo("oliveiraagall@gmail.com");
-			String nome = usuario.getNome();
-			helper.setSubject("Olá " + nome + " segue os produtos promocionais da semana.\r\n");
-
+			helper.setSubject("Olá, veja os produtos em promoção essa semana.");
+			
 			StringBuilder builder = new StringBuilder();
 			builder.append("<html>\r\n" 
 					+ "<body>\r\n" 
@@ -237,7 +238,15 @@ public class EmailService {
 					+ "<div align=\"center\">\r\n" 
 					+ "<img src=\"cid:logo\">" 
 					+ "</div>\r\n"
-					+ "" 
+					+"<div align=\"center\">\r\n"); 
+				 	List<PromocaoDTO> promo = produtoService.promocao();
+				 	for (int i = 0 ; i <promo.size();i++ ) {
+				 		builder.append("<p> produto:" + promo.get(i).getNome()+" - \r\n"); 
+				 		builder.append("valor: R$"+promo.get(i).getValorUnitario()+"</p> \r\n");
+					}
+				 	
+					builder.append(
+					"</div>" 
 					+ "<div align=\"center\">\r\n" 
 					+ "<p>Não perca essas ofertas que estão no site.</p>"
 					+ "<p>é por tempo limitado! Não vai perder essa chance, ein?!</p>"
