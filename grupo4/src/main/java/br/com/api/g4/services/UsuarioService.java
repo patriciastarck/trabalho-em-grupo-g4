@@ -18,14 +18,14 @@ public class UsuarioService {
 
 	public Usuario parseDeUsuario(UsuarioDTO objeto) {
 		Usuario usuarioNovo = new Usuario();
+		
 		usuarioNovo.setNome(objeto.getNome());
 		usuarioNovo.setNomeUsuario(objeto.getNomeUsuario());
-		usuarioNovo.setRoles(objeto.getRoles());
 		usuarioNovo.setEmail(objeto.getEmail());
+		usuarioNovo.setRoles(objeto.getRoles());
 		usuarioNovo.setPassword(objeto.getPassword());
 		usuarioNovo.setCpf(objeto.getCpf());
 		usuarioNovo.setDataNascimento(objeto.getDataNascimento());
-		usuarioNovo.setAtivo(objeto.getAtivo());
 
 		return usuarioNovo;
 	}
@@ -55,25 +55,27 @@ public class UsuarioService {
 		}
 	}
 
-	public Usuario atualizar(Integer id, Usuario objetoUsuario) {
+	public Usuario atualizar(Integer id, UsuarioDTO objetoUsuario) {
 		Usuario registroAntigo = acharId(id);
-		if (objetoUsuario.getAtivo() != null) {
-			registroAntigo.setAtivo(objetoUsuario.getAtivo());
+		Usuario usuario =parseDeUsuario(objetoUsuario);
+		
+		if (usuario.getAtivo() != null) {
+			registroAntigo.setAtivo(usuario.getAtivo());
 		}
-		if (objetoUsuario.getNome() != null) {
-			registroAntigo.setNome(objetoUsuario.getNome());
+		if (usuario.getNome() != null) {
+			registroAntigo.setNome(usuario.getNome());
 		}
-		if (objetoUsuario.getNomeUsuario() != null) {
-			registroAntigo.setNomeUsuario(objetoUsuario.getNomeUsuario());
+		if (usuario.getNomeUsuario() != null) {
+			registroAntigo.setNomeUsuario(usuario.getNomeUsuario());
 		}
-		if (objetoUsuario.getEmail() != null) {
-			registroAntigo.setEmail(objetoUsuario.getEmail());
+		if (usuario.getEmail() != null) {
+			registroAntigo.setEmail(usuario.getEmail());
 		}
-		if (objetoUsuario.getCpf() != null) {
-			registroAntigo.setCpf(objetoUsuario.getCpf());
+		if (usuario.getCpf() != null) {
+			registroAntigo.setCpf(usuario.getCpf());
 		}
-		if (objetoUsuario.getDataNascimento() != null) {
-			registroAntigo.setDataNascimento(objetoUsuario.getDataNascimento());
+		if (usuario.getDataNascimento() != null) {
+			registroAntigo.setDataNascimento(usuario.getDataNascimento());
 		}
 		registroAntigo.setId(id);
 		return usuarioRepository.save(registroAntigo);
