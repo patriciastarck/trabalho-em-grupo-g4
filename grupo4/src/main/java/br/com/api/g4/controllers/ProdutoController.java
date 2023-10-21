@@ -18,13 +18,17 @@ import br.com.api.g4.entities.Produto;
 import br.com.api.g4.services.EmailService;
 import br.com.api.g4.services.ProdutoService;
 
-@RestController 
+@RestController
 @RequestMapping("/produto")
 public class ProdutoController {
-	
-	@Autowired
-	EmailService emailService;
-	
+
+	private EmailService emailService;
+
+    @Autowired
+    public void setEmailService(EmailService emailService) {
+        this.emailService = emailService;
+    }
+
 	@Autowired
 	ProdutoService produtoService;
 
@@ -32,7 +36,6 @@ public class ProdutoController {
 	public Integer getCount() {
 		return produtoService.getCount();
 	}
- 
 
 	@PostMapping("/salvar")
 	public Produto salvar(@RequestBody ProdutoDTO objetoProduto) {
@@ -63,7 +66,7 @@ public class ProdutoController {
 	public Produto atualizar(@PathVariable Integer id, @RequestBody ProdutoDTO objetoProduto) {
 		return produtoService.atualizar(id, objetoProduto);
 	}
-	
+
 	@GetMapping("/promocao")
 	public List<PromocaoDTO> promocao() {
 		emailService.envioEmailPromo();

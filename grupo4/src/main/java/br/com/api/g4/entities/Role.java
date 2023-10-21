@@ -17,17 +17,21 @@ import br.com.api.g4.enums.TipoRoleEnum;
 public class Role {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "name")
-    private TipoRoleEnum name;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column(name = "name")
+	private TipoRoleEnum name;
 
 	public Role() {
 		super();
 	}
 
+	public Role( @NotNull TipoRoleEnum name) {
+		super();
+		this.name = name;
+	}
 	public Role(Long id, @NotNull TipoRoleEnum name) {
 		super();
 		this.id = id;

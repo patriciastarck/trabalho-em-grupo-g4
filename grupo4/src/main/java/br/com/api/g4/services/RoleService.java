@@ -9,6 +9,7 @@ import br.com.api.g4.repositories.RoleRepository;
 
 @Service
 public class RoleService {
+	
 	@Autowired
 	RoleRepository roleRepository;
 

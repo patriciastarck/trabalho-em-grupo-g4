@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -24,15 +25,16 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
-	@Column(nullable = false, length = 40)
+	@Column( length = 40)
 	private String nome;
-	@Column(nullable = false, length = 20)
+	@Column( length = 20)
 	private String nomeUsuario;
-	@Column(nullable = false)
+	@Column()
+	@NotBlank
 	private String email;
-	@Column(nullable = false, length = 11)
+	@Column( length = 11)
 	private String cpf;
-	@Column(nullable = false, length = 10)
+	@Column( length = 10)
 	private LocalDate dataNascimento;
 	@Column(nullable = false)
 	private Boolean ativo;

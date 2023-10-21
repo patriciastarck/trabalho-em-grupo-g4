@@ -1,9 +1,6 @@
 package br.com.api.g4.dto;
 
 import java.time.LocalDate;
-import java.util.List;
-
-import br.com.api.g4.entities.Categoria;
 
 public class ProdutoDTO {
 
@@ -12,21 +9,19 @@ public class ProdutoDTO {
 	private LocalDate dataFabricacao;
 	private Integer qntdEstoque;
 	private Double valorUnitario;
-	private List<Categoria> categorias;
-	
+
 	public ProdutoDTO() {
 		super();
 	}
 
 	public ProdutoDTO(String nome, String descricao, LocalDate dataFabricacao, Integer qntdEstoque,
-			Double valorUnitario, List<Categoria> categorias) {
+			Double valorUnitario) {
 		super();
 		this.nome = nome;
 		this.descricao = descricao;
 		this.dataFabricacao = dataFabricacao;
 		this.qntdEstoque = qntdEstoque;
 		this.valorUnitario = valorUnitario;
-		this.categorias = categorias;
 	}
 
 	public String getNome() {
@@ -67,14 +62,6 @@ public class ProdutoDTO {
 
 	public void setValorUnitario(Double valorUnitario) {
 		this.valorUnitario = valorUnitario;
-	}
-
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
 	}
 
 }

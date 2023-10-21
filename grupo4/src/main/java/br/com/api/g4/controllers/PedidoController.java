@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.g4.dto.PedidoDTO;
 import br.com.api.g4.entities.Pedido;
+import br.com.api.g4.services.EmailService;
 import br.com.api.g4.services.PedidoService;
 
 @RestController
@@ -23,14 +24,21 @@ public class PedidoController {
 	@Autowired
 	PedidoService pedidoService;
 
+	private EmailService emailService;
+
+	@Autowired
+	public void setEmailService(EmailService emailService) {
+		this.emailService = emailService;
+	}
 
 	@GetMapping("/count")
 	public Integer getCount() {
 		return pedidoService.getCount();
 	}
-		
+
 	@PostMapping("/salvar")
 	public Pedido salvar(@RequestBody PedidoDTO objetoPedido) {
+		emailService.envioEmailPedido(objetoPedido);
 		return pedidoService.salvar(objetoPedido);
 	}
 
@@ -48,12 +56,12 @@ public class PedidoController {
 	public void deletar(@PathVariable Integer id) {
 		pedidoService.apagar(id);
 	}
-	
+
 	@DeleteMapping("/deletarLogico/{id}")
 	public void deletarLogico(@PathVariable Integer id) {
 		pedidoService.apagarLogico(id);
 	}
-	
+
 	@PutMapping("/atualizar/{id}")
 	public Pedido atualizar(@PathVariable Integer id, @RequestBody PedidoDTO objetoTeste) {
 		return pedidoService.atualizar(id, objetoTeste);

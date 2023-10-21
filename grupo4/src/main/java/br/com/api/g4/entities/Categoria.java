@@ -26,7 +26,7 @@ public class Categoria {
 	private String descricao;
 	@Column(nullable = false)
 	private Boolean ativo;
-	@ManyToOne
+	@OneToMany
 	@JoinColumn(name = "categoria_id")
 	private List<Produto> produtos;
 

@@ -1,13 +1,17 @@
 package br.com.api.g4.services;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.api.g4.dto.UsuarioDTO;
 import br.com.api.g4.entities.Endereco;
+import br.com.api.g4.entities.Role;
 import br.com.api.g4.entities.Usuario;
+import br.com.api.g4.enums.TipoRoleEnum;
 import br.com.api.g4.repositories.UsuarioRepository;
 
 @Service
@@ -22,7 +26,16 @@ public class UsuarioService {
 		usuarioNovo.setNome(objeto.getNome());
 		usuarioNovo.setNomeUsuario(objeto.getNomeUsuario());
 		usuarioNovo.setEmail(objeto.getEmail());
-		usuarioNovo.setRoles(objeto.getRoles());
+		
+		Set<Role> roles = new HashSet<>();
+		for(String role: objeto.getRoles()) {
+			TipoRoleEnum rolem = TipoRoleEnum.valueOf(role);
+			Role rolen =new Role(rolem);
+			roles.add(rolen);
+		}
+		
+		usuarioNovo.setRoles(roles);
+		
 		usuarioNovo.setPassword(objeto.getPassword());
 		usuarioNovo.setCpf(objeto.getCpf());
 		usuarioNovo.setDataNascimento(objeto.getDataNascimento());
@@ -102,5 +115,9 @@ public class UsuarioService {
 			obgUsuario.setAtivo(true);
 			usuarioRepository.save(obgUsuario);
 		}
+	}
+
+	public Usuario findByEmail(String email) {
+		return usuarioRepository.findByEmail(email).get();
 	}
 }

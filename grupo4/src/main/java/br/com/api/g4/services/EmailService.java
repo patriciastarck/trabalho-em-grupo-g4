@@ -1,5 +1,9 @@
 package br.com.api.g4.services;
 
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -16,6 +20,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import br.com.api.g4.dto.PedidoDTO;
 import br.com.api.g4.dto.PromocaoDTO;
 import br.com.api.g4.dto.UsuarioDTO;
 import br.com.api.g4.entities.Usuario;
@@ -66,74 +71,77 @@ public class EmailService {
 		return emailSender;
 	}
 
-	// TODO terminar metodo e botar no pedido
-//	public void envioEmailPedido() {
-//		MimeMessage mensagemCadastro = emailSender.createMimeMessage();
-//		try {
-//			MimeMessageHelper helper = new MimeMessageHelper(mensagemCadastro, true);
-//			helper.setFrom("gp4api.serratec@gmail.com");
-//			helper.setTo("oliveiraagall@gmail.com");
-//			helper.setSubject("seu pedido esta sendo enviado");
-//
-//			LocalDate localDate = LocalDate.now();
-//			DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//			String dataEntrega = localDate.plusDays(7).format(format);
-//			double valorTotal = 0;
-//			List<String> nomes =new ArrayList<>();
-//			List<Double> valores=new ArrayList<>();
-//			for (int i = 0; i < pedido.getProdutos().size(); i++) {
-//				valores.add(pedido.getProdutos().get(i).getValorUnitario());
-//				nomes.add(pedido.getProdutos().get(i).getNome());
-//				valorTotal += pedido.getProdutos().get(i).getValorUnitario();
-//			}
-//			DecimalFormat df = new DecimalFormat("R$ ,##0.00");
-//
-//			StringBuilder builder = new StringBuilder();
-//			builder.append("<html>\r\n");
-//			builder.append("<body>\r\n");
-//			builder.append("<div align=\"center\">\r\n");
-//			builder.append("<h1>Convite</h1>\r\n");
-//			builder.append("</div>\r\n");
-//			builder.append("<br/> \r\n");
-//
-//			builder.append("<center>");
-//			builder.append("<table border='2' cellpadding='4'> \r\n");
-//			builder.append("<tr> <th> Nome </th> <\r\n");
-//			builder.append("<tr> <th> Nome</th> <th> Email</th> <th>Perfis</th><th> Data de entrega</th> </tr>\r\n");
-//
-//			for (int i = 0; i< nomes.size();i++) {
-//				builder.append(dataEntrega);
-//				builder.append(" <tr>\r\n");
-//				builder.append(" <td>\r\n");
-//				builder.append(nomes.get(i));
-//				builder.append(" </td>\r\n");
-//				builder.append(" <td>\r\n");
-//				builder.append(df.format(valores.get(i)));
-//				builder.append(" </td>\r\n");
-//				builder.append(" <td>\r\n");
-//				builder.append(" </td>\r\n");
-//				builder.append(" <td>\r\n");
-//				builder.append(" </td>\r\n");
-//			}
-//			
-//			builder.append(" </table>\r\n");
-//			builder.append(" </center>\r\n");
-//			builder.append(" <table border='1' cellpadding='1' >\r\n");
-//			builder.append("<tr><th>Valor Total</th></tr>\r\n");
-//			builder.append(" <td>\r\n");
-//			builder.append(df.format(valorTotal));
-//			builder.append(" </td>\r\n");
-//			builder.append(" </table>\r\n");
-//			builder.append(" </body>\r\n");
-//			builder.append("</html>");
-//
-//			helper.setText(builder.toString(), true);
-//			emailSender.send(mensagemCadastro);
-//
-//		} catch (MessagingException e) {
-//			e.printStackTrace();
-//		}
-//	}
+//	 TODO terminar metodo e botar no pedido
+	public void envioEmailPedido(PedidoDTO pedido) {
+		MimeMessage mensagemCadastro = emailSender.createMimeMessage();
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(mensagemCadastro, true);
+			helper.setFrom("gp4api.serratec@gmail.com");
+			helper.setTo("oliveiraagall@gmail.com");
+			helper.setSubject("seu pedido esta sendo enviado");
+
+			LocalDate localDate = LocalDate.now();
+			DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			String dataEntrega = localDate.plusDays(7).format(format);
+			double valorTotal = 0;
+			List<String> nomes =new ArrayList<>();
+			List<Double> valores=new ArrayList<>();
+			
+			for (int i = 0; i < pedido.getProdutos().size(); i++) {
+				
+				valores.add(pedido.getProdutos().get(i).getValorUnitario());
+				nomes.add(pedido.getProdutos().get(i).getNome());
+				valorTotal += pedido.getProdutos().get(i).getValorUnitario();
+			}
+			
+			DecimalFormat df = new DecimalFormat("R$ ,##0.00");
+
+			StringBuilder builder = new StringBuilder();
+			builder.append("<html>\r\n");
+			builder.append("<body>\r\n");
+			builder.append("<div align=\"center\">\r\n");
+			builder.append("<h1>Convite</h1>\r\n");
+			builder.append("</div>\r\n");
+			builder.append("<br/> \r\n");
+
+			builder.append("<center>");
+			builder.append("<table border='2' cellpadding='4'> \r\n");
+			builder.append("<tr> <th> Nome </th> <\r\n");
+			builder.append("<tr> <th> Nome</th> <th> Email</th> <th>Perfis</th><th> Data de entrega</th> </tr>\r\n");
+
+			for (int i = 0; i< nomes.size();i++) {
+				builder.append(dataEntrega);
+				builder.append(" <tr>\r\n");
+				builder.append(" <td>\r\n");
+				builder.append(nomes.get(i));
+				builder.append(" </td>\r\n");
+				builder.append(" <td>\r\n");
+				builder.append(df.format(valores.get(i)));
+				builder.append(" </td>\r\n");
+				builder.append(" <td>\r\n");
+				builder.append(" </td>\r\n");
+				builder.append(" <td>\r\n");
+				builder.append(" </td>\r\n");
+			}
+			
+			builder.append(" </table>\r\n");
+			builder.append(" </center>\r\n");
+			builder.append(" <table border='1' cellpadding='1' >\r\n");
+			builder.append("<tr><th>Valor Total</th></tr>\r\n");
+			builder.append(" <td>\r\n");
+			builder.append(df.format(valorTotal));
+			builder.append(" </td>\r\n");
+			builder.append(" </table>\r\n");
+			builder.append(" </body>\r\n");
+			builder.append("</html>");
+
+			helper.setText(builder.toString(), true);
+			emailSender.send(mensagemCadastro);
+
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void envioEmailCadastro(UsuarioDTO objetousuario) {
 		MimeMessage mensagemCadastro = emailSender.createMimeMessage();

@@ -45,7 +45,7 @@ public class JWTUtil {
 		}
 	}
 
-	public String generateTokenWithUserData(Usuario user) throws IllegalArgumentException, JWTCreationException {
+	public String generateTokenWithUsuarioData(Usuario user) throws IllegalArgumentException, JWTCreationException {
 		ObjectMapper mapper = new ObjectMapper();
 		String userJson = null;
 		try {
