@@ -38,11 +38,12 @@ public class Pedido {
 		super();
 	}
 
-	public Pedido(Integer id, LocalDate dataPedido, Boolean ativo) {
+	public Pedido(Integer id, LocalDate dataPedido, Boolean ativo, List<Produto> produtos) {
 		super();
 		this.id = id;
 		this.dataPedido = dataPedido;
 		this.ativo = ativo;
+		this.produtos = produtos;
 	}
 
 	public Integer getId() {

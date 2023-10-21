@@ -34,7 +34,6 @@ public class CategoriaService {
 		return categoriaRepository.save(categoria);
 	}
 
-
 	public Categoria acharId(Integer id) {
 		return categoriaRepository.findById(id).get();
 	}

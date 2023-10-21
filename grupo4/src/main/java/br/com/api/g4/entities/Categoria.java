@@ -1,10 +1,15 @@
 package br.com.api.g4.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,17 +26,21 @@ public class Categoria {
 	private String descricao;
 	@Column(nullable = false)
 	private Boolean ativo;
+	@ManyToOne
+	@JoinColumn(name = "categoria_id")
+	private List<Produto> produtos;
 
 	public Categoria() {
 		super();
 	}
 
-	public Categoria(Integer id, Boolean ativo, String nome, String descricao) {
+	public Categoria(Integer id, String nome, String descricao, Boolean ativo, List<Produto> produtos) {
 		super();
 		this.id = id;
-		this.ativo = ativo;
 		this.nome = nome;
 		this.descricao = descricao;
+		this.ativo = ativo;
+		this.produtos = produtos;
 	}
 
 	public Integer getId() {
@@ -64,6 +73,14 @@ public class Categoria {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 
 	@Override

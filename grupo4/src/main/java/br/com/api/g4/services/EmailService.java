@@ -1,10 +1,5 @@
 package br.com.api.g4.services;
 
-import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -23,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.api.g4.dto.PromocaoDTO;
 import br.com.api.g4.dto.UsuarioDTO;
-import br.com.api.g4.entities.Pedido;
 import br.com.api.g4.entities.Usuario;
 
 @Configuration

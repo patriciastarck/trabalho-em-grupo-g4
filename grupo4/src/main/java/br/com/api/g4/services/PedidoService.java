@@ -21,17 +21,17 @@ public class PedidoService {
 	ProdutoService produtoService;
 
 	public Pedido parseDePedido(PedidoDTO objeto) {
-        Pedido pedido = new Pedido();
-        List<Produto> prod = new ArrayList<Produto>();
+		Pedido pedido = new Pedido();
+		List<Produto> prod = new ArrayList<>();
 
-        for(int i = 0; i <objeto.getProdutos().size();i++) {
-            prod.add(produtoService.parseDeProduto(objeto.getProdutos().get(i)));
-        }
-        pedido.setProdutos(prod);
+		for (int i = 0; i < objeto.getProdutos().size(); i++) {
+			prod.add(produtoService.parseDeProduto(objeto.getProdutos().get(i)));
+		}
+		pedido.setProdutos(prod);
 
-        return pedido;
-    }
-	
+		return pedido;
+	}
+
 	public Integer getCount() {
 		return pedidoRepository.contar();
 	}
@@ -42,11 +42,13 @@ public class PedidoService {
 		pedido.setDataPedido(LocalDate.now());
 		return pedidoRepository.save(pedido);
 	}
-	//TODO PedidoDTO de retorno com data formatada
+
+	// TODO PedidoDTO de retorno com data formatada
 	public Pedido acharId(Integer id) {
 		return pedidoRepository.findById(id).get();
 	}
-	//TODO PedidoDTO de retorno com data formatada
+
+	// TODO PedidoDTO de retorno com data formatada
 	public List<Pedido> listar() {
 		return pedidoRepository.findAll();
 	}
@@ -54,16 +56,15 @@ public class PedidoService {
 	public void apagar(Integer id) {
 		pedidoRepository.deleteById(id);
 	}
-	
+
 	public void apagarLogico(Integer id) {
-//		Pedido objPedido = pedidoRepository.findById(id).get();
 		Pedido objPedido = acharId(id);
-		if(objPedido != null) {
+		if (objPedido != null) {
 			objPedido.setAtivo(false);
 			pedidoRepository.save(objPedido);
-		}		
+		}
 	}
-	
+
 	public Pedido atualizar(Integer id, PedidoDTO objetoPedido) {
 		Pedido registroAntigo = acharId(id);
 		Pedido pedido = parseDePedido(objetoPedido);

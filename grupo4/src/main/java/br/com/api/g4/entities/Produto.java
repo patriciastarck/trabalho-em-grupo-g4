@@ -31,24 +31,21 @@ public class Produto {
 	private Double valorUnitario;
 	@Column(nullable = false)
 	private Boolean ativo;
-	@OneToMany
-	@JoinColumn(name = "produto_id")
-	private List<Categoria> categorias;
 
 	public Produto() {
 		super();
 	}
 
-	public Produto(Integer id, String nome, Boolean ativo, String descricao, LocalDate dataFabricacao,
-			Integer qntdEstoque, Double valorUnitario) {
+	public Produto(Integer id, String nome, String descricao, LocalDate dataFabricacao, Integer qntdEstoque,
+			Double valorUnitario, Boolean ativo) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.ativo = ativo;
 		this.descricao = descricao;
 		this.dataFabricacao = dataFabricacao;
 		this.qntdEstoque = qntdEstoque;
 		this.valorUnitario = valorUnitario;
+		this.ativo = ativo;
 	}
 
 	public Integer getId() {
@@ -65,14 +62,6 @@ public class Produto {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public Boolean getAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
 	}
 
 	public String getDescricao() {
@@ -107,18 +96,19 @@ public class Produto {
 		this.valorUnitario = valorUnitario;
 	}
 
-	public List<Categoria> getCategorias() {
-		return categorias;
+	public Boolean getAtivo() {
+		return ativo;
 	}
 
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	@Override
 	public String toString() {
-		return "Produto [id=" + id + ", nome=" + nome + ", ativo=" + ativo + ", descricao=" + descricao
-				+ ", dataFabricacao=" + dataFabricacao + ", qntdEstoque=" + qntdEstoque + ", valorUnitario="
-				+ valorUnitario + "]";
+		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", dataFabricacao="
+				+ dataFabricacao + ", qntdEstoque=" + qntdEstoque + ", valorUnitario=" + valorUnitario + ", ativo="
+				+ ativo + "]";
 	}
+
 }
