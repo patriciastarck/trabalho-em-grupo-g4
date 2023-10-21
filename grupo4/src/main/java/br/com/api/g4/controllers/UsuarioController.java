@@ -103,13 +103,13 @@ public class UsuarioController {
 	}
 	
 	//TODO verificar a mensagem de recuperaçao de senha é valida
-	@PutMapping("recuperarSenha/{id}")
+	@PutMapping("/recuperarSenha/{id}")
 	public void recuperarSenha(@PathVariable Integer id, @RequestParam String senha) {
 		usuarioService.recuperarSenha(id, senha);
 		emailService.envioEmailRecuperacaoSenha(acharId(id));
 	}
 
-	@PutMapping("recuperarConta/{id}")
+	@PutMapping("/recuperarConta/{id}")
 	public void recuperarConta(@PathVariable Integer id) {
 		usuarioService.recuperarConta(id);
 		emailService.envioEmailRecuperacaoConta(acharId(id));

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.g4.dto.PedidoDTO;
+import br.com.api.g4.dto.PedidoDeProdutoDTO;
 import br.com.api.g4.entities.Pedido;
 import br.com.api.g4.services.EmailService;
 import br.com.api.g4.services.PedidoService;
@@ -37,8 +38,8 @@ public class PedidoController {
 	}
 
 	@PostMapping("/salvar")
-	public Pedido salvar(@RequestBody PedidoDTO objetoPedido) {
-		emailService.envioEmailPedido(objetoPedido);
+	public Pedido salvar(@RequestBody PedidoDeProdutoDTO objetoPedido) {
+		//emailService.envioEmailPedido(objetoPedido);
 		return pedidoService.salvar(objetoPedido);
 	}
 

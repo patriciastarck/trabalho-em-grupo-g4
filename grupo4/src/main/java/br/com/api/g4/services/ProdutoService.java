@@ -25,7 +25,6 @@ public class ProdutoService {
 		produto.setDataFabricacao(objeto.getDataFabricacao());
 		produto.setQntdEstoque(objeto.getQntdEstoque());
 		produto.setValorUnitario(objeto.getValorUnitario());
-		
 		return produto;
 	}
 	

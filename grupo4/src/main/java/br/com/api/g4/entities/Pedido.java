@@ -1,6 +1,7 @@
 package br.com.api.g4.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -33,17 +35,22 @@ public class Pedido {
 																	// associacao(produto)
 	)
 	private List<Produto> produtos;
+	@OneToMany
+	@JoinColumn(name = "pedido_id")
+	private List<Integer> quantidadePorProduto;
 
 	public Pedido() {
 		super();
 	}
 
-	public Pedido(Integer id, LocalDate dataPedido, Boolean ativo, List<Produto> produtos) {
+	public Pedido(Integer id, LocalDate dataPedido, Boolean ativo, List<Produto> produtos,
+			List<Integer> quantidadePorProduto) {
 		super();
 		this.id = id;
 		this.dataPedido = dataPedido;
 		this.ativo = ativo;
 		this.produtos = produtos;
+		this.quantidadePorProduto = quantidadePorProduto;
 	}
 
 	public Integer getId() {
@@ -78,8 +85,18 @@ public class Pedido {
 		this.produtos = produtos;
 	}
 
+	public List<Integer> getQuantidadePorProduto() {
+		return quantidadePorProduto;
+	}
+
+	public void setQuantidadePorProduto(List<Integer> quantidadePorProduto) {
+		this.quantidadePorProduto = quantidadePorProduto;
+	}
+
 	@Override
 	public String toString() {
-		return "Pedido [id=" + id + ", dataPedido=" + dataPedido + ", ativo=" + ativo + "]";
+		return "Pedido [id=" + id + ", dataPedido=" + dataPedido + ", ativo=" + ativo + ", produtos=" + produtos
+				+ ", quantidadePorProduto=" + quantidadePorProduto + "]";
 	}
+
 }

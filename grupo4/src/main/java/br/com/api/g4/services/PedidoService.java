@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.api.g4.dto.PedidoDTO;
+import br.com.api.g4.dto.PedidoDeProdutoDTO;
 import br.com.api.g4.entities.Pedido;
 import br.com.api.g4.entities.Produto;
 import br.com.api.g4.repositories.PedidoRepository;
+import br.com.api.g4.repositories.ProdutoRepository;
 
 @Service
 public class PedidoService {
@@ -19,6 +21,8 @@ public class PedidoService {
 	PedidoRepository pedidoRepository;
 	@Autowired
 	ProdutoService produtoService;
+	@Autowired
+	ProdutoRepository produtoRepository;
 
 	public Pedido parseDePedido(PedidoDTO objeto) {
 		Pedido pedido = new Pedido();
@@ -32,12 +36,30 @@ public class PedidoService {
 		return pedido;
 	}
 
+	public Pedido parsePedidoDeProduto(PedidoDeProdutoDTO obj) {
+		Pedido pedido = new Pedido();
+		List<Produto> prod = new ArrayList<>();
+		List<Integer> quantidade = new ArrayList<>();
+		
+		for (int i = 0; i < obj.getIdDoproduto().size(); i++) {
+			pedido.setQuantidadeDeProdutos(obj.getQuantidade());
+		}
+		
+		for (int i = 0; i < obj.getIdDoproduto().size(); i++) {
+			prod=produtoRepository.findById(obj.get(i).getId());
+		}
+		
+		pedido.setProdutos(prod.);
+		
+		return pedido;
+	}
+
 	public Integer getCount() {
 		return pedidoRepository.contar();
 	}
 
-	public Pedido salvar(PedidoDTO objetoPedido) {
-		Pedido pedido = parseDePedido(objetoPedido);
+	public Pedido salvar(PedidoDeProdutoDTO objetoPedido) {
+		Pedido pedido = parsePedidoDeProduto(objetoPedido);
 		pedido.setAtivo(true);
 		pedido.setDataPedido(LocalDate.now());
 		return pedidoRepository.save(pedido);
