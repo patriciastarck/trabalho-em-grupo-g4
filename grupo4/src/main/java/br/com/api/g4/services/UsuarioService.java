@@ -24,6 +24,7 @@ public class UsuarioService {
 		Usuario usuarioNovo = new Usuario();
 		usuarioNovo.setNome(objetoUsuario.getNome());
 		usuarioNovo.setNomeUsuario(objetoUsuario.getNomeUsuario());
+		usuarioNovo.setRoles(objetoUsuario.getRoles());
 		usuarioNovo.setEmail(objetoUsuario.getEmail());
 		usuarioNovo.setPassword(objetoUsuario.getPassword());
 		usuarioNovo.setCpf(objetoUsuario.getCpf());

@@ -168,6 +168,16 @@ public class Usuario {
 	public void setEndereco(List<Endereco> endereco) {
 		this.endereco = endereco;
 	}
+	
+	
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 
 	@Override
 	public String toString() {

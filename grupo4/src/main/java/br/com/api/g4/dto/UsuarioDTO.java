@@ -1,30 +1,35 @@
 package br.com.api.g4.dto;
 
 import java.time.LocalDate;
+import java.util.Set;
+
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import br.com.api.g4.entities.Role;
+
 public class UsuarioDTO {
-	
-	
+
 	private String nome;
 	private String nomeUsuario;
 	private String email;
-	
+
+	@JoinTable(name = "usuario_role", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles;
+
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
-	
+
 	private String cpf;
 	private LocalDate dataNascimento;
 	private Boolean ativo;
-	
+
 	public UsuarioDTO() {
 		super();
 	}
 
-	
-
-	
 	public UsuarioDTO(String nome, String nomeUsuario, String email, String password, String cpf,
 			LocalDate dataNascimento, Boolean ativo) {
 		super();
@@ -36,9 +41,6 @@ public class UsuarioDTO {
 		this.dataNascimento = dataNascimento;
 		this.ativo = ativo;
 	}
-
-
-
 
 	public String getNome() {
 		return nome;
@@ -95,6 +97,13 @@ public class UsuarioDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
 }
