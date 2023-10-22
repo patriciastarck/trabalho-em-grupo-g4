@@ -53,4 +53,8 @@ public class CategoriaController {
 	public Categoria atualizar(@PathVariable Integer id, @RequestBody CategoriaDTO objetoTeste) {
 		return categoriaService.atualizar(id,objetoTeste);
 	}
+	@PutMapping("/reativacaoDeCategoria/{id}")
+	public void reativacaoDeCategoria(@PathVariable Integer id) {
+		categoriaService.reativacaoDeCategoria(id);
+	}
 }

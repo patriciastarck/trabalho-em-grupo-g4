@@ -72,4 +72,8 @@ public class ProdutoController {
 		emailService.envioEmailPromo();
 		return produtoService.promocao();
 	}
+	@PutMapping("/reativacaoDeProduto/{id}")
+	public void reativacaoDeProduto(@PathVariable Integer id) {
+		produtoService.reativacaoDeProduto(id);
+	}
 }

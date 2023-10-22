@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.api.g4.dto.ProdutoDTO;
 import br.com.api.g4.dto.ProdutoDePedidoDTO;
 import br.com.api.g4.dto.PromocaoDTO;
+import br.com.api.g4.entities.Endereco;
 import br.com.api.g4.entities.Produto;
 import br.com.api.g4.repositories.ProdutoRepository;
 
@@ -38,13 +39,13 @@ public class ProdutoService {
 		for (int i = 0; i < produtos.size(); i++) {
 
 			registroAntigo = acharId(produtos.get(i).getId());
-			
-			Integer a =registroAntigo.getQntdEstoque();
-			Integer b =produtos.get(i).getQuantidadePorProduto();
-			Integer c= a-b;
-			
+
+			Integer a = registroAntigo.getQntdEstoque();
+			Integer b = produtos.get(i).getQuantidadePorProduto();
+			Integer c = a - b;
+
 			registroAntigo.setQntdEstoque(c);
-			
+
 			registroAntigo.setId(produtos.get(i).getId());
 			registroAntigos.add(registroAntigo);
 		}
@@ -111,5 +112,13 @@ public class ProdutoService {
 		return produtoRepository.promocao().stream()
 				.map(record -> new PromocaoDTO(String.valueOf(record[0]), String.valueOf(record[1])))
 				.collect(Collectors.toList());
+	}
+
+	public void reativacaoDeProduto(Integer id) {
+		Produto objTeste = acharId(id);
+		if (objTeste != null) {
+			objTeste.setAtivo(true);
+			produtoRepository.save(objTeste);
+		}
 	}
 }

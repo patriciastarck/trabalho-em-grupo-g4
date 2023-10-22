@@ -52,4 +52,8 @@ public class EnderecoController {
 	public Endereco atualizar(@PathVariable Integer id, @RequestBody EnderecoDTO objetoEndereco) {
 		return enderecoService.atualizar(id, objetoEndereco);
 	}
+	@PutMapping("/reativacaoDeEndereco/{id}")
+	public void reativacaoDeEndereco(@PathVariable Integer id) {
+		enderecoService.reativacaoDeEndereco(id);
+	}
 }

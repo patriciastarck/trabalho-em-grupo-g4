@@ -98,4 +98,12 @@ public class EnderecoService {
 		params.put("cep", cep);
 		return restTemplate.getForObject(uri, Endereco.class, params);
 	}
+	
+	public void reativacaoDeEndereco(Integer id) {
+		Endereco objTeste = acharId(id);
+		if (objTeste != null) {
+			objTeste.setAtivo(true);
+			enderecoRepository.save(objTeste);
+		}
+	}
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.api.g4.dto.CategoriaDTO;
 import br.com.api.g4.entities.Categoria;
+import br.com.api.g4.entities.Produto;
 import br.com.api.g4.repositories.CategoriaRepository;
 
 @Service
@@ -66,5 +67,12 @@ public class CategoriaService {
 		}
 		registroAntigo.setId(id);
 		return categoriaRepository.save(registroAntigo);
+	}
+	public void reativacaoDeCategoria(Integer id) {
+		Categoria objTeste = acharId(id);
+		if (objTeste != null) {
+			objTeste.setAtivo(true);
+			categoriaRepository.save(objTeste);
+		}
 	}
 }
