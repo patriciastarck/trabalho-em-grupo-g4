@@ -54,9 +54,9 @@ public class PedidoService {
 		pedido.setDataPedido(LocalDate.now());
 		pedido.setProdutos(produtos);
 		
+		pedidoRepository.save(pedido);
 		produtoService.atualizacaoDeEstoque(objetoPedido.getProdutos());
 		
-		pedidoRepository.save(pedido);
 		return pedido;
 	}
 

@@ -1,5 +1,6 @@
 package br.com.api.g4.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,15 +32,20 @@ public class ProdutoService {
 	}
 
 	public void atualizacaoDeEstoque(List<ProdutoDePedidoDTO> produtos) {
+		List<Produto> registroAntigos = new ArrayList<Produto>();
 		Produto registroAntigo = new Produto();
 
 		for (int i = 0; i < produtos.size(); i++) {
+
 			registroAntigo = acharId(produtos.get(i).getId());
-			registroAntigo.setQntdEstoque(registroAntigo.getQntdEstoque() - produtos.get(i).getQuantidadePorProduto());
+			Integer a =registroAntigo.getQntdEstoque();
+			Integer b =produtos.get(i).getQuantidadePorProduto();
 			
+			registroAntigo.setQntdEstoque(a-b);
 			registroAntigo.setId(produtos.get(i).getId());
-			produtoRepository.save(registroAntigo);
+			registroAntigos.add(registroAntigo);
 		}
+		produtoRepository.saveAll(registroAntigos);
 	}
 
 	public Integer getCount() {
