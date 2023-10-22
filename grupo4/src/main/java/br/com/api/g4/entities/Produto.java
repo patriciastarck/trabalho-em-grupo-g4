@@ -1,14 +1,19 @@
 package br.com.api.g4.entities;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "produto")
@@ -19,26 +24,33 @@ public class Produto {
 	@Column(nullable = false, unique = true)
 	private Integer id;
 	@Column( length = 60)
-
 	private String nome;
 	private String descricao;
 	@Column( length = 10)
 	private LocalDate dataFabricacao;
 	@Column()
-
 	private Integer qntdEstoque;
 	@Column()
 	private Double valorUnitario;
 	@Column()
-
 	private Boolean ativo;
+	
+	@ElementCollection
+	@CollectionTable(
+	    name = "pedido_produto",
+	    joinColumns = @JoinColumn(name = "produto_id")
+	)
+	@MapKeyJoinColumn(name = "pedido_id")
+	@Column(name = "quantidade")
+	private Map<Pedido, Integer> itemQuantidade = new HashMap<>();
 
 	public Produto() {
 		super();
 	}
 
-	public Produto(Integer id, String nome, String descricao, LocalDate dataFabricacao, Integer qntdEstoque,
-			Double valorUnitario, Boolean ativo) {
+	public Produto(Integer id, String nome, String descricao, LocalDate dataFabricacao,
+			Integer qntdEstoque, Double valorUnitario, Boolean ativo,
+			Map<Pedido, Integer> itemQuantidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -47,6 +59,15 @@ public class Produto {
 		this.qntdEstoque = qntdEstoque;
 		this.valorUnitario = valorUnitario;
 		this.ativo = ativo;
+		this.itemQuantidade = itemQuantidade;
+	}
+
+	public Map<Pedido, Integer> getItemQuantidade() {
+		return itemQuantidade;
+	}
+
+	public void setItemQuantidade(Map<Pedido, Integer> itemQuantidade) {
+		this.itemQuantidade = itemQuantidade;
 	}
 
 	public Integer getId() {
@@ -109,7 +130,7 @@ public class Produto {
 	public String toString() {
 		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", dataFabricacao="
 				+ dataFabricacao + ", qntdEstoque=" + qntdEstoque + ", valorUnitario=" + valorUnitario + ", ativo="
-				+ ativo + "]";
+				+ ativo + ", itemQuantidade=" + itemQuantidade + "]";
 	}
 
 }

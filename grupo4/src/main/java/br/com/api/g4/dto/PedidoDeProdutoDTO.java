@@ -5,25 +5,25 @@ import java.util.List;
 public class PedidoDeProdutoDTO {
 	
 	
-	private List<ProdutoDePedidoDTO> idDoproduto;
+	private List<ProdutoDePedidoDTO> produtos;
 	
 	public PedidoDeProdutoDTO() {
 		super();
 	}
 	
-	public PedidoDeProdutoDTO(Integer quantidade, List<ProdutoDePedidoDTO> idDoproduto) {
+	public PedidoDeProdutoDTO(List<ProdutoDePedidoDTO> produtos) {
 		super();
-		this.idDoproduto = idDoproduto;
+		this.produtos = produtos;
 	}
 
 
 
-	public List<ProdutoDePedidoDTO> getIdDoproduto() {
-		return idDoproduto;
+	public List<ProdutoDePedidoDTO> getProdutos() {
+		return produtos;
 	}
 
-	public void setIdDoproduto(List<ProdutoDePedidoDTO> idDoproduto) {
-		this.idDoproduto = idDoproduto;
+	public void setProdutos(List<ProdutoDePedidoDTO> produtos) {
+		this.produtos = produtos;
 	}
 	
 }

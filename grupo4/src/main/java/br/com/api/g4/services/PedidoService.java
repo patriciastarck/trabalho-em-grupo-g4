@@ -2,13 +2,16 @@ package br.com.api.g4.services;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.api.g4.dto.PedidoDTO;
 import br.com.api.g4.dto.PedidoDeProdutoDTO;
+import br.com.api.g4.dto.ProdutoDePedidoDTO;
 import br.com.api.g4.entities.Pedido;
 import br.com.api.g4.entities.Produto;
 import br.com.api.g4.repositories.PedidoRepository;
@@ -36,18 +39,18 @@ public class PedidoService {
 		return pedido;
 	}
 
+	List<Produto> produtos = new ArrayList<>();
 	public Pedido parsePedidoDeProduto(PedidoDeProdutoDTO obj) {
 		Pedido pedido = new Pedido();
-		List<Integer> quantidade = new ArrayList<>();
-		List<Produto> prod = new ArrayList<>();
+		List<ProdutoDePedidoDTO> produtosDoPedido = obj.getProdutos();
+		Map<Pedido, Integer> itemQuantidade = new HashMap<>();
 		
-		for (int i = 0; i < obj.getIdDoproduto().size(); i++) {
-			quantidade.add(obj.getIdDoproduto().get(i).getQuantidade());
-			prod.add(produtoRepository.getReferenceById(obj.getIdDoproduto().get(i).getId()));
+		for(ProdutoDePedidoDTO itemPedido : produtosDoPedido) {
+			Produto produto = produtoRepository.findById(itemPedido.getId()).get();
+			itemQuantidade.put(pedido, itemPedido.getQuantidade());
+			produto.setItemQuantidade(itemQuantidade);
+			produtos.add(produto);
 		}
-		
-		pedido.setQuantidadePorProduto(quantidade);
-		pedido.setProdutos(prod);
 		
 		return pedido;
 	}
@@ -60,7 +63,9 @@ public class PedidoService {
 		Pedido pedido = parsePedidoDeProduto(objetoPedido);
 		pedido.setAtivo(true);
 		pedido.setDataPedido(LocalDate.now());
-		return pedidoRepository.save(pedido);
+		pedidoRepository.save(pedido);
+		pedido.setProdutos(produtos);
+		return pedido;
 	}
 
 	// TODO PedidoDTO de retorno com data formatada

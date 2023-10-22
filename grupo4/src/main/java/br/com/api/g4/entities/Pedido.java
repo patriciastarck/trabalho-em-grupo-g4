@@ -3,9 +3,7 @@ package br.com.api.g4.entities;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "pedido")
@@ -36,10 +33,11 @@ public class Pedido {
 																	// associacao(produto)
 	)
 	private List<Produto> produtos;
-	@ElementCollection
-	@CollectionTable(name = "pedido_qtd_produtos", joinColumns = @JoinColumn(name = "pedido_id"))
-	@Column(name = "qtd_produto")
-	private List<Integer> quantidadePorProduto;
+//	@OneToMany
+//	@JoinColumn(name = "pedido_id")
+//	private List<Integer> quantidadePorProduto;
+
+
 
 	public Pedido() {
 		super();
@@ -52,7 +50,7 @@ public class Pedido {
 		this.dataPedido = dataPedido;
 		this.ativo = ativo;
 		this.produtos = produtos;
-		this.quantidadePorProduto = quantidadePorProduto;
+//		this.quantidadePorProduto = quantidadePorProduto;
 	}
 
 	public Integer getId() {
@@ -87,18 +85,18 @@ public class Pedido {
 		this.produtos = produtos;
 	}
 
-	public List<Integer> getQuantidadePorProduto() {
-		return quantidadePorProduto;
-	}
-
-	public void setQuantidadePorProduto(List<Integer> quantidadePorProduto) {
-		this.quantidadePorProduto = quantidadePorProduto;
-	}
-
-	@Override
-	public String toString() {
-		return "Pedido [id=" + id + ", dataPedido=" + dataPedido + ", ativo=" + ativo + ", produtos=" + produtos
-				+ ", quantidadePorProduto=" + quantidadePorProduto + "]";
-	}
+//	public List<Integer> getQuantidadePorProduto() {
+//		return quantidadePorProduto;
+//	}
+//
+//	public void setQuantidadePorProduto(List<Integer> quantidadePorProduto) {
+//		this.quantidadePorProduto = quantidadePorProduto;
+//	}
+//
+//	@Override
+//	public String toString() {
+//		return "Pedido [id=" + id + ", dataPedido=" + dataPedido + ", ativo=" + ativo + ", produtos=" + produtos
+//				+ ", quantidadePorProduto=" + quantidadePorProduto + "]";
+//	}}}
 
 }
