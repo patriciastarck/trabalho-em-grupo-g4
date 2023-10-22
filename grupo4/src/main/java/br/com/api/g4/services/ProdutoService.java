@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.api.g4.dto.ProdutoDTO;
+import br.com.api.g4.dto.ProdutoDePedidoDTO;
 import br.com.api.g4.dto.PromocaoDTO;
 import br.com.api.g4.entities.Produto;
 import br.com.api.g4.repositories.ProdutoRepository;
@@ -19,16 +20,28 @@ public class ProdutoService {
 
 	public Produto parseDeProduto(ProdutoDTO objeto) {
 		Produto produto = new Produto();
-		
+
 		produto.setNome(objeto.getNome());
 		produto.setDescricao(objeto.getDescricao());
 		produto.setDataFabricacao(objeto.getDataFabricacao());
 		produto.setQntdEstoque(objeto.getQntdEstoque());
 		produto.setValorUnitario(objeto.getValorUnitario());
-		
+
 		return produto;
 	}
-	
+
+	public void atualizacaoDeEstoque(List<ProdutoDePedidoDTO> produtos) {
+		Produto registroAntigo = new Produto();
+
+		for (int i = 0; i < produtos.size(); i++) {
+			registroAntigo = acharId(produtos.get(i).getId());
+			registroAntigo.setQntdEstoque(registroAntigo.getQntdEstoque() - produtos.get(i).getQuantidadePorProduto());
+			
+			registroAntigo.setId(produtos.get(i).getId());
+			produtoRepository.save(registroAntigo);
+		}
+	}
+
 	public Integer getCount() {
 		return produtoRepository.contar();
 	}
@@ -61,7 +74,7 @@ public class ProdutoService {
 
 	public Produto atualizar(Integer id, ProdutoDTO objetoproduto) {
 		Produto registroAntigo = acharId(id);
-		Produto produto =parseDeProduto(objetoproduto);
+		Produto produto = parseDeProduto(objetoproduto);
 
 		if (produto.getAtivo() != null) {
 			registroAntigo.setAtivo(produto.getAtivo());

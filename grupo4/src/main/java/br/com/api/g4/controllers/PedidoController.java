@@ -2,6 +2,8 @@ package br.com.api.g4.controllers;
 
 import java.util.List;
 
+import javax.validation.constraints.Min;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +38,7 @@ public class PedidoController {
 	}
 
 	@PostMapping("/salvar")
+	@Min(value=1)
 	public Pedido salvar(@RequestBody PedidoDeProdutoDTO objetoPedido) {
 		// emailService.envioEmailPedido(objetoPedido);
 		return pedidoService.salvar(objetoPedido);

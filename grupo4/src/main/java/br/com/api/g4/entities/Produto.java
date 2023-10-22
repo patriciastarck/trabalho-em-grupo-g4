@@ -14,9 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "produto")
@@ -24,24 +21,22 @@ public class Produto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
+	@Column(nullable = false, unique = true)
 	private Integer id;
-	@NotNull
-	@Size(max = 50)
-	@NotBlank
+	@Column(length = 60)
 	private String nome;
-	@NotNull
-	@Size(max = 100)
-	@NotBlank
 	private String descricao;
+	@Column(length = 10)
 	private LocalDate dataFabricacao;
+	@Column()
 	private Integer qntdEstoque;
+	@Column()
 	private Double valorUnitario;
+	@Column()
 	private Boolean ativo;
+
 	@ElementCollection
-	@CollectionTable(
-	    name = "pedido_produto",
-	    joinColumns = @JoinColumn(name = "produto_id")
-	)
+	@CollectionTable(name = "pedido_produto", joinColumns = @JoinColumn(name = "produto_id"))
 	@MapKeyJoinColumn(name = "pedido_id")
 	@Column(name = "quantidade")
 	private Map<Pedido, Integer> itemQuantidade = new HashMap<>();
@@ -50,9 +45,8 @@ public class Produto {
 		super();
 	}
 
-	public Produto(Integer id, String nome, String descricao, LocalDate dataFabricacao,
-			Integer qntdEstoque, Double valorUnitario, Boolean ativo,
-			Map<Pedido, Integer> itemQuantidade) {
+	public Produto(Integer id, String nome, String descricao, LocalDate dataFabricacao, Integer qntdEstoque,
+			Double valorUnitario, Boolean ativo, Map<Pedido, Integer> itemQuantidade) {
 		super();
 		this.id = id;
 		this.nome = nome;

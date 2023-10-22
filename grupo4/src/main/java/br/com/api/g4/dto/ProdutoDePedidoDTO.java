@@ -24,15 +24,18 @@ public class ProdutoDePedidoDTO {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
 
 
-	public Integer getQuantidade() {
+	public Integer getQuantidadePorProduto() {
 		return quantidadePorProduto;
 	}
+	
 
 
-	public void setQuantidade(Integer quantidade) {
-		this.quantidadePorProduto = quantidade;
+	public void setQuantidadePorProduto(Integer quantidadePorProduto) {
+		this.quantidadePorProduto = quantidadePorProduto;
 	}
+
 	
 }

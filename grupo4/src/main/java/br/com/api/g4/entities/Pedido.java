@@ -33,10 +33,6 @@ public class Pedido {
 																	// associacao(produto)
 	)
 	private List<Produto> produtos;
-//	@OneToMany
-//	@JoinColumn(name = "pedido_id")
-//	private List<Integer> quantidadePorProduto;
-
 
 
 	public Pedido() {

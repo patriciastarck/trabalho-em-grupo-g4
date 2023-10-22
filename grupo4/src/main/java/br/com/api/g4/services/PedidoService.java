@@ -3,6 +3,7 @@ package br.com.api.g4.services;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class PedidoService {
 
 		for (ProdutoDePedidoDTO itemPedido : produtosDoPedido) {
 			Produto produto = produtoRepository.findById(itemPedido.getId()).get();
-			itemQuantidade.put(pedido, itemPedido.getQuantidade());
+			itemQuantidade.put(pedido, itemPedido.getQuantidadePorProduto());
 			produto.setItemQuantidade(itemQuantidade);
 			produtos.add(produto);
 		}
@@ -51,8 +52,11 @@ public class PedidoService {
 		Pedido pedido = parsePedidoDeProduto(objetoPedido);
 		pedido.setAtivo(true);
 		pedido.setDataPedido(LocalDate.now());
-		pedidoRepository.save(pedido);
 		pedido.setProdutos(produtos);
+		
+		produtoService.atualizacaoDeEstoque(objetoPedido.getProdutos());
+		
+		pedidoRepository.save(pedido);
 		return pedido;
 	}
 
@@ -78,4 +82,16 @@ public class PedidoService {
 		}
 	}
 
+	public Pedido atualizar(Integer id, PedidoDeProdutoDTO objetoPedido) {
+		Pedido registroAntigo = acharId(id);
+		Pedido pedido = parsePedidoDeProduto(objetoPedido);
+		if (pedido.getAtivo() != null) {
+			registroAntigo.setAtivo(pedido.getAtivo());
+		}
+		if (pedido.getProdutos() != null) {
+			registroAntigo.setProdutos(pedido.getProdutos());
+		}
+		registroAntigo.setId(id);
+		return pedidoRepository.save(registroAntigo);
+	}
 }
