@@ -14,7 +14,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -25,26 +28,27 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
-	@Column( length = 40)
+	@NotNull
+	@Size(max = 50)
 	@NotBlank
 	private String nome;
-	@Column( length = 20)
+	@NotNull
+	@Size(max = 50)
 	@NotBlank
 	private String nomeUsuario;
-	@Column()
+	@NotNull
 	@NotBlank
+	@Email
 	private String email;
-	@Column( length = 11)
+	@NotNull
+	@Size(max = 11)
 	@NotBlank
 	private String cpf;
-	@Column( length = 10)
-	@NotBlank
+	
 	private LocalDate dataNascimento;
-	@Column(nullable = false)
-	@NotBlank
+	
 	private Boolean ativo;
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@NotBlank
 	private String password;
 	@OneToMany
 	@JoinColumn(name = "usuario_id")

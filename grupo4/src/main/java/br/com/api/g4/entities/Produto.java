@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "produto")
@@ -21,18 +24,18 @@ public class Produto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
-	@Column(nullable = false, unique = true)
 	private Integer id;
-	@Column( length = 60)
+	@NotNull
+	@Size(max = 50)
+	@NotBlank
 	private String nome;
+	@NotNull
+	@Size(max = 100)
+	@NotBlank
 	private String descricao;
-	@Column( length = 10)
 	private LocalDate dataFabricacao;
-	@Column()
 	private Integer qntdEstoque;
-	@Column()
 	private Double valorUnitario;
-	@Column()
 	private Boolean ativo;
 	@ElementCollection
 	@CollectionTable(

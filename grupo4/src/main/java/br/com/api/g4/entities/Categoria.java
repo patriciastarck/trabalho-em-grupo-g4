@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "categoria")
@@ -18,16 +20,14 @@ public class Categoria {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
-	@Column(nullable = false, unique = true)
 	private Integer id;
-	@Column( unique = true, length = 20)
+	@NotNull
 	@NotBlank
+	@Size(max = 100)
 	private String nome;
-	@Column()
+	@NotNull
 	@NotBlank
 	private String descricao;
-	@Column()
-	@NotBlank
 	private Boolean ativo;
 	@OneToMany
 	@JoinColumn(name = "categoria_id")
