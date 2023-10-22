@@ -38,18 +38,16 @@ public class PedidoService {
 
 	public Pedido parsePedidoDeProduto(PedidoDeProdutoDTO obj) {
 		Pedido pedido = new Pedido();
-		List<Produto> prod = new ArrayList<>();
 		List<Integer> quantidade = new ArrayList<>();
+		List<Produto> prod = new ArrayList<>();
 		
 		for (int i = 0; i < obj.getIdDoproduto().size(); i++) {
-			pedido.setQuantidadeDeProdutos(obj.getQuantidade());
+			quantidade.add(obj.getIdDoproduto().get(i).getQuantidade());
+			prod.add(produtoRepository.getReferenceById(obj.getIdDoproduto().get(i).getId()));
 		}
 		
-		for (int i = 0; i < obj.getIdDoproduto().size(); i++) {
-			prod=produtoRepository.findById(obj.get(i).getId());
-		}
-		
-		pedido.setProdutos(prod.);
+		pedido.setQuantidadePorProduto(quantidade);
+		pedido.setProdutos(prod);
 		
 		return pedido;
 	}

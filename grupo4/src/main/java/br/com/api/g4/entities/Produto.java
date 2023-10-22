@@ -19,20 +19,18 @@ public class Produto {
 	@Column(nullable = false, unique = true)
 	private Integer id;
 	@Column( length = 60)
-	@NotBlank
+
 	private String nome;
 	private String descricao;
 	@Column( length = 10)
-	@NotBlank
 	private LocalDate dataFabricacao;
 	@Column()
-	@NotBlank
+
 	private Integer qntdEstoque;
 	@Column()
-	@NotBlank
 	private Double valorUnitario;
 	@Column()
-	@NotBlank
+
 	private Boolean ativo;
 
 	public Produto() {
