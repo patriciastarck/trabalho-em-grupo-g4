@@ -40,7 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+    
+    //TODO voltar os paths de segurança certos 
     @Override
     protected void configure(HttpSecurity http) throws Exception { // Metodo encarregado de configurar a seguranca da API
         http
@@ -49,10 +50,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.csrf().disable()
                 .httpBasic().disable()
                 .authorizeHttpRequests()
-                .antMatchers("/categoria/{id}","/categoria/listar","/produto/count","/usuario/salvar","/usuario/login","/produto/salvar","/pedido/salvar").permitAll()
-                .antMatchers("/usuario/{id}","/usuario/listar").hasRole("COMPRADOR")
-                .antMatchers("/categoria/count","/categoria/salvar","/categoria/deletarLogico/{id}","/categoria/atualizar/{id}","/pedido/atualizar/{id}","/produto/deletar/{id}","/produto/atualizar/{id}","/produto/promocao","/usuario/salvar").hasRole("VENDEDOR")
-                .antMatchers("/endereco/count","/endereco/salvar","/endereco/{id}","/endereco/listar","/endereco/deletarLogico/{id}","/endereco/atualizar/{id}","/pedido/count","/pedido/{id}","/pedido/listar","/pedido/deletar/{id}","/produto/{id}","/produto/listar","/usuario/deletarLogico/{id}","/usuario/atualizar/{id}","/usuario/listarEndereco/{id}","/usuario/recuperarSenha/{id}","/usuario/recuperarConta/{id}","/usuario/registro").hasAnyRole("COMPRADOR","VENDEDOR")
+                .antMatchers("/categoria/{id}","/categoria/listar","/produto/count","/usuario/salvar","/usuario/login").permitAll()
+                .antMatchers("/usuario/{id}","/usuario/listar","/pedido/salvar").permitAll()//hasRole("COMPRADOR")
+                .antMatchers("/categoria/count","/categoria/salvar","/categoria/deletarLogico/{id}","/categoria/atualizar/{id}","/pedido/atualizar/{id}","/produto/deletar/{id}","/produto/atualizar/{id}","/produto/promocao","/usuario/salvar","/produto/salvar").permitAll()//hasRole("VENDEDOR")
+                .antMatchers("/endereco/count","/endereco/salvar","/endereco/{id}","/endereco/listar","/endereco/deletarLogico/{id}","/endereco/atualizar/{id}","/pedido/count","/pedido/{id}","/pedido/listar","/pedido/deletar/{id}","/produto/{id}","/produto/listar","/usuario/deletarLogico/{id}","/usuario/atualizar/{id}","/usuario/listarEndereco/{id}","/usuario/recuperarSenha/{id}","/usuario/recuperarConta/{id}","/usuario/registro").permitAll()//hasAnyRole("COMPRADOR","VENDEDOR")
                 .and()
                 .userDetailsService(uds)
                 .exceptionHandling()
@@ -66,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
+    
 //	@Bean
 //	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 //		http.authorizeHttpRequests().anyRequest().permitAll().and().csrf(csrf -> csrf.disable());

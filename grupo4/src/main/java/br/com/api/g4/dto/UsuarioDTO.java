@@ -1,7 +1,6 @@
 package br.com.api.g4.dto;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -118,5 +117,5 @@ public class UsuarioDTO {
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
- 
+
 }

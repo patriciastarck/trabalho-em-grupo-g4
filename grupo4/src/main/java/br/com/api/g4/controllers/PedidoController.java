@@ -7,12 +7,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.g4.dto.PedidoDTO;
 import br.com.api.g4.dto.PedidoDeProdutoDTO;
 import br.com.api.g4.entities.Pedido;
 import br.com.api.g4.services.EmailService;
@@ -39,7 +37,7 @@ public class PedidoController {
 
 	@PostMapping("/salvar")
 	public Pedido salvar(@RequestBody PedidoDeProdutoDTO objetoPedido) {
-		//emailService.envioEmailPedido(objetoPedido);
+		// emailService.envioEmailPedido(objetoPedido);
 		return pedidoService.salvar(objetoPedido);
 	}
 
@@ -63,8 +61,4 @@ public class PedidoController {
 		pedidoService.apagarLogico(id);
 	}
 
-	@PutMapping("/atualizar/{id}")
-	public Pedido atualizar(@PathVariable Integer id, @RequestBody PedidoDTO objetoTeste) {
-		return pedidoService.atualizar(id, objetoTeste);
-	}
 }

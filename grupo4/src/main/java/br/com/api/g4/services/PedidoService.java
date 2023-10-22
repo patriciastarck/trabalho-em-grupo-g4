@@ -9,7 +9,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.api.g4.dto.PedidoDTO;
 import br.com.api.g4.dto.PedidoDeProdutoDTO;
 import br.com.api.g4.dto.ProdutoDePedidoDTO;
 import br.com.api.g4.entities.Pedido;
@@ -27,31 +26,20 @@ public class PedidoService {
 	@Autowired
 	ProdutoRepository produtoRepository;
 
-	public Pedido parseDePedido(PedidoDTO objeto) {
-		Pedido pedido = new Pedido();
-		List<Produto> prod = new ArrayList<>();
-
-		for (int i = 0; i < objeto.getProdutos().size(); i++) {
-			prod.add(produtoService.parseDeProduto(objeto.getProdutos().get(i)));
-		}
-		pedido.setProdutos(prod);
-
-		return pedido;
-	}
-
 	List<Produto> produtos = new ArrayList<>();
+
 	public Pedido parsePedidoDeProduto(PedidoDeProdutoDTO obj) {
 		Pedido pedido = new Pedido();
 		List<ProdutoDePedidoDTO> produtosDoPedido = obj.getProdutos();
 		Map<Pedido, Integer> itemQuantidade = new HashMap<>();
-		
-		for(ProdutoDePedidoDTO itemPedido : produtosDoPedido) {
+
+		for (ProdutoDePedidoDTO itemPedido : produtosDoPedido) {
 			Produto produto = produtoRepository.findById(itemPedido.getId()).get();
 			itemQuantidade.put(pedido, itemPedido.getQuantidade());
 			produto.setItemQuantidade(itemQuantidade);
 			produtos.add(produto);
 		}
-		
+
 		return pedido;
 	}
 
@@ -90,16 +78,4 @@ public class PedidoService {
 		}
 	}
 
-	public Pedido atualizar(Integer id, PedidoDTO objetoPedido) {
-		Pedido registroAntigo = acharId(id);
-		Pedido pedido = parseDePedido(objetoPedido);
-		if (pedido.getAtivo() != null) {
-			registroAntigo.setAtivo(pedido.getAtivo());
-		}
-		if (pedido.getProdutos() != null) {
-			registroAntigo.setProdutos(pedido.getProdutos());
-		}
-		registroAntigo.setId(id);
-		return pedidoRepository.save(registroAntigo);
-	}
 }

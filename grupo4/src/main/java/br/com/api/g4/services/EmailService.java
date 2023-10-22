@@ -20,9 +20,10 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import br.com.api.g4.dto.PedidoDTO;
+import br.com.api.g4.dto.PedidoDeProdutoDTO;
 import br.com.api.g4.dto.PromocaoDTO;
 import br.com.api.g4.dto.UsuarioDTO;
+import br.com.api.g4.entities.Pedido;
 import br.com.api.g4.entities.Usuario;
 
 @Configuration
@@ -33,6 +34,8 @@ public class EmailService {
 	UsuarioService usuarioService;
 	@Autowired
 	ProdutoService produtoService;
+	@Autowired
+	PedidoService pedidoService;
 
 	private JavaMailSender emailSender;
 
@@ -72,7 +75,8 @@ public class EmailService {
 	}
 
 //	 TODO terminar metodo e botar no pedido
-	public void envioEmailPedido(PedidoDTO pedido) {
+	public void envioEmailPedido(PedidoDeProdutoDTO pedidon) {
+		Pedido pedido = pedidoService.parsePedidoDeProduto(pedidon);
 		MimeMessage mensagemCadastro = emailSender.createMimeMessage();
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(mensagemCadastro, true);

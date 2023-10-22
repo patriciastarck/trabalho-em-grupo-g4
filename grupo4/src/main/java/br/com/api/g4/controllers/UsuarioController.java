@@ -25,7 +25,6 @@ import br.com.api.g4.config.JWTUtil;
 import br.com.api.g4.dto.LoginDTO;
 import br.com.api.g4.dto.UsuarioDTO;
 import br.com.api.g4.entities.Endereco;
-import br.com.api.g4.entities.Produto;
 import br.com.api.g4.entities.Role;
 import br.com.api.g4.entities.Usuario;
 import br.com.api.g4.enums.TipoRoleEnum;
@@ -43,26 +42,26 @@ public class UsuarioController {
 	@Autowired
 	UsuarioService usuarioService;
 	@Autowired
-    private JWTUtil jwtUtil;
-    @Autowired
-    private AuthenticationManager authManager;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    RoleRepository roleRepository;
-    @Autowired
-    EnderecoService enderecoService;
-    @Autowired
-    UsuarioRepository usuarioRepository;
-    @Autowired
-    EnderecoRepository enderecoRepository;
+	private JWTUtil jwtUtil;
+	@Autowired
+	private AuthenticationManager authManager;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	@Autowired
+	RoleRepository roleRepository;
+	@Autowired
+	EnderecoService enderecoService;
+	@Autowired
+	UsuarioRepository usuarioRepository;
+	@Autowired
+	EnderecoRepository enderecoRepository;
 
 	private EmailService emailService;
 
-    @Autowired
-    public void setEmailService(EmailService emailService) {
-        this.emailService = emailService;
-    }
+	@Autowired
+	public void setEmailService(EmailService emailService) {
+		this.emailService = emailService;
+	}
 
 	@GetMapping("/count")
 	public Integer getCount() {
@@ -72,7 +71,7 @@ public class UsuarioController {
 
 	@PostMapping("/salvar")
 	public Usuario salvar(@RequestBody UsuarioDTO objetousuario) {
-		
+
 		return usuarioService.salvar(objetousuario);
 	}
 
@@ -101,8 +100,8 @@ public class UsuarioController {
 	public List<Endereco> getEndereco(@PathVariable Integer id) {
 		return usuarioService.listarEndereco();
 	}
-	
-	//TODO verificar a mensagem de recuperaçao de senha é valida
+
+	// TODO verificar a mensagem de recuperaçao de senha é valida
 	@PutMapping("/recuperarSenha/{id}")
 	public void recuperarSenha(@PathVariable Integer id, @RequestParam String senha) {
 		usuarioService.recuperarSenha(id, senha);
@@ -114,16 +113,17 @@ public class UsuarioController {
 		usuarioService.recuperarConta(id);
 		emailService.envioEmailRecuperacaoConta(acharId(id));
 	}
+
 	// Registro de usuario
-    @PostMapping("/registro")
-    public Usuario cadastro(@RequestParam String email, @RequestBody UsuarioDTO usuario){
-    	
-        //usuario = usuarioService.save(usuario);
+	@PostMapping("/registro")
+	public Usuario cadastro(@RequestParam String email, @RequestBody UsuarioDTO usuario) {
 
-        // Gerando o token JWT a partir do e-mail do Usuario
-        //String token = jwtUtil.generateToken(usuario.getEmail());
+		// usuario = usuarioService.save(usuario);
 
-        Set<String> strRoles = usuario.getRoles();
+		// Gerando o token JWT a partir do e-mail do Usuario
+		// String token = jwtUtil.generateToken(usuario.getEmail());
+
+		Set<String> strRoles = usuario.getRoles();
 		Set<Role> roles = new HashSet<>();
 
 		if (strRoles == null) {
@@ -147,7 +147,7 @@ public class UsuarioController {
 				}
 			});
 		}
-		
+
 		Endereco viaCep = enderecoService.pesquisarEndereco(usuario.getCep());
 		Endereco endereco = new Endereco();
 		endereco.setCep(usuario.getCep());
@@ -159,54 +159,54 @@ public class UsuarioController {
 		endereco.setUf(viaCep.getUf());
 		endereco.setAtivo(true);
 		enderecoRepository.save(endereco);
-		
-        Usuario usuarioResumido = new Usuario();
-        usuarioResumido.setAtivo(true);
-        usuarioResumido.setNomeUsuario(usuario.getNomeUsuario());
-        usuarioResumido.setEmail(usuario.getEmail());
-        usuarioResumido.setRoles(roles);
-        usuarioResumido.setCpf(usuario.getCpf());
-        usuarioResumido.setDataNascimento(usuario.getDataNascimento());
-        usuarioResumido.setNome(usuario.getNome());
-     // Encriptando a senha usando o Bcrypt
-        String encodedPass = passwordEncoder.encode(usuario.getPassword());
-        usuarioResumido.setPassword(encodedPass);
+
+		Usuario usuarioResumido = new Usuario();
+		usuarioResumido.setAtivo(true);
+		usuarioResumido.setNomeUsuario(usuario.getNomeUsuario());
+		usuarioResumido.setEmail(usuario.getEmail());
+		usuarioResumido.setRoles(roles);
+		usuarioResumido.setCpf(usuario.getCpf());
+		usuarioResumido.setDataNascimento(usuario.getDataNascimento());
+		usuarioResumido.setNome(usuario.getNome());
+		// Encriptando a senha usando o Bcrypt
+		String encodedPass = passwordEncoder.encode(usuario.getPassword());
+		usuarioResumido.setPassword(encodedPass);
 //        String token = jwtUtil.generateTokenWithUsuarioData(usuarioResumido);
 //        Collections.singletonMap("jwt-token", token);
-        
-        emailService.envioEmailCadastro(usuario);
-        return usuarioRepository.save(usuarioResumido);
-    }
-    
-    // Login de usuario
-    @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody LoginDTO body){
-        try {
-            // Criando o token que sera usado no processo de autenticacao
-            UsernamePasswordAuthenticationToken authInputToken =
-                    new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
 
-            // Autenticando as credenciais de login
-            authManager.authenticate(authInputToken);
+		emailService.envioEmailCadastro(usuario);
+		return usuarioRepository.save(usuarioResumido);
+	}
 
-            // Se o processo de autenticacao foi concluido com sucesso - etapa anterior,
-            // eh gerado o JWT
+	// Login de usuario
+	@PostMapping("/login")
+	public Map<String, Object> login(@RequestBody LoginDTO body) {
+		try {
+			// Criando o token que sera usado no processo de autenticacao
+			UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
+					body.getEmail(), body.getPassword());
+
+			// Autenticando as credenciais de login
+			authManager.authenticate(authInputToken);
+
+			// Se o processo de autenticacao foi concluido com sucesso - etapa anterior,
+			// eh gerado o JWT
 //            String token = jwtUtil.generateToken(body.getEmail());
 
-            Usuario usuario = usuarioService.findByEmail(body.getEmail());
-            Usuario usuarioResumido = new Usuario();
-            usuarioResumido.setNomeUsuario(usuario.getNomeUsuario());
-            usuarioResumido.setEmail(usuario.getEmail());
-            usuarioResumido.setId(usuario.getId());
-            usuarioResumido.setRoles(usuario.getRoles());
-            // Gerando o token JWT a partir dos dados do Usuario
-            String token = jwtUtil.generateTokenWithUsuarioData(usuarioResumido);
+			Usuario usuario = usuarioService.findByEmail(body.getEmail());
+			Usuario usuarioResumido = new Usuario();
+			usuarioResumido.setNomeUsuario(usuario.getNomeUsuario());
+			usuarioResumido.setEmail(usuario.getEmail());
+			usuarioResumido.setId(usuario.getId());
+			usuarioResumido.setRoles(usuario.getRoles());
+			// Gerando o token JWT a partir dos dados do Usuario
+			String token = jwtUtil.generateTokenWithUsuarioData(usuarioResumido);
 
-            // Responde com o JWT
-            return Collections.singletonMap("jwt-token", token);
-        }catch (AuthenticationException authExc){
-            throw new RuntimeException("Credenciais Invalidas");
-        }
-    }
+			// Responde com o JWT
+			return Collections.singletonMap("jwt-token", token);
+		} catch (AuthenticationException authExc) {
+			throw new RuntimeException("Credenciais Invalidas");
+		}
+	}
 
 }

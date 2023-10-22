@@ -34,7 +34,6 @@ public class Produto {
 	private Double valorUnitario;
 	@Column()
 	private Boolean ativo;
-	
 	@ElementCollection
 	@CollectionTable(
 	    name = "pedido_produto",
