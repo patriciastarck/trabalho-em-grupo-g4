@@ -12,53 +12,64 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.api.g4.dto.ProdutoDTO;
+import br.com.api.g4.dto.PromocaoDTO;
 import br.com.api.g4.entities.Produto;
 import br.com.api.g4.services.EmailService;
 import br.com.api.g4.services.ProdutoService;
 
-@RestController 
+@RestController
 @RequestMapping("/produto")
 public class ProdutoController {
-	
+
+	private EmailService emailService;
+
+    @Autowired
+    public void setEmailService(EmailService emailService) {
+        this.emailService = emailService;
+    }
+
 	@Autowired
-	EmailService emailService;
-	
-	@Autowired
-	ProdutoService ProdutoService;
+	ProdutoService produtoService;
 
 	@GetMapping("/count")
 	public Integer getCount() {
-		return ProdutoService.getCount();
+		return produtoService.getCount();
 	}
- 
 
 	@PostMapping("/salvar")
-	public Produto salvar(@RequestBody Produto objetoProduto) {
-		return ProdutoService.salvar(objetoProduto);
+	public Produto salvar(@RequestBody ProdutoDTO objetoProduto) {
+		return produtoService.salvar(objetoProduto);
 	}
 
 	@GetMapping("/{id}")
 	public Produto acharId(@PathVariable Integer id) {
-		return ProdutoService.acharId(id);
+		return produtoService.acharId(id);
 	}
 
 	@GetMapping("/listar")
 	public List<Produto> listar() {
-		return ProdutoService.listar();
+		return produtoService.listar();
 	}
 
 	@DeleteMapping("/deletar/{id}")
 	public void deletar(@PathVariable Integer id) {
-		ProdutoService.deletar(id);
+		produtoService.deletar(id);
 	}
 
 	@DeleteMapping("/deletarLogico/{id}")
 	public void deletarlogico(@PathVariable Integer id) {
-		ProdutoService.deletarlogico(id);
+		produtoService.deletarlogico(id);
 	}
 
 	@PutMapping("/atualizar/{id}")
-	public Produto atualizar(@PathVariable Integer id, @RequestBody Produto objetoProduto) {
-		return ProdutoService.atualizar(id, objetoProduto);
+	public Produto atualizar(@PathVariable Integer id, @RequestBody ProdutoDTO objetoProduto) {
+		return produtoService.atualizar(id, objetoProduto);
+	}
+
+	@GetMapping("/promocao")
+	public List<PromocaoDTO> promocao() {
+		emailService.envioEmailPromo();
+		return produtoService.promocao();
 	}
 }

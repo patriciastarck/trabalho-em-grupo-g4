@@ -9,16 +9,19 @@
     "type": "java.lang.String",
     "description": "A description for 'jwt.expiration'"
   },
-
   {
     "name": "jwt-company-project-name",
     "type": "java.lang.String",
     "description": "A description for 'jwt-company-project-name'"
   },
-
   {
     "name": "jwt-subject",
     "type": "java.lang.String",
     "description": "A description for 'jwt-subject'"
+  },
+  {
+    "name": "jwt-secret",
+    "type": "java.lang.String",
+    "description": "A description for 'jwt-secret'"
   }
 ]}

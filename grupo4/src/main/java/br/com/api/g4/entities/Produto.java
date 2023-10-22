@@ -1,15 +1,18 @@
 package br.com.api.g4.entities;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -20,38 +23,51 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	@Column(nullable = false, unique = true)
 	private Integer id;
-	@Column(nullable = false, length = 60)
+	@Column( length = 60)
 	private String nome;
 	private String descricao;
-	@Column(nullable = false, length = 10)
+	@Column( length = 10)
 	private LocalDate dataFabricacao;
-	@Column(nullable = false)
+	@Column()
 	private Integer qntdEstoque;
-	@Column(nullable = false)
+	@Column()
 	private Double valorUnitario;
-	@Column(nullable = false)
+	@Column()
 	private Boolean ativo;
-	
-	@OneToMany
-	@JoinColumn(name="produto_id")
-	private List<Categoria> categorias; 
+	@ElementCollection
+	@CollectionTable(
+	    name = "pedido_produto",
+	    joinColumns = @JoinColumn(name = "produto_id")
+	)
+	@MapKeyJoinColumn(name = "pedido_id")
+	@Column(name = "quantidade")
+	private Map<Pedido, Integer> itemQuantidade = new HashMap<>();
 
 	public Produto() {
 		super();
 	}
 
-	public Produto(Integer id, String nome, Boolean ativo, String descricao, LocalDate dataFabricacao,
-			Integer qntdEstoque, Double valorUnitario) {
+	public Produto(Integer id, String nome, String descricao, LocalDate dataFabricacao,
+			Integer qntdEstoque, Double valorUnitario, Boolean ativo,
+			Map<Pedido, Integer> itemQuantidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.ativo = ativo;
 		this.descricao = descricao;
 		this.dataFabricacao = dataFabricacao;
 		this.qntdEstoque = qntdEstoque;
 		this.valorUnitario = valorUnitario;
+		this.ativo = ativo;
+		this.itemQuantidade = itemQuantidade;
 	}
-	
+
+	public Map<Pedido, Integer> getItemQuantidade() {
+		return itemQuantidade;
+	}
+
+	public void setItemQuantidade(Map<Pedido, Integer> itemQuantidade) {
+		this.itemQuantidade = itemQuantidade;
+	}
 
 	public Integer getId() {
 		return id;
@@ -67,14 +83,6 @@ public class Produto {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public Boolean getAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
 	}
 
 	public String getDescricao() {
@@ -109,10 +117,19 @@ public class Produto {
 		this.valorUnitario = valorUnitario;
 	}
 
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
 	@Override
 	public String toString() {
-		return "Produto [id=" + id + ", nome=" + nome + ", ativo=" + ativo + ", descricao=" + descricao
-				+ ", dataFabricacao=" + dataFabricacao + ", qntdEstoque=" + qntdEstoque + ", valorUnitario="
-				+ valorUnitario + "]";
+		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", dataFabricacao="
+				+ dataFabricacao + ", qntdEstoque=" + qntdEstoque + ", valorUnitario=" + valorUnitario + ", ativo="
+				+ ativo + ", itemQuantidade=" + itemQuantidade + "]";
 	}
+
 }

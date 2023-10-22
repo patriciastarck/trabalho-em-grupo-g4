@@ -1,44 +1,42 @@
 package br.com.api.g4.dto;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UsuarioDTO {
-	
-	
+
 	private String nome;
 	private String nomeUsuario;
 	private String email;
-	
+	private Set<String> roles;
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
-	
 	private String cpf;
 	private LocalDate dataNascimento;
-	private Boolean ativo;
-	
+	private String cep;
+	private String complemento;
+	private String numero;
+
 	public UsuarioDTO() {
 		super();
 	}
 
-	
-
-	
-	public UsuarioDTO(String nome, String nomeUsuario, String email, String password, String cpf,
-			LocalDate dataNascimento, Boolean ativo) {
+	public UsuarioDTO(String nome, String nomeUsuario, String email, Set<String> roles, String password, String cpf,
+			LocalDate dataNascimento, String cep, String complemento, String numero) {
 		super();
 		this.nome = nome;
 		this.nomeUsuario = nomeUsuario;
 		this.email = email;
+		this.roles = roles;
 		this.password = password;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
-		this.ativo = ativo;
+		this.cep = cep;
+		this.complemento = complemento;
+		this.numero = numero;
 	}
-
-
-
 
 	public String getNome() {
 		return nome;
@@ -80,14 +78,6 @@ public class UsuarioDTO {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Boolean getAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -95,6 +85,37 @@ public class UsuarioDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+
+	public Set<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<String> roles) {
+		this.roles = roles;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
 }

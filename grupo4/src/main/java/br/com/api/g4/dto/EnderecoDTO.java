@@ -4,18 +4,16 @@ public class EnderecoDTO {
 	
 	private String cep;
 	private String complemento;
-	private Boolean ativo;
 	private String numero;
 	
 	public EnderecoDTO() {
 		super();
 	}
 	
-	public EnderecoDTO(String cep, String complemento, Boolean ativo, String numero) {
+	public EnderecoDTO(String cep, String complemento, String numero) {
 		super();
 		this.cep = cep;
 		this.complemento = complemento;
-		this.ativo = ativo;
 		this.numero = numero;
 	}
 
@@ -33,14 +31,6 @@ public class EnderecoDTO {
 	
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
-	}
-
-	public Boolean getAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
 	}
 
 	public String getNumero() {

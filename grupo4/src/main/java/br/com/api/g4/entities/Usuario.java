@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -24,49 +25,47 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
-	@Column(nullable = false,length = 40)
+	@Column( length = 40)
+	@NotBlank
 	private String nome;
-	@Column(nullable = false, length = 20)
+	@Column( length = 20)
+	@NotBlank
 	private String nomeUsuario;
-	@Column(nullable = false)
+	@Column()
+	@NotBlank
 	private String email;
-	@Column(nullable = false, length = 11)
+	@Column( length = 11)
+	@NotBlank
 	private String cpf;
-	@Column(nullable = false, length = 10)
+	@Column( length = 10)
+	@NotBlank
 	private LocalDate dataNascimento;
 	@Column(nullable = false)
+	@NotBlank
 	private Boolean ativo;
-
-	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@NotBlank
+	private String password;
 	@OneToMany
-	@JoinColumn(name="usuario_id")
-	private List<Pedido> pedidos; 
-	
+	@JoinColumn(name = "usuario_id")
+	private List<Pedido> pedidos;
 	@OneToMany
-	@JoinColumn(name="usuario_id")
-	private List<Produto> produtos; 
-	
+	@JoinColumn(name = "usuario_id")
+	private List<Produto> produtos;
 	@OneToMany
-	@JoinColumn(name="usuario_id")
+	@JoinColumn(name = "usuario_id")
 	private List<Endereco> endereco;
-	
-	 @ManyToMany
-	    @JoinTable(
-	            name = "usuario_role",
-	            joinColumns = @JoinColumn(name = "usuario_id"),
-	            inverseJoinColumns = @JoinColumn(name = "role_id")
-	    )
-	    private Set<Role> roles;
-
-	    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	    private String password;
+	@ManyToMany
+	@JoinTable(name = "usuario_role", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles;
 
 	public Usuario() {
 		super();
 	}
 
 	public Usuario(Integer id, String nome, String nomeUsuario, String email, String cpf, LocalDate dataNascimento,
-			String password, Boolean ativo, List<Pedido> pedidos, List<Produto> produtos, List<Endereco> endereco) {
+			Boolean ativo, String password, List<Pedido> pedidos, List<Produto> produtos, List<Endereco> endereco,
+			Set<Role> roles) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -74,11 +73,12 @@ public class Usuario {
 		this.email = email;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
-		this.password = password;
 		this.ativo = ativo;
+		this.password = password;
 		this.pedidos = pedidos;
 		this.produtos = produtos;
 		this.endereco = endereco;
+		this.roles = roles;
 	}
 
 	public Integer getId() {
@@ -129,20 +129,20 @@ public class Usuario {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public Boolean getAtivo() {
 		return ativo;
 	}
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public List<Pedido> getPedidos() {
@@ -169,11 +169,19 @@ public class Usuario {
 		this.endereco = endereco;
 	}
 
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nome=" + nome + ", nomeUsuario=" + nomeUsuario + ", email=" + email + ", cpf="
-				+ cpf + ", dataNascimento=" + dataNascimento + ", password=" + password + ", ativo=" + ativo
-				+ ", pedidos=" + pedidos + ", produtos=" + produtos + ", endereco=" + endereco + "]";
+				+ cpf + ", dataNascimento=" + dataNascimento + ", ativo=" + ativo + ", password=" + password
+				+ ", pedidos=" + pedidos + ", produtos=" + produtos + ", endereco=" + endereco + ", roles=" + roles
+				+ "]";
 	}
-
 }

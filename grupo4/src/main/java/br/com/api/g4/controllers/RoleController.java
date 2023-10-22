@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.api.g4.dto.RoleDTO;
 import br.com.api.g4.entities.Role;
 import br.com.api.g4.services.RoleService;
 
@@ -19,7 +20,7 @@ public class RoleController {
 	RoleService roleService;
 	
 	@PostMapping
-	public ResponseEntity<Role> save(@RequestBody Role role) {
+	public ResponseEntity<Role> save(@RequestBody RoleDTO role) {
 		Role newRole = roleService.save(role);
 		if(newRole != null)
 			return new ResponseEntity<>(newRole, HttpStatus.CREATED);

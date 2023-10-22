@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.api.g4.dto.CategoriaDTO;
 import br.com.api.g4.entities.Categoria;
 import br.com.api.g4.services.CategoriaService;
-import br.com.api.g4.services.EmailService;
 
 @RestController
 @RequestMapping("/categoria")
@@ -28,9 +28,9 @@ public class CategoriaController {
 	public Integer getCount() {
 		return categoriaService.getCount();
 	}
-	
+
 	@PostMapping("/salvar")
-	public Categoria salvar(@RequestBody Categoria objetoTeste) {
+	public Categoria salvar(@RequestBody CategoriaDTO objetoTeste) {
 		return categoriaService.salvar(objetoTeste);
 	}
 
@@ -50,7 +50,7 @@ public class CategoriaController {
 	}
 
 	@PutMapping("/atualizar/{id}")
-	public Categoria atualizar(@PathVariable Integer id, @RequestBody Categoria objetoTeste) {
+	public Categoria atualizar(@PathVariable Integer id, @RequestBody CategoriaDTO objetoTeste) {
 		return categoriaService.atualizar(id,objetoTeste);
 	}
 }

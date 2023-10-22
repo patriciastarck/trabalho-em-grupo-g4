@@ -18,22 +18,28 @@ public class EnderecoService {
 	@Autowired
 	EnderecoRepository enderecoRepository;
 
-	public Integer getCount() {
-		return enderecoRepository.contar();
-	}
-	
-	public Endereco salvar(EnderecoDTO endereco) {
+	public Endereco parseDeEndereco(EnderecoDTO endereco) {
 		Endereco viaCep=pesquisarEndereco(endereco.getCep());
 		Endereco enderecoNovo=new Endereco();
 		
 		enderecoNovo.setCep(endereco.getCep());
 		enderecoNovo.setComplemento(endereco.getComplemento());
-		enderecoNovo.setAtivo(endereco.getAtivo());
 		enderecoNovo.setNumero(endereco.getNumero());
 		enderecoNovo.setBairro(viaCep.getBairro());
 		enderecoNovo.setLocalidade(viaCep.getLocalidade());
 		enderecoNovo.setLogradouro(viaCep.getLogradouro());
 		enderecoNovo.setUf(viaCep.getUf());
+		
+		return enderecoNovo;
+	}
+	
+	public Integer getCount() {
+		return enderecoRepository.contar();
+	}
+	
+	public Endereco salvar(EnderecoDTO endereco) {
+		Endereco enderecoNovo = parseDeEndereco(endereco);
+		enderecoNovo.setAtivo(true);
 		return enderecoRepository.save(enderecoNovo);
 	}
 
@@ -53,32 +59,33 @@ public class EnderecoService {
 		}
 	}
 	
-	public Endereco atualizar(Integer id, Endereco objetoTeste) {
+	public Endereco atualizar(Integer id, EnderecoDTO objetoTeste) {
 		Endereco registroAntigo = acharId(id);
+		Endereco endereco = parseDeEndereco(objetoTeste);
 
-		if (objetoTeste.getCep() != null) {
-			registroAntigo.setCep(objetoTeste.getCep());
+		if (endereco.getCep() != null) {
+			registroAntigo.setCep(endereco.getCep());
 		}
-		if (objetoTeste.getLogradouro() != null) {
-			registroAntigo.setLogradouro(objetoTeste.getLogradouro());
+		if (endereco.getLogradouro() != null) {
+			registroAntigo.setLogradouro(endereco.getLogradouro());
 		}
-		if (objetoTeste.getComplemento() != null) {
-			registroAntigo.setComplemento(objetoTeste.getComplemento());
+		if (endereco.getComplemento() != null) {
+			registroAntigo.setComplemento(endereco.getComplemento());
 		}
-		if (objetoTeste.getBairro() != null) {
-			registroAntigo.setBairro(objetoTeste.getBairro());
+		if (endereco.getBairro() != null) {
+			registroAntigo.setBairro(endereco.getBairro());
 		}
-		if (objetoTeste.getLocalidade() != null) {
-		registroAntigo.setLocalidade(objetoTeste.getLocalidade());
+		if (endereco.getLocalidade() != null) {
+		registroAntigo.setLocalidade(endereco.getLocalidade());
 		}
-		if (objetoTeste.getUf() != null) {
-			registroAntigo.setUf(objetoTeste.getUf());
+		if (endereco.getUf() != null) {
+			registroAntigo.setUf(endereco.getUf());
 		}
-		if (objetoTeste.getAtivo() != null) {
-			registroAntigo.setAtivo(objetoTeste.getAtivo());
+		if (endereco.getAtivo() != null) {
+			registroAntigo.setAtivo(endereco.getAtivo());
 		}
-		if (objetoTeste.getNumero() != null) {
-			registroAntigo.setNumero(objetoTeste.getNumero());
+		if (endereco.getNumero() != null) {
+			registroAntigo.setNumero(endereco.getNumero());
 		}
 		registroAntigo.setId(id);
 		return enderecoRepository.save(registroAntigo);
