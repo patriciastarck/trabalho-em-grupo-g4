@@ -19,7 +19,6 @@ public class Pedido {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
-	@Column(nullable = false, unique = true)
 	private Integer id;
 	@Column()
 	private LocalDate dataPedido;

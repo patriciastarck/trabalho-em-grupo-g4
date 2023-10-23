@@ -19,6 +19,8 @@ public class UsuarioService {
 
 	@Autowired
 	UsuarioRepository usuarioRepository;
+	@Autowired
+	EnderecoService listarEndereco;
 
 	public Usuario parseDeUsuario(UsuarioDTO objeto) {
 		Usuario usuarioNovo = new Usuario();
@@ -94,7 +96,6 @@ public class UsuarioService {
 		return usuarioRepository.save(registroAntigo);
 	}
 
-	EnderecoService listarEndereco;
 
 	public List<Endereco> listarEndereco() {
 		// TODO Auto-generated method stub

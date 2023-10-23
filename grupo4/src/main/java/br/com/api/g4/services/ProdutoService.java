@@ -39,12 +39,9 @@ public class ProdutoService {
 		for (int i = 0; i < produtos.size(); i++) {
 
 			registroAntigo = acharId(produtos.get(i).getId());
-
-			Integer a = registroAntigo.getQntdEstoque();
-			Integer b = produtos.get(i).getQuantidadePorProduto();
-			Integer c = a - b;
-
-			registroAntigo.setQntdEstoque(c);
+			
+			
+			registroAntigo.setQntdEstoque(registroAntigo.getQntdEstoque()-produtos.get(i).getQuantidadePorProduto());
 
 			registroAntigo.setId(produtos.get(i).getId());
 			registroAntigos.add(registroAntigo);

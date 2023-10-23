@@ -21,7 +21,6 @@ public class Produto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
-	@Column(nullable = false, unique = true)
 	private Integer id;
 	@Column(length = 60)
 	private String nome;
@@ -37,15 +36,14 @@ public class Produto {
 	@ElementCollection
 	@CollectionTable(name = "pedido_produto", joinColumns = @JoinColumn(name = "produto_id"))
 	@MapKeyJoinColumn(name = "pedido_id")
-	@Column(name = "quantidade")
-	private Map<Pedido, Integer> itemQuantidade = new HashMap<>();
+	private Map<Pedido, PedidoProdutoEntry> itemQuantidade = new HashMap<>();
 
 	public Produto() {
 		super();
 	}
 
 	public Produto(Integer id, String nome, String descricao, LocalDate dataFabricacao, Integer qntdEstoque,
-			Double valorUnitario, Boolean ativo, Map<Pedido, Integer> itemQuantidade) {
+			Double valorUnitario, Boolean ativo, Map<Pedido, PedidoProdutoEntry> itemQuantidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -54,14 +52,6 @@ public class Produto {
 		this.qntdEstoque = qntdEstoque;
 		this.valorUnitario = valorUnitario;
 		this.ativo = ativo;
-		this.itemQuantidade = itemQuantidade;
-	}
-
-	public Map<Pedido, Integer> getItemQuantidade() {
-		return itemQuantidade;
-	}
-
-	public void setItemQuantidade(Map<Pedido, Integer> itemQuantidade) {
 		this.itemQuantidade = itemQuantidade;
 	}
 
@@ -119,6 +109,14 @@ public class Produto {
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public Map<Pedido, PedidoProdutoEntry> getItemQuantidade() {
+		return itemQuantidade;
+	}
+
+	public void setItemQuantidade(Map<Pedido, PedidoProdutoEntry> itemQuantidade) {
+		this.itemQuantidade = itemQuantidade;
 	}
 
 	@Override
