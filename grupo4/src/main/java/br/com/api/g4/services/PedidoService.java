@@ -1,6 +1,7 @@
 package br.com.api.g4.services;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,23 +26,22 @@ public class PedidoService {
 	@Autowired
 	ProdutoRepository produtoRepository;
 
-	List<Produto> produtos = new ArrayList<>();
+	List<Produto> produtos;
 
 	public Pedido parsePedidoDeProduto(PedidoDeProdutoDTO obj) {
+		produtos = new ArrayList<>();
 		Pedido pedido = new Pedido();
 		List<ProdutoDePedidoDTO> produtosDoPedido = obj.getProdutos();
 
 		for (ProdutoDePedidoDTO itemPedido : produtosDoPedido) {
 			Produto produto = produtoRepository.findById(itemPedido.getId()).get();
-			PedidoProdutoEntry existingEntry = produto.getItemQuantidade().get(pedido);
 
-			if (existingEntry != null) {
-				existingEntry.setQuantidade(existingEntry.getQuantidade() + itemPedido.getQuantidadePorProduto());
-			} else {
-				PedidoProdutoEntry novoPedidoProdutoEntry = new PedidoProdutoEntry();
-				novoPedidoProdutoEntry.setQuantidade(itemPedido.getQuantidadePorProduto());
-				produto.getItemQuantidade().put(pedido, novoPedidoProdutoEntry);
-			}
+			PedidoProdutoEntry pedidoProdutoEntry = new PedidoProdutoEntry();
+			pedidoProdutoEntry.setDataHora(LocalDateTime.now());
+			pedidoProdutoEntry.setQuantidade(itemPedido.getQuantidadePorProduto());
+
+			produto.getItemQuantidade().put(pedido, pedidoProdutoEntry);
+			
 			produtos.add(produto);
 		}
 
@@ -56,9 +56,9 @@ public class PedidoService {
 		Pedido pedido = parsePedidoDeProduto(objetoPedido);
 		pedido.setAtivo(true);
 		pedido.setDataPedido(LocalDate.now());
+		pedidoRepository.save(pedido);
 		pedido.setProdutos(produtos);
 
-		pedidoRepository.save(pedido);
 		produtoService.atualizacaoDeEstoque(objetoPedido.getProdutos());
 
 		return pedido;

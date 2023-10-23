@@ -33,7 +33,7 @@ public class ProdutoService {
 	}
 
 	public void atualizacaoDeEstoque(List<ProdutoDePedidoDTO> produtos) {
-		List<Produto> registroAntigos = new ArrayList<Produto>();
+		List<Produto> registroAntigos = new ArrayList<>();
 		Produto registroAntigo = new Produto();
 
 		for (int i = 0; i < produtos.size(); i++) {
