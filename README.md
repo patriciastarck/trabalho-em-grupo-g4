@@ -59,4 +59,4 @@ de usuários e o controle de estoque de seus produtos.</h3>
 <br>
 <br>
 <hr>
-<p>© 2023 SmartBear Software. All Rights Reserved.</p>
+<p>© 2023 Grupo 4 Software. Todos os direitos reservados.</p>
