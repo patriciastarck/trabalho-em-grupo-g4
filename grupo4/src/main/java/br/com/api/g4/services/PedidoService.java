@@ -40,13 +40,14 @@ public class PedidoService {
 
 			PedidoProdutoEntry pedidoProdutoEntry = new PedidoProdutoEntry();
 			pedidoProdutoEntry.setDataHora(LocalDateTime.now());
-			pedidoProdutoEntry.setQuantidade(itemPedido.getQuantidadePorProduto());
-
-			produto.getItemQuantidade().put(pedido, pedidoProdutoEntry);
-
-			produtos.add(produto);
+			if (itemPedido.getQuantidadePorProduto() <= produto.getQntdEstoque()) {
+				Integer quantidadeAtualizada = produto.getQntdEstoque() - itemPedido.getQuantidadePorProduto();
+				pedidoProdutoEntry.setQuantidade(itemPedido.getQuantidadePorProduto());
+				produto.getItemQuantidade().put(pedido, pedidoProdutoEntry);
+				produto.setQntdEstoque(quantidadeAtualizada);
+				produtos.add(produto);
+			}
 		}
-
 		return pedido;
 	}
 
@@ -60,9 +61,7 @@ public class PedidoService {
 		pedido.setDataPedido(LocalDate.now());
 		pedidoRepository.save(pedido);
 		pedido.setProdutos(produtos);
-
-		produtoService.atualizacaoDeEstoque(objetoPedido.getProdutos());
-
+//		produtoService.atualizacaoDeEstoque(objetoPedido.getProdutos());
 		return pedido;
 	}
 

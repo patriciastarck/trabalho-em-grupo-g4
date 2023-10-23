@@ -19,8 +19,7 @@ import br.com.api.g4.services.CategoriaService;
 @RestController
 @RequestMapping("/categoria")
 public class CategoriaController {
-	
-    
+
 	@Autowired
 	CategoriaService categoriaService;
 
@@ -51,8 +50,9 @@ public class CategoriaController {
 
 	@PutMapping("/atualizar/{id}")
 	public Categoria atualizar(@PathVariable Integer id, @RequestBody CategoriaDTO objetoTeste) {
-		return categoriaService.atualizar(id,objetoTeste);
+		return categoriaService.atualizar(id, objetoTeste);
 	}
+
 	@PutMapping("/reativacaoDeCategoria/{id}")
 	public void reativacaoDeCategoria(@PathVariable Integer id) {
 		categoriaService.reativacaoDeCategoria(id);

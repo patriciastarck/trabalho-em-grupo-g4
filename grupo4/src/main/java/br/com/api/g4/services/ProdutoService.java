@@ -33,21 +33,21 @@ public class ProdutoService {
 		return produto;
 	}
 
-	public void atualizacaoDeEstoque(List<ProdutoDePedidoDTO> produtos) {
-		List<Produto> registroAntigos = new ArrayList<>();
-		Produto registroAntigo = new Produto();
-
-		for (int i = 0; i < produtos.size(); i++) {
-
-			registroAntigo = acharId(produtos.get(i).getId());
-
-			registroAntigo.setQntdEstoque(registroAntigo.getQntdEstoque() - produtos.get(i).getQuantidadePorProduto());
-
-			registroAntigo.setId(produtos.get(i).getId());
-			registroAntigos.add(registroAntigo);
-		}
-		produtoRepository.saveAll(registroAntigos);
-	}
+//	public void atualizacaoDeEstoque(List<ProdutoDePedidoDTO> produtos) {
+//		List<Produto> registroAntigos = new ArrayList<>();
+//		Produto registroAntigo = new Produto();
+//
+//		for (int i = 0; i < produtos.size(); i++) {
+//
+//			registroAntigo = acharId(produtos.get(i).getId());
+//
+//			registroAntigo.setQntdEstoque(registroAntigo.getQntdEstoque() - produtos.get(i).getQuantidadePorProduto());
+//
+//			registroAntigo.setId(produtos.get(i).getId());
+//			registroAntigos.add(registroAntigo);
+//		}
+//		produtoRepository.saveAll(registroAntigos);
+//	}
 
 	public Integer getCount() {
 		return produtoRepository.contar();
