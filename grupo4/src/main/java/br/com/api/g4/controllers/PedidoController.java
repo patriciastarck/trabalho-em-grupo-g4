@@ -54,11 +54,6 @@ public class PedidoController {
 		return pedidoService.listar();
 	}
 
-	@DeleteMapping("/deletar/{id}")
-	public void deletar(@PathVariable Integer id) {
-		pedidoService.apagar(id);
-	}
-
 	@DeleteMapping("/deletarLogico/{id}")
 	public void deletarLogico(@PathVariable Integer id) {
 		pedidoService.apagarLogico(id);

@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +43,7 @@ public class PedidoService {
 			pedidoProdutoEntry.setQuantidade(itemPedido.getQuantidadePorProduto());
 
 			produto.getItemQuantidade().put(pedido, pedidoProdutoEntry);
-			
+
 			produtos.add(produto);
 		}
 
@@ -66,7 +68,11 @@ public class PedidoService {
 
 	// TODO PedidoDTO de retorno com data formatada
 	public Pedido acharId(Integer id) {
-		return pedidoRepository.findById(id).get();
+		if (pedidoRepository.findById(id).get() != null) {
+			throw new EntityNotFoundException("Esse pedido não existe");
+		} else {
+			return pedidoRepository.findById(id).get();
+		}
 	}
 
 	// TODO PedidoDTO de retorno com data formatada
@@ -74,28 +80,32 @@ public class PedidoService {
 		return pedidoRepository.findAll();
 	}
 
-	public void apagar(Integer id) {
-		pedidoRepository.deleteById(id);
-	}
-
 	public void apagarLogico(Integer id) {
-		Pedido objPedido = acharId(id);
-		if (objPedido != null) {
-			objPedido.setAtivo(false);
-			pedidoRepository.save(objPedido);
+		if (pedidoRepository.findById(id).get() != null) {
+			throw new EntityNotFoundException("Esse pedido não existe");
+		} else {
+			Pedido objPedido = acharId(id);
+			if (objPedido != null) {
+				objPedido.setAtivo(false);
+				pedidoRepository.save(objPedido);
+			}
 		}
 	}
 
 	public Pedido atualizar(Integer id, PedidoDeProdutoDTO objetoPedido) {
-		Pedido registroAntigo = acharId(id);
-		Pedido pedido = parsePedidoDeProduto(objetoPedido);
-		if (pedido.getAtivo() != null) {
-			registroAntigo.setAtivo(pedido.getAtivo());
+		if (pedidoRepository.findById(id).get() != null) {
+			throw new EntityNotFoundException("Esse pedido não existe");
+		} else {
+			Pedido registroAntigo = acharId(id);
+			Pedido pedido = parsePedidoDeProduto(objetoPedido);
+			if (pedido.getAtivo() != null) {
+				registroAntigo.setAtivo(pedido.getAtivo());
+			}
+			if (pedido.getProdutos() != null) {
+				registroAntigo.setProdutos(pedido.getProdutos());
+			}
+			registroAntigo.setId(id);
+			return pedidoRepository.save(registroAntigo);
 		}
-		if (pedido.getProdutos() != null) {
-			registroAntigo.setProdutos(pedido.getProdutos());
-		}
-		registroAntigo.setId(id);
-		return pedidoRepository.save(registroAntigo);
 	}
 }

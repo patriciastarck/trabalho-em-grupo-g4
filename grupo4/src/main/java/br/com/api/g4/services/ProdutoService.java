@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.api.g4.dto.ProdutoDTO;
 import br.com.api.g4.dto.ProdutoDePedidoDTO;
 import br.com.api.g4.dto.PromocaoDTO;
-import br.com.api.g4.entities.Endereco;
 import br.com.api.g4.entities.Produto;
 import br.com.api.g4.repositories.ProdutoRepository;
 
@@ -39,9 +40,8 @@ public class ProdutoService {
 		for (int i = 0; i < produtos.size(); i++) {
 
 			registroAntigo = acharId(produtos.get(i).getId());
-			
-			
-			registroAntigo.setQntdEstoque(registroAntigo.getQntdEstoque()-produtos.get(i).getQuantidadePorProduto());
+
+			registroAntigo.setQntdEstoque(registroAntigo.getQntdEstoque() - produtos.get(i).getQuantidadePorProduto());
 
 			registroAntigo.setId(produtos.get(i).getId());
 			registroAntigos.add(registroAntigo);
@@ -60,7 +60,11 @@ public class ProdutoService {
 	}
 
 	public Produto acharId(Integer id) {
-		return produtoRepository.findById(id).get();
+		if (produtoRepository.findById(id).get() != null) {
+			throw new EntityNotFoundException("Esse produto não existe");
+		} else {
+			return produtoRepository.findById(id).get();
+		}
 	}
 
 	public List<Produto> listar() {
@@ -68,41 +72,53 @@ public class ProdutoService {
 	}
 
 	public void deletar(Integer id) {
-		produtoRepository.deleteById(id);
+		if (produtoRepository.findById(id).get() != null) {
+			throw new EntityNotFoundException("Esse produto não existe");
+		} else {
+			produtoRepository.deleteById(id);
+		}
 	}
 
 	public void deletarlogico(Integer id) {
-		Produto objProduto = acharId(id);
-		if (objProduto != null) {
-			objProduto.setAtivo(false);
-			produtoRepository.save(objProduto);
+		if (produtoRepository.findById(id).get() != null) {
+			throw new EntityNotFoundException("Esse produto não existe");
+		} else {
+			Produto objProduto = acharId(id);
+			if (objProduto != null) {
+				objProduto.setAtivo(false);
+				produtoRepository.save(objProduto);
+			}
 		}
 	}
 
 	public Produto atualizar(Integer id, ProdutoDTO objetoproduto) {
-		Produto registroAntigo = acharId(id);
-		Produto produto = parseDeProduto(objetoproduto);
+		if (produtoRepository.findById(id).get() != null) {
+			throw new EntityNotFoundException("Esse produto não existe");
+		} else {
+			Produto registroAntigo = acharId(id);
+			Produto produto = parseDeProduto(objetoproduto);
 
-		if (produto.getAtivo() != null) {
-			registroAntigo.setAtivo(produto.getAtivo());
+			if (produto.getAtivo() != null) {
+				registroAntigo.setAtivo(produto.getAtivo());
+			}
+			if (produto.getNome() != null) {
+				registroAntigo.setNome(produto.getNome());
+			}
+			if (produto.getDescricao() != null) {
+				registroAntigo.setDescricao(produto.getDescricao());
+			}
+			if (produto.getDataFabricacao() != null) {
+				registroAntigo.setDataFabricacao(produto.getDataFabricacao());
+			}
+			if (produto.getQntdEstoque() != null) {
+				registroAntigo.setQntdEstoque(produto.getQntdEstoque());
+			}
+			if (produto.getValorUnitario() != null) {
+				registroAntigo.setValorUnitario(produto.getValorUnitario());
+			}
+			registroAntigo.setId(id);
+			return produtoRepository.save(registroAntigo);
 		}
-		if (produto.getNome() != null) {
-			registroAntigo.setNome(produto.getNome());
-		}
-		if (produto.getDescricao() != null) {
-			registroAntigo.setDescricao(produto.getDescricao());
-		}
-		if (produto.getDataFabricacao() != null) {
-			registroAntigo.setDataFabricacao(produto.getDataFabricacao());
-		}
-		if (produto.getQntdEstoque() != null) {
-			registroAntigo.setQntdEstoque(produto.getQntdEstoque());
-		}
-		if (produto.getValorUnitario() != null) {
-			registroAntigo.setValorUnitario(produto.getValorUnitario());
-		}
-		registroAntigo.setId(id);
-		return produtoRepository.save(registroAntigo);
 	}
 
 	public List<PromocaoDTO> promocao() {
@@ -112,10 +128,14 @@ public class ProdutoService {
 	}
 
 	public void reativacaoDeProduto(Integer id) {
-		Produto objTeste = acharId(id);
-		if (objTeste != null) {
-			objTeste.setAtivo(true);
-			produtoRepository.save(objTeste);
+		if (produtoRepository.findById(id).get() != null) {
+			throw new EntityNotFoundException("Esse produto não existe");
+		} else {
+			Produto objTeste = acharId(id);
+			if (objTeste != null) {
+				objTeste.setAtivo(true);
+				produtoRepository.save(objTeste);
+			}
 		}
 	}
 }
