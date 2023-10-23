@@ -111,7 +111,6 @@ public class UsuarioService {
 	}
 
 	public List<Endereco> listarEndereco() {
-		// TODO Auto-generated method stub
 		return listarEndereco.listar();
 	}
 

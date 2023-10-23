@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -19,9 +21,9 @@ public class EnderecoService {
 	EnderecoRepository enderecoRepository;
 
 	public Endereco parseDeEndereco(EnderecoDTO endereco) {
-		Endereco viaCep=pesquisarEndereco(endereco.getCep());
-		Endereco enderecoNovo=new Endereco();
-		
+		Endereco viaCep = pesquisarEndereco(endereco.getCep());
+		Endereco enderecoNovo = new Endereco();
+
 		enderecoNovo.setCep(endereco.getCep());
 		enderecoNovo.setComplemento(endereco.getComplemento());
 		enderecoNovo.setNumero(endereco.getNumero());
@@ -29,14 +31,14 @@ public class EnderecoService {
 		enderecoNovo.setLocalidade(viaCep.getLocalidade());
 		enderecoNovo.setLogradouro(viaCep.getLogradouro());
 		enderecoNovo.setUf(viaCep.getUf());
-		
+
 		return enderecoNovo;
 	}
-	
+
 	public Integer getCount() {
 		return enderecoRepository.contar();
 	}
-	
+
 	public Endereco salvar(EnderecoDTO endereco) {
 		Endereco enderecoNovo = parseDeEndereco(endereco);
 		enderecoNovo.setAtivo(true);
@@ -44,7 +46,11 @@ public class EnderecoService {
 	}
 
 	public Endereco acharId(Integer id) {
-		return enderecoRepository.findById(id).get();
+		if (enderecoRepository.existsById(id)) {
+			return enderecoRepository.findById(id).get();
+		} else {
+			throw new EntityNotFoundException("Esse ID não está cadastrado no banco.");
+		}
 	}
 
 	public List<Endereco> listar() {
@@ -58,7 +64,7 @@ public class EnderecoService {
 			enderecoRepository.save(objTeste);
 		}
 	}
-	
+
 	public Endereco atualizar(Integer id, EnderecoDTO objetoTeste) {
 		Endereco registroAntigo = acharId(id);
 		Endereco endereco = parseDeEndereco(objetoTeste);
@@ -76,7 +82,7 @@ public class EnderecoService {
 			registroAntigo.setBairro(endereco.getBairro());
 		}
 		if (endereco.getLocalidade() != null) {
-		registroAntigo.setLocalidade(endereco.getLocalidade());
+			registroAntigo.setLocalidade(endereco.getLocalidade());
 		}
 		if (endereco.getUf() != null) {
 			registroAntigo.setUf(endereco.getUf());
@@ -90,7 +96,7 @@ public class EnderecoService {
 		registroAntigo.setId(id);
 		return enderecoRepository.save(registroAntigo);
 	}
-	
+
 	public Endereco pesquisarEndereco(String cep) {
 		RestTemplate restTemplate = new RestTemplate();
 		String uri = "http://viacep.com.br/ws/{cep}/json/";
@@ -98,7 +104,7 @@ public class EnderecoService {
 		params.put("cep", cep);
 		return restTemplate.getForObject(uri, Endereco.class, params);
 	}
-	
+
 	public void reativacaoDeEndereco(Integer id) {
 		Endereco objTeste = acharId(id);
 		if (objTeste != null) {
