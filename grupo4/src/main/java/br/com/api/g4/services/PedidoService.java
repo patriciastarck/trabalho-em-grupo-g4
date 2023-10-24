@@ -92,7 +92,7 @@ public class PedidoService {
 
 		pedido.setAtivo(true);
 		pedido.setDataPedido(LocalDate.now());
-		pedido.setProdutos(produtos);
+//		pedido.setProdutos(produtos);
 		System.out.println(pedido);
 		pedidoRepository.save(pedido);
 
@@ -107,13 +107,12 @@ public class PedidoService {
 		usuarioRepository.save(usuario);
 
 		return pedido;
-
+	}
 //		for (int i = 0; i < usuario.getPedidos().size(); i++) {
 //		pedidos.add(pedido);
 //		}
 //		usuario.setPedidos(pedidos);
 //		usuarioRepository.save(usuario);
-	}
 
 	public PedidoRespostaDTO acharId(Integer id) {
 		PedidoRespostaDTO pedidoResposta = parseDePedidoResposta(pedidoRepository.findById(id).get());

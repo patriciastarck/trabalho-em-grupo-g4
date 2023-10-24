@@ -46,7 +46,9 @@ public class EnderecoService {
 
 	public void salvar(EnderecoDTO endereco, String email) {
 		Endereco enderecoNovo = parseDeEndereco(endereco);
+		
 		enderecoNovo.setAtivo(true);
+		
 		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
 		usuario.get().getEndereco().add(enderecoNovo);
 		
