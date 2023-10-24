@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.api.g4.dto.PedidoDeProdutoDTO;
+import br.com.api.g4.dto.PedidoRespostaDTO;
 import br.com.api.g4.dto.ProdutoDePedidoDTO;
 import br.com.api.g4.entities.Pedido;
 import br.com.api.g4.entities.PedidoProdutoEntry;
@@ -72,13 +73,22 @@ public class PedidoService {
 		return pedido;
 	}
 
+	public PedidoRespostaDTO parseDePedidoResposta(Pedido pedido) {
+		PedidoRespostaDTO pedidoResposta = new PedidoRespostaDTO();
+
+		pedidoResposta.setAtivo(pedido.getAtivo());
+		pedidoResposta.setDataPedido(pedido.getDataPedido());
+		pedidoResposta.setProdutos(pedido.getProdutos());
+
+		return pedidoResposta;
+	}
+
 	public Integer getCount() {
 		return pedidoRepository.contar();
 	}
 
 	public Pedido salvar(PedidoDeProdutoDTO objetoPedido, String email) {
 		Pedido pedido = atualizacaoDeEstoque(objetoPedido);
-		 
 
 		pedido.setAtivo(true);
 		pedido.setDataPedido(LocalDate.now());
@@ -88,9 +98,9 @@ public class PedidoService {
 
 		Usuario usuario = usuarioRepository.findByEmail(email).get();
 		List<Pedido> pedidos = usuario.getPedidos();
-		if(pedidos==null) {
+		if (pedidos == null) {
 			usuario.setPedidos(List.of(pedido));
-		}else {
+		} else {
 			pedidos.add(pedido);
 			usuario.setPedidos(pedidos);
 		}
@@ -105,47 +115,33 @@ public class PedidoService {
 //		usuarioRepository.save(usuario);
 	}
 
-	// TODO PedidoDTO de retorno com data formatada
-	public Pedido acharId(Integer id) {
-		if (pedidoRepository.findById(id).get() != null) {
-			throw new EntityNotFoundException("Esse pedido não existe");
-		} else {
-			return pedidoRepository.findById(id).get();
-		}
+	public PedidoRespostaDTO acharId(Integer id) {
+		PedidoRespostaDTO pedidoResposta = parseDePedidoResposta(pedidoRepository.findById(id).get());
+		return pedidoResposta;
 	}
 
-	// TODO PedidoDTO de retorno com data formatada
-	public List<Pedido> listar() {
-		return pedidoRepository.findAll();
+	public List<PedidoRespostaDTO> listar() {
+		List<PedidoRespostaDTO> pedidosResposta = new ArrayList<>();
+		List<Pedido> pedidos = pedidoRepository.findAll();
+
+		for (Pedido pedido : pedidos) {
+			pedidosResposta.add(parseDePedidoResposta(pedido));
+		}
+		return pedidosResposta;
+
 	}
 
 	public void apagarLogico(Integer id) {
 		if (pedidoRepository.findById(id).get() != null) {
 			throw new EntityNotFoundException("Esse pedido não existe");
 		} else {
-			Pedido objPedido = acharId(id);
+			Optional<Pedido> objPedido = pedidoRepository.findById(id);
 			if (objPedido != null) {
-				objPedido.setAtivo(false);
-				pedidoRepository.save(objPedido);
+
+				objPedido.get().setAtivo(false);
+				pedidoRepository.save(objPedido.get());
 			}
 		}
 	}
 
-//	public Pedido atualizar(Integer id, PedidoDeProdutoDTO objetoPedido) {
-//		if (pedidoRepository.findById(id).get() != null) {
-//			throw new EntityNotFoundException("Esse pedido não existe");
-//		} else {
-//			
-//			Pedido registroAntigo = acharId(id);
-//			Pedido pedido = parsePedidoDeProduto(objetoPedido);
-//			if (pedido.getAtivo() != null) {
-//				registroAntigo.setAtivo(pedido.getAtivo());
-//			}
-//			if (pedido.getProdutos() != null) {
-//				registroAntigo.setProdutos(pedido.getProdutos());
-//			}
-//			registroAntigo.setId(id);
-//			return pedidoRepository.save(registroAntigo);
-//		}
-//	}
 }
