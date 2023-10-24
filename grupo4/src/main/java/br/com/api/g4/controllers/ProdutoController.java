@@ -40,8 +40,8 @@ public class ProdutoController {
 	}
 
 	@PostMapping("/salvar")
-	public void salvar(@RequestBody ProdutoDTO objetoProduto, @RequestParam String nome) {
-		produtoService.salvar(objetoProduto,nome);
+	public void salvar(@RequestBody ProdutoDTO objetoProduto, @RequestParam String nomeDaCategoria,@RequestParam String email) {
+		produtoService.salvar(objetoProduto,nomeDaCategoria,email);
 	}
 
 	@GetMapping("/{id}")

@@ -15,8 +15,10 @@ import br.com.api.g4.dto.ProdutoRespostaDTO;
 import br.com.api.g4.dto.PromocaoDTO;
 import br.com.api.g4.entities.Categoria;
 import br.com.api.g4.entities.Produto;
+import br.com.api.g4.entities.Usuario;
 import br.com.api.g4.repositories.CategoriaRepository;
 import br.com.api.g4.repositories.ProdutoRepository;
+import br.com.api.g4.repositories.UsuarioRepository;
 
 @Service
 public class ProdutoService {
@@ -25,7 +27,8 @@ public class ProdutoService {
 	ProdutoRepository produtoRepository;
 	@Autowired
 	CategoriaRepository categoriaRepository;
-	
+	@Autowired
+	UsuarioRepository usuarioRepository;
 
 	public Produto parseDeProduto(ProdutoDTO objeto) {
 		Produto produto = new Produto();
@@ -36,9 +39,10 @@ public class ProdutoService {
 		produto.setQntdEstoque(objeto.getQntdEstoque());
 		produto.setValorUnitario(objeto.getValorUnitario());
 		produto.setDataFabricacao(objeto.getDataFabricacao());
-		
+
 		return produto;
 	}
+
 	public ProdutoRespostaDTO parseDeProdutoResposta(Produto objeto) {
 		ProdutoRespostaDTO produto = new ProdutoRespostaDTO();
 
@@ -48,43 +52,33 @@ public class ProdutoService {
 		produto.setQntdEstoque(objeto.getQntdEstoque());
 		produto.setValorUnitario(objeto.getValorUnitario());
 		produto.setDataFabricacao(objeto.getDataFabricacao());
-		
+
 		return produto;
 	}
-
-//	public void atualizacaoDeEstoque(List<ProdutoDePedidoDTO> produtos) {
-//		List<Produto> registroAntigos = new ArrayList<>();
-//		Produto registroAntigo = new Produto();
-//
-//		for (int i = 0; i < produtos.size(); i++) {
-//
-//			registroAntigo = acharId(produtos.get(i).getId());
-//
-//			registroAntigo.setQntdEstoque(registroAntigo.getQntdEstoque() - produtos.get(i).getQuantidadePorProduto());
-//
-//			registroAntigo.setId(produtos.get(i).getId());
-//			registroAntigos.add(registroAntigo);
-//		}
-//		produtoRepository.saveAll(registroAntigos);
-//	}
 
 	public Integer getCount() {
 		return produtoRepository.contar();
 	}
 
-	public void salvar(ProdutoDTO objetoproduto, String nome)
-	{
-		Optional<Categoria>categoria = categoriaRepository.findByNome(nome);
-		Produto produto = parseDeProduto(objetoproduto);
-		
-		produto.setAtivo(true);
+	public void salvar(ProdutoDTO objetoproduto, String nome, String email) {
+		Produto produtoNovo = parseDeProduto(objetoproduto);
+
+		produtoNovo.setAtivo(true);
+
+		Optional<Categoria> categoria = categoriaRepository.findByNome(nome);
+		categoria.get().getProdutos().add(produtoNovo);
+
+		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+		usuario.get().getProdutos().add(produtoNovo);
+
+		produtoRepository.save(produtoNovo);
 		categoriaRepository.save(categoria.get());
-		produtoRepository.save(produto);
+		usuarioRepository.save(usuario.get());
 	}
 
 	public ProdutoRespostaDTO acharId(Integer id) {
 		if (produtoRepository.findById(id).get() != null) {
-			
+
 			throw new EntityNotFoundException("Esse produto não existe");
 		} else {
 			ProdutoRespostaDTO produtoResposta = parseDeProdutoResposta(produtoRepository.findById(id).get());
