@@ -57,11 +57,6 @@ public class ProdutoController {
 		produtoService.deletar(id);
 	}
 
-	@DeleteMapping("/deletarLogico/{id}")
-	public void deletarlogico(@PathVariable Integer id) {
-		produtoService.deletarlogico(id);
-	}
-
 	@PutMapping("/atualizar/{id}")
 	public Produto atualizar(@PathVariable Integer id, @RequestBody ProdutoDTO objetoProduto) {
 		return produtoService.atualizar(id, objetoProduto);
@@ -72,6 +67,7 @@ public class ProdutoController {
 		emailService.envioEmailPromo();
 		return produtoService.promocao();
 	}
+	
 	@PutMapping("/reativacaoDeProduto/{id}")
 	public void reativacaoDeProduto(@PathVariable Integer id) {
 		produtoService.reativacaoDeProduto(id);

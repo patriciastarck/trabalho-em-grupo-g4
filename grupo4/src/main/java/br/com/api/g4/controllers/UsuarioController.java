@@ -71,18 +71,6 @@ public class UsuarioController {
 		return usuarioService.getCount();
 	}
 
-//	@PostMapping("/salvar")
-//	public Usuario salvar(@RequestBody UsuarioDTO objetousuario) {
-//
-//		return usuarioService.salvar(objetousuario);
-//	}
-
-	@PostMapping("/salvar")
-	public ResponseEntity<MessageResponseDTO> salvar(@RequestBody UsuarioDTO objetousuario){
-		
-		return ResponseEntity.ok(new MessageResponseDTO("Parabens você finalizou o trabalho com muito custo!"));
-	}
-	
 	@GetMapping("/{id}")
 	public Usuario acharId(@PathVariable Integer id) {
 		return usuarioService.acharId(id);
