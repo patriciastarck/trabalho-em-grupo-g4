@@ -166,7 +166,7 @@ public class EmailService {
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(mensagemCadastro, true);
 			helper.setFrom("gp4api.serratec@gmail.com");
-			helper.setTo("oliveiraagall@gmail.com");
+			helper.setTo(objetousuario.getEmail());
 			String nome = objetousuario.getNome();
 			helper.setSubject("Olá " + nome + " sua conta foi criada com sucesso.");
 
@@ -211,7 +211,7 @@ public class EmailService {
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(mensagemCadastro, true);
 			helper.setFrom("gp4api.serratec@gmail.com");
-			helper.setTo("oliveiraagall@gmail.com");
+			helper.setTo(usuario.getEmail());
 			String nome = usuario.getNome();
 			helper.setSubject("Olá " + nome + " sua conta foi apagada com sucesso.");
 
@@ -279,7 +279,7 @@ public class EmailService {
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(mensagemCadastro, true);
 			helper.setFrom("gp4api.serratec@gmail.com");
-			helper.setTo("oliveiraagall@gmail.com");
+			helper.setTo(usuario.getEmail());
 			String nome = usuario.getNome();
 			helper.setSubject("Olá " + nome + " vamos recuperar a sua senha");
 			StringBuilder builder = new StringBuilder();
@@ -309,7 +309,7 @@ public class EmailService {
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(mensagemCadastro, true);
 			helper.setFrom("gp4api.serratec@gmail.com");
-			helper.setTo("oliveiraagall@gmail.com");
+			helper.setTo(usuario.getEmail());
 			String nome = usuario.getNome();
 			helper.setSubject("Olá " + nome + " vamos recuperar o sua conta");
 			StringBuilder builder = new StringBuilder();
