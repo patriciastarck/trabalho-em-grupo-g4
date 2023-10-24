@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.g4.dto.EnderecoDTO;
@@ -29,8 +30,8 @@ public class EnderecoController {
 	}
 
 	@PostMapping("/salvar")
-	public Endereco salvar(@RequestBody EnderecoDTO endereco) {
-		return enderecoService.salvar(endereco);
+	public void salvar(@RequestBody EnderecoDTO endereco, @RequestParam String email) {
+		enderecoService.salvar(endereco, email);
 	}
 
 	@GetMapping("/{id}")
@@ -47,11 +48,12 @@ public class EnderecoController {
 	public void deletarlogico(@PathVariable Integer id) {
 		enderecoService.deletarlogico(id);
 	}
-	
+
 	@PutMapping("/atualizar/{id}")
 	public Endereco atualizar(@PathVariable Integer id, @RequestBody EnderecoDTO objetoEndereco) {
 		return enderecoService.atualizar(id, objetoEndereco);
 	}
+
 	@PutMapping("/reativacaoDeEndereco/{id}")
 	public void reativacaoDeEndereco(@PathVariable Integer id) {
 		enderecoService.reativacaoDeEndereco(id);

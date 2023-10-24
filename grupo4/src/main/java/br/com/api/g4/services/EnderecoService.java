@@ -3,6 +3,7 @@ package br.com.api.g4.services;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -12,13 +13,17 @@ import org.springframework.web.client.RestTemplate;
 
 import br.com.api.g4.dto.EnderecoDTO;
 import br.com.api.g4.entities.Endereco;
+import br.com.api.g4.entities.Usuario;
 import br.com.api.g4.repositories.EnderecoRepository;
+import br.com.api.g4.repositories.UsuarioRepository;
 
 @Service
 public class EnderecoService {
 
 	@Autowired
 	EnderecoRepository enderecoRepository;
+	@Autowired
+	UsuarioRepository usuarioRepository;
 
 	public Endereco parseDeEndereco(EnderecoDTO endereco) {
 		Endereco viaCep = pesquisarEndereco(endereco.getCep());
@@ -39,10 +44,14 @@ public class EnderecoService {
 		return enderecoRepository.contar();
 	}
 
-	public Endereco salvar(EnderecoDTO endereco) {
+	public void salvar(EnderecoDTO endereco, String email) {
 		Endereco enderecoNovo = parseDeEndereco(endereco);
 		enderecoNovo.setAtivo(true);
-		return enderecoRepository.save(enderecoNovo);
+		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+		usuario.get().getEndereco().add(enderecoNovo);
+		
+		enderecoRepository.save(enderecoNovo);
+		usuarioRepository.save(usuario.get());
 	}
 
 	public Endereco acharId(Integer id) {
