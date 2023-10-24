@@ -25,7 +25,7 @@ public class UsuarioService {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 	@Autowired
-	EnderecoService listarEndereco;
+	EnderecoService enderecoService;
 	@Autowired
 	EnderecoRepository enderecoRepository;
 
@@ -83,7 +83,7 @@ public class UsuarioService {
 	}
 
 	public void deletarLogico(Integer id) {
-		if (usuarioRepository.findById(id).get() != null) {
+		if (usuarioRepository.findById(id).get() == null) {
 			throw new EntityNotFoundException("Esse usuario não existe");
 		} else {
 			Usuario obgUsuario = usuarioRepository.findById(id).get();
@@ -95,7 +95,7 @@ public class UsuarioService {
 	}
 
 	public Usuario atualizar(Integer id, UsuarioDTO objetoUsuario) {
-		if (usuarioRepository.findById(id).get() != null) {
+		if (usuarioRepository.findById(id).get() == null) {
 			throw new EntityNotFoundException("Esse usuario não existe");
 		} else {
 			Usuario registroAntigo = usuarioRepository.findById(id).get();
@@ -124,12 +124,8 @@ public class UsuarioService {
 		}
 	}
 
-	public List<Endereco> listarEndereco() {
-		return listarEndereco.listar();
-	}
-
 	public void recuperarSenha(Integer id, String senha) {
-		if (usuarioRepository.findById(id).get() != null) {
+		if (usuarioRepository.findById(id).get() == null) {
 			throw new EntityNotFoundException("Esse usuario não existe");
 		} else {
 			Usuario objTeste = usuarioRepository.findById(id).get();
@@ -141,7 +137,7 @@ public class UsuarioService {
 	}
 
 	public void recuperarConta(Integer id) {
-		if (usuarioRepository.findById(id).get() != null) {
+		if (usuarioRepository.findById(id).get() == null) {
 			throw new EntityNotFoundException("Esse usuario não existe");
 		} else {
 			Usuario obgUsuario = usuarioRepository.findById(id).get();

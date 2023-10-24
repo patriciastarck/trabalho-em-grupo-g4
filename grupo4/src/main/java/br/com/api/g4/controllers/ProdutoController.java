@@ -70,8 +70,4 @@ public class ProdutoController {
 		return produtoService.promocao();
 	}
 	
-	@PutMapping("/reativacaoDeProduto/{id}")
-	public void reativacaoDeProduto(@PathVariable Integer id) {
-		produtoService.reativacaoDeProduto(id);
-	}
 }

@@ -108,11 +108,6 @@ public class PedidoService {
 
 		return pedido;
 	}
-//		for (int i = 0; i < usuario.getPedidos().size(); i++) {
-//		pedidos.add(pedido);
-//		}
-//		usuario.setPedidos(pedidos);
-//		usuarioRepository.save(usuario);
 
 	public PedidoRespostaDTO acharId(Integer id) {
 		PedidoRespostaDTO pedidoResposta = parseDePedidoResposta(pedidoRepository.findById(id).get());
@@ -131,7 +126,7 @@ public class PedidoService {
 	}
 
 	public void apagarLogico(Integer id) {
-		if (pedidoRepository.findById(id).get() != null) {
+		if (pedidoRepository.findById(id).get() == null) {
 			throw new EntityNotFoundException("Esse pedido não existe");
 		} else {
 			Optional<Pedido> objPedido = pedidoRepository.findById(id);

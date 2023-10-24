@@ -67,7 +67,7 @@ public class CategoriaService {
 	}
 
 	public void deletarlogico(Integer id) {
-		if (categoriaRepository.findById(id).get() != null) {
+		if (categoriaRepository.findById(id).get() == null) {
 			throw new EntityNotFoundException("Esse categoria não existe");
 		} else {
 			Optional<Categoria> objTeste = categoriaRepository.findById(id);
@@ -79,7 +79,7 @@ public class CategoriaService {
 	}
 
 	public Categoria atualizar(Integer id, CategoriaDTO objetoTeste) {
-		if (categoriaRepository.findById(id).get() != null) {
+		if (categoriaRepository.findById(id).get() == null) {
 			throw new EntityNotFoundException("Esse categoria não existe");
 		} else {
 			Optional<Categoria> registroAntigo = categoriaRepository.findById(id);
@@ -101,7 +101,7 @@ public class CategoriaService {
 	}
 
 	public void reativacaoDeCategoria(Integer id) {
-		if (categoriaRepository.findById(id).get() != null) {
+		if (categoriaRepository.findById(id).get() == null) {
 			throw new EntityNotFoundException("Esse categoria não existe");
 		} else {
 			Optional<Categoria> objTeste = categoriaRepository.findById(id);

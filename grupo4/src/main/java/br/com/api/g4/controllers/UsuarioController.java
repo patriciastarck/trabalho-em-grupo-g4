@@ -92,11 +92,6 @@ public class UsuarioController {
 		return usuarioService.atualizar(id, objetousuario);
 	}
 
-	@GetMapping("/listarEndereco/{id}")
-	public List<Endereco> getEndereco(@PathVariable Integer id) {
-		return usuarioService.listarEndereco();
-	}
-
 	@PutMapping("/recuperarSenha/{id}")
 	public void recuperarSenha(@PathVariable Integer id, @RequestParam String senha) {
 		usuarioService.recuperarSenha(id, senha);
