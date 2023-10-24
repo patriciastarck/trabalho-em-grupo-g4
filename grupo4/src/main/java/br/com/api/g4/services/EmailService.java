@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 import br.com.api.g4.dto.PedidoDeProdutoDTO;
 import br.com.api.g4.dto.PromocaoDTO;
 import br.com.api.g4.dto.UsuarioDTO;
-import br.com.api.g4.entities.Pedido;
 import br.com.api.g4.entities.Usuario;
 
 @Configuration
@@ -76,7 +75,7 @@ public class EmailService {
 
 //	 TODO terminar metodo e botar no pedido
 	public void envioEmailPedido(PedidoDeProdutoDTO pedidon) {
-		Pedido pedido = pedidoService.parsePedidoDeProduto(pedidon);
+//		Pedido pedido = pedidoService.parsePedidoDeProduto(pedidon);
 		MimeMessage mensagemCadastro = emailSender.createMimeMessage();
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(mensagemCadastro, true);
@@ -88,58 +87,72 @@ public class EmailService {
 			DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			String dataEntrega = localDate.plusDays(7).format(format);
 			double valorTotal = 0;
-			List<String> nomes =new ArrayList<>();
-			List<Double> valores=new ArrayList<>();
-			
-			for (int i = 0; i < pedido.getProdutos().size(); i++) {
-				
-				valores.add(pedido.getProdutos().get(i).getValorUnitario());
-				nomes.add(pedido.getProdutos().get(i).getNome());
-				valorTotal += pedido.getProdutos().get(i).getValorUnitario();
-			}
-			
+			List<String> nomes = new ArrayList<>();
+			List<Double> valores = new ArrayList<>();
+
+//			for (int i = 0; i < pedido.getProdutos().size(); i++) {
+//				
+//				valores.add(pedido.getProdutos().get(i).getValorUnitario());
+//				nomes.add(pedido.getProdutos().get(i).getNome());
+//				valorTotal += pedido.getProdutos().get(i).getValorUnitario();
+//			}
+
 			DecimalFormat df = new DecimalFormat("R$ ,##0.00");
 
 			StringBuilder builder = new StringBuilder();
 			builder.append("<html>\r\n");
 			builder.append("<body>\r\n");
 			builder.append("<div align=\"center\">\r\n");
-			builder.append("<h1>Convite</h1>\r\n");
+			builder.append("<h1>Seu pedido foi finalizado com sucesso</h1>\r\n");
 			builder.append("</div>\r\n");
-			builder.append("<br/> \r\n");
+			builder.append("<br> \r\n");
+			builder.append("<div align=\"center\">\r\n");
+			builder.append("<img src=\"cid:logo\">");
+			builder.append("</div>\r\n");
+			builder.append("");
+			builder.append("<div align=\"center\">\r\n");
+			builder.append("<p>Parabéns! Seu pedido foi realizado com sucesso</p>\r\n");
+			builder.append("<p></p>");
+			builder.append(
+					"<a href=http:\"//localhost:8080/api/swagger-ui/index.html#/\"\"\">Clique aqui para voltar ao site </a>\r\n");
+			builder.append("<p>Atenciosamente Grupo 4.\r\n</p>");
+			builder.append("");
+			builder.append("</div>\r\n");
 
-			builder.append("<center>");
-			builder.append("<table border='2' cellpadding='4'> \r\n");
-			builder.append("<tr> <th> Nome </th> <\r\n");
-			builder.append("<tr> <th> Nome</th> <th> Email</th> <th>Perfis</th><th> Data de entrega</th> </tr>\r\n");
-
-			for (int i = 0; i< nomes.size();i++) {
-				builder.append(dataEntrega);
-				builder.append(" <tr>\r\n");
-				builder.append(" <td>\r\n");
-				builder.append(nomes.get(i));
-				builder.append(" </td>\r\n");
-				builder.append(" <td>\r\n");
-				builder.append(df.format(valores.get(i)));
-				builder.append(" </td>\r\n");
-				builder.append(" <td>\r\n");
-				builder.append(" </td>\r\n");
-				builder.append(" <td>\r\n");
-				builder.append(" </td>\r\n");
-			}
-			
-			builder.append(" </table>\r\n");
-			builder.append(" </center>\r\n");
-			builder.append(" <table border='1' cellpadding='1' >\r\n");
-			builder.append("<tr><th>Valor Total</th></tr>\r\n");
-			builder.append(" <td>\r\n");
-			builder.append(df.format(valorTotal));
-			builder.append(" </td>\r\n");
-			builder.append(" </table>\r\n");
+//			builder.append("<center>");
+//			builder.append("<table border='2' cellpadding='4'> \r\n");
+//			builder.append("<tr> <th> Nome </th> <\r\n");
+//			builder.append("<tr> <th> Nome</th> <th> Email</th> <th>Perfis</th><th> Data de entrega</th> </tr>\r\n");
+//
+//			for (int i = 0; i< nomes.size();i++) {
+//				builder.append(dataEntrega);
+//				builder.append(" <tr>\r\n");
+//				builder.append(" <td>\r\n");
+//				builder.append(nomes.get(i));
+//				builder.append(" </td>\r\n");
+//				builder.append(" <td>\r\n");
+//				builder.append(df.format(valores.get(i)));
+//				builder.append(" </td>\r\n");
+//				builder.append(" <td>\r\n");
+//				builder.append(" </td>\r\n");
+//				builder.append(" <td>\r\n");
+//				builder.append(" </td>\r\n");
+//			}
+//			
+//			builder.append(" </table>\r\n");
+//			builder.append(" </center>\r\n");
+//			builder.append(" <table border='1' cellpadding='1' >\r\n");
+//			builder.append("<tr><th>Valor Total</th></tr>\r\n");
+//			builder.append(" <td>\r\n");
+//			builder.append(df.format(valorTotal));
+//			builder.append(" </td>\r\n");
+//			builder.append(" </table>\r\n");
 			builder.append(" </body>\r\n");
 			builder.append("</html>");
 
 			helper.setText(builder.toString(), true);
+			ClassPathResource imageResource = new ClassPathResource("img/logo.png");
+			helper.addInline("logo", imageResource);
 			emailSender.send(mensagemCadastro);
 
 		} catch (MessagingException e) {

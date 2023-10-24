@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -32,7 +33,6 @@ public class Pedido {
 																	// associacao(produto)
 	)
 	private List<Produto> produtos;
-
 
 	public Pedido() {
 		super();
@@ -80,18 +80,12 @@ public class Pedido {
 		this.produtos = produtos;
 	}
 
-//	public List<Integer> getQuantidadePorProduto() {
-//		return quantidadePorProduto;
-//	}
-//
-//	public void setQuantidadePorProduto(List<Integer> quantidadePorProduto) {
-//		this.quantidadePorProduto = quantidadePorProduto;
-//	}
-//
-//	@Override
-//	public String toString() {
-//		return "Pedido [id=" + id + ", dataPedido=" + dataPedido + ", ativo=" + ativo + ", produtos=" + produtos
-//				+ ", quantidadePorProduto=" + quantidadePorProduto + "]";
-//	}}}
+	
+	@Override
+	public String toString() {
+		return "Pedido [ produtos=" + produtos + "]";
+	}
+
+	
 
 }

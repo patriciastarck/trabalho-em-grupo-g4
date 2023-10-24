@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -44,9 +43,7 @@ public class Usuario {
 	@Size(max = 11)
 	@NotBlank
 	private String cpf;
-	
 	private LocalDate dataNascimento;
-	
 	private Boolean ativo;
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
