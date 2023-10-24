@@ -58,7 +58,7 @@ public class SwaggerConfig {
 
 	private ApiInfo apiInfo() {
 		ApiInfo apiInfo = new ApiInfoBuilder().title("Documentação da api de teste")
-				.description("Descrição projeto de aula").license("Apache license version 2.0").version("14.27.0")
+				.description("Descrição projeto de aula").license("Apache license version 2.0").version("14.29.0")
 				.build();
 		return apiInfo;
 	}

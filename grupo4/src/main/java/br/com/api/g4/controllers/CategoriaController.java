@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.g4.dto.CategoriaDTO;
+import br.com.api.g4.dto.CategoriaRespostaDTO;
 import br.com.api.g4.entities.Categoria;
 import br.com.api.g4.services.CategoriaService;
 
@@ -34,12 +35,12 @@ public class CategoriaController {
 	}
 
 	@GetMapping("/{id}")
-	public Categoria acharId(@PathVariable Integer id) {
+	public CategoriaRespostaDTO acharId(@PathVariable Integer id) {
 		return categoriaService.acharId(id);
 	}
 
 	@GetMapping("/listar")
-	public List<Categoria> listar() {
+	public List<CategoriaRespostaDTO> listar() {
 		return categoriaService.listar();
 	}
 
