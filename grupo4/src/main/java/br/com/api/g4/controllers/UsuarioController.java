@@ -1,5 +1,6 @@
 package br.com.api.g4.controllers;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -152,7 +153,6 @@ public class UsuarioController {
 		endereco.setLogradouro(viaCep.getLogradouro());
 		endereco.setUf(viaCep.getUf());
 		endereco.setAtivo(true);
-		enderecoRepository.save(endereco);
 
 		Usuario usuarioResumido = new Usuario();
 		usuarioResumido.setAtivo(true);
@@ -165,9 +165,15 @@ public class UsuarioController {
 		// Encriptando a senha usando o Bcrypt
 		String encodedPass = passwordEncoder.encode(usuario.getPassword());
 		usuarioResumido.setPassword(encodedPass);
+		usuarioRepository.save(usuarioResumido);
+
+		List<Endereco> enderecos = new ArrayList<>();
+		enderecos.add(endereco);
+		usuarioResumido.setEndereco(enderecos);
 //        String token = jwtUtil.generateTokenWithUsuarioData(usuarioResumido);
 //        Collections.singletonMap("jwt-token", token);
 
+		enderecoRepository.save(endereco);
 		emailService.envioEmailCadastro(usuario);
 		return usuarioRepository.save(usuarioResumido);
 	}
