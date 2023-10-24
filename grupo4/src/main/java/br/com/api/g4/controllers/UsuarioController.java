@@ -110,6 +110,7 @@ public class UsuarioController {
 	}
 
 	// Registro de usuario
+	@SuppressWarnings("unused")
 	@PostMapping("/registro")
 	public Usuario cadastro(@RequestParam String email, @RequestBody UsuarioDTO usuario) {
 
@@ -117,8 +118,13 @@ public class UsuarioController {
 
 		// Gerando o token JWT a partir do e-mail do Usuario
 		// String token = jwtUtil.generateToken(usuario.getEmail());
-
-		Set<String> strRoles = usuario.getRoles();
+		Set<String> usuarioMaiusculo =new HashSet<>();
+		
+		for (String str : usuario.getRoles()) {
+			usuarioMaiusculo.add(str.toUpperCase());
+        }
+		
+		Set<String> strRoles = usuarioMaiusculo;
 		Set<Role> roles = new HashSet<>();
 
 		if (strRoles == null) {

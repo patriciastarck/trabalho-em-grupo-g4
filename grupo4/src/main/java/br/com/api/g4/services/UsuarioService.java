@@ -67,11 +67,6 @@ public class UsuarioService {
 		return usuarioRepository.contar();
 	}
 
-	public Usuario salvar(UsuarioDTO objetoUsuario) {
-
-		return usuarioRepository.save(parseDeUsuario(objetoUsuario));
-	}
-
 	public UsuarioRespostaDTO acharId(Integer id) {
 		UsuarioRespostaDTO UsuarioResposta = parseDeUsuarioResposta(usuarioRepository.findById(id).get());
 		return UsuarioResposta;
