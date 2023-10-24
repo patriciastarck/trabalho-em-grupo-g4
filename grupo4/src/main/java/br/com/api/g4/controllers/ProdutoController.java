@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.g4.dto.ProdutoDTO;
@@ -39,8 +40,8 @@ public class ProdutoController {
 	}
 
 	@PostMapping("/salvar")
-	public Produto salvar(@RequestBody ProdutoDTO objetoProduto) {
-		return produtoService.salvar(objetoProduto);
+	public void salvar(@RequestBody ProdutoDTO objetoProduto, @RequestParam String nome) {
+		produtoService.salvar(objetoProduto,nome);
 	}
 
 	@GetMapping("/{id}")

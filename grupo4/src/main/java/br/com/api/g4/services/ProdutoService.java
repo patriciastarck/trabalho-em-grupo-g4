@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import br.com.api.g4.dto.ProdutoDTO;
 import br.com.api.g4.dto.ProdutoRespostaDTO;
 import br.com.api.g4.dto.PromocaoDTO;
+import br.com.api.g4.entities.Categoria;
 import br.com.api.g4.entities.Produto;
+import br.com.api.g4.repositories.CategoriaRepository;
 import br.com.api.g4.repositories.ProdutoRepository;
 
 @Service
@@ -21,6 +23,9 @@ public class ProdutoService {
 
 	@Autowired
 	ProdutoRepository produtoRepository;
+	@Autowired
+	CategoriaRepository categoriaRepository;
+	
 
 	public Produto parseDeProduto(ProdutoDTO objeto) {
 		Produto produto = new Produto();
@@ -67,10 +72,14 @@ public class ProdutoService {
 		return produtoRepository.contar();
 	}
 
-	public Produto salvar(ProdutoDTO objetoproduto) {
+	public void salvar(ProdutoDTO objetoproduto, String nome)
+	{
+		Optional<Categoria>categoria = categoriaRepository.findByNome(nome);
 		Produto produto = parseDeProduto(objetoproduto);
+		
 		produto.setAtivo(true);
-		return produtoRepository.save(produto);
+		categoriaRepository.save(categoria.get());
+		produtoRepository.save(produto);
 	}
 
 	public ProdutoRespostaDTO acharId(Integer id) {
