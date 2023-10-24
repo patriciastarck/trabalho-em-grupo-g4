@@ -18,29 +18,27 @@ public class Endereco {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
     
     private Integer id;
-    @NotNull
+    @NotNull(message = "CEP não pode ser nulo.")
+	@NotBlank(message = "CEP não pode ser vazio.")
 	@Size(max = 9)
-	@NotBlank
     private String cep;
-    @NotNull
+    @NotNull(message = "Logradouro não pode ser nulo.")
+   	@NotBlank(message = "Logradouro não pode ser vazio.")
    	@Size(max = 60)
-   	@NotBlank
     private String logradouro;
-    @NotNull
    	@Size(max = 60)
-   	@NotBlank
     private String complemento;
-    @NotNull
+    @NotNull(message = "Bairro não pode ser nulo.")
+   	@NotBlank(message = "Bairro não pode ser vazio.")
    	@Size(max = 60)
-   	@NotBlank
     private String bairro;
-    @NotNull
+    @NotNull(message = "Localidade não pode ser nulo.")
+   	@NotBlank(message = "Localidade não pode ser vazio.")
    	@Size(max = 60)
-   	@NotBlank
     private String localidade;
-    @NotNull
+    @NotNull(message = "UF não pode ser nulo.")
+   	@NotBlank(message = "UF não pode ser vazio.")
    	@Size(max = 2)
-   	@NotBlank
     private String uf;
    
     private Boolean ativo;

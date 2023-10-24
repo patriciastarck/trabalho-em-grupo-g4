@@ -21,12 +21,12 @@ public class Categoria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
-	@NotNull
-	@NotBlank
+	@NotNull(message = "Nome não pode ser nulo.")
+	@NotBlank(message = "Nome não pode ser vazio." )
 	@Size(max = 100)
 	private String nome;
-	@NotNull
-	@NotBlank
+	@NotNull(message ="Descrição não pode ser nulo.")
+	@NotBlank(message = "Descrição não pode ser vazio.")
 	private String descricao;
 	private Boolean ativo;
 	@OneToMany

@@ -21,9 +21,7 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
-	@Column()
 	private LocalDate dataPedido;
-	@Column()
 	private Boolean ativo;
 	@ManyToMany // relacionamento muitos pra muitos
 	@JoinTable( // cria a tabela de ligacao

@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "produto")
@@ -22,14 +23,12 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
-	@Column(length = 60)
+	@Size(max = 60)
 	private String nome;
 	private String descricao;
-	@Column(length = 10)
+	@Size(max = 10)
 	private LocalDate dataFabricacao;
-	@Column()
 	private Integer qntdEstoque;
-	@Column()
 	private Double valorUnitario;
 	@Column()
 	private Boolean ativo;

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,10 +14,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.UniqueElements;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -27,21 +31,22 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
-	@NotNull
+	@NotNull(message = "Nome não pode ser nulo.")
+	@NotBlank(message = "Nome não pode ser vazio.")
 	@Size(max = 50)
-	@NotBlank
 	private String nome;
-	@NotNull
+	@NotNull(message = "Nome de usuario não pode ser nulo.")
+	@NotBlank(message = "Nome de usuario não pode ser vazio.")
 	@Size(max = 50)
-	@NotBlank
 	private String nomeUsuario;
-	@NotNull
-	@NotBlank
+	@NotNull(message = "EMAIL não pode ser nulo.")
+	@NotBlank(message = "EMAIL não pode ser vazio.")
 	@Email
+	@Column(unique = true)
 	private String email;
-	@NotNull
+	@NotNull(message = "CPF não pode ser nulo.")
+	@NotBlank(message = "CPF não pode ser vazio.")
 	@Size(max = 11)
-	@NotBlank
 	private String cpf;
 	private LocalDate dataNascimento;
 	private Boolean ativo;
