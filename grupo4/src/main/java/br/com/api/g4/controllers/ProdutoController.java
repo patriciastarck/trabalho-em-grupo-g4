@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.g4.dto.ProdutoDTO;
+import br.com.api.g4.dto.ProdutoRespostaDTO;
 import br.com.api.g4.dto.PromocaoDTO;
 import br.com.api.g4.entities.Produto;
 import br.com.api.g4.services.EmailService;
@@ -43,12 +44,12 @@ public class ProdutoController {
 	}
 
 	@GetMapping("/{id}")
-	public Produto acharId(@PathVariable Integer id) {
+	public ProdutoRespostaDTO acharId(@PathVariable Integer id) {
 		return produtoService.acharId(id);
 	}
 
 	@GetMapping("/listar")
-	public List<Produto> listar() {
+	public List<ProdutoRespostaDTO> listar() {
 		return produtoService.listar();
 	}
 

@@ -2,6 +2,7 @@ package br.com.api.g4.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.api.g4.dto.ProdutoDTO;
-import br.com.api.g4.dto.ProdutoDePedidoDTO;
+import br.com.api.g4.dto.ProdutoRespostaDTO;
 import br.com.api.g4.dto.PromocaoDTO;
 import br.com.api.g4.entities.Produto;
 import br.com.api.g4.repositories.ProdutoRepository;
@@ -29,7 +30,20 @@ public class ProdutoService {
 		produto.setDataFabricacao(objeto.getDataFabricacao());
 		produto.setQntdEstoque(objeto.getQntdEstoque());
 		produto.setValorUnitario(objeto.getValorUnitario());
+		produto.setDataFabricacao(objeto.getDataFabricacao());
+		
+		return produto;
+	}
+	public ProdutoRespostaDTO parseDeProdutoResposta(Produto objeto) {
+		ProdutoRespostaDTO produto = new ProdutoRespostaDTO();
 
+		produto.setNome(objeto.getNome());
+		produto.setDescricao(objeto.getDescricao());
+		produto.setDataFabricacao(objeto.getDataFabricacao());
+		produto.setQntdEstoque(objeto.getQntdEstoque());
+		produto.setValorUnitario(objeto.getValorUnitario());
+		produto.setDataFabricacao(objeto.getDataFabricacao());
+		
 		return produto;
 	}
 
@@ -59,16 +73,23 @@ public class ProdutoService {
 		return produtoRepository.save(produto);
 	}
 
-	public Produto acharId(Integer id) {
+	public ProdutoRespostaDTO acharId(Integer id) {
 		if (produtoRepository.findById(id).get() != null) {
+			
 			throw new EntityNotFoundException("Esse produto não existe");
 		} else {
-			return produtoRepository.findById(id).get();
+			ProdutoRespostaDTO produtoResposta = parseDeProdutoResposta(produtoRepository.findById(id).get());
+			return produtoResposta;
 		}
 	}
 
-	public List<Produto> listar() {
-		return produtoRepository.findAll();
+	public List<ProdutoRespostaDTO> listar() {
+		List<ProdutoRespostaDTO> produtosResposta = new ArrayList<>();
+		List<Produto> produtos = produtoRepository.findAll();
+		for (Produto produto : produtos) {
+			produtosResposta.add(parseDeProdutoResposta(produto));
+		}
+		return produtosResposta;
 	}
 
 	public void deletar(Integer id) {
@@ -83,10 +104,10 @@ public class ProdutoService {
 		if (produtoRepository.findById(id).get() != null) {
 			throw new EntityNotFoundException("Esse produto não existe");
 		} else {
-			Produto objProduto = acharId(id);
-			if (objProduto != null) {
-				objProduto.setAtivo(false);
-				produtoRepository.save(objProduto);
+			Optional<Produto> objProdutos = produtoRepository.findById(id);
+			if (objProdutos != null) {
+				objProdutos.get().setAtivo(false);
+				produtoRepository.save(objProdutos.get());
 			}
 		}
 	}
@@ -95,29 +116,29 @@ public class ProdutoService {
 		if (produtoRepository.findById(id).get() != null) {
 			throw new EntityNotFoundException("Esse produto não existe");
 		} else {
-			Produto registroAntigo = acharId(id);
+			Optional<Produto> registroAntigo = produtoRepository.findById(id);
 			Produto produto = parseDeProduto(objetoproduto);
 
 			if (produto.getAtivo() != null) {
-				registroAntigo.setAtivo(produto.getAtivo());
+				registroAntigo.get().setAtivo(produto.getAtivo());
 			}
 			if (produto.getNome() != null) {
-				registroAntigo.setNome(produto.getNome());
+				registroAntigo.get().setNome(produto.getNome());
 			}
 			if (produto.getDescricao() != null) {
-				registroAntigo.setDescricao(produto.getDescricao());
+				registroAntigo.get().setDescricao(produto.getDescricao());
 			}
 			if (produto.getDataFabricacao() != null) {
-				registroAntigo.setDataFabricacao(produto.getDataFabricacao());
+				registroAntigo.get().setDataFabricacao(produto.getDataFabricacao());
 			}
 			if (produto.getQntdEstoque() != null) {
-				registroAntigo.setQntdEstoque(produto.getQntdEstoque());
+				registroAntigo.get().setQntdEstoque(produto.getQntdEstoque());
 			}
 			if (produto.getValorUnitario() != null) {
-				registroAntigo.setValorUnitario(produto.getValorUnitario());
+				registroAntigo.get().setValorUnitario(produto.getValorUnitario());
 			}
-			registroAntigo.setId(id);
-			return produtoRepository.save(registroAntigo);
+			registroAntigo.get().setId(id);
+			return produtoRepository.save(registroAntigo.get());
 		}
 	}
 
@@ -131,10 +152,10 @@ public class ProdutoService {
 		if (produtoRepository.findById(id).get() != null) {
 			throw new EntityNotFoundException("Esse produto não existe");
 		} else {
-			Produto objTeste = acharId(id);
+			Optional<Produto> objTeste = produtoRepository.findById(id);
 			if (objTeste != null) {
-				objTeste.setAtivo(true);
-				produtoRepository.save(objTeste);
+				objTeste.get().setAtivo(true);
+				produtoRepository.save(objTeste.get());
 			}
 		}
 	}
