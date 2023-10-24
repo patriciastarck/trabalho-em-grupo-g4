@@ -1,6 +1,8 @@
 package br.com.api.g4.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.api.g4.dto.CategoriaDTO;
+import br.com.api.g4.dto.CategoriaRespostaDTO;
 import br.com.api.g4.entities.Categoria;
 import br.com.api.g4.repositories.CategoriaRepository;
 
@@ -26,6 +29,16 @@ public class CategoriaService {
 		return categoria;
 	}
 
+	public CategoriaRespostaDTO parseDeCategoriaRespostaDTO(Categoria categoria) {
+		CategoriaRespostaDTO categoriaResposta = new CategoriaRespostaDTO();
+
+		categoriaResposta.setAtivo(categoria.getAtivo());
+		categoriaResposta.setNome(categoria.getNome());
+		categoriaResposta.setDescricao(categoria.getDescricao());
+
+		return categoriaResposta;
+	}
+
 	public Integer getCount() {
 		return categoriaRepository.contar();
 	}
@@ -36,26 +49,31 @@ public class CategoriaService {
 		return categoriaRepository.save(categoria);
 	}
 
-	public Categoria acharId(Integer id) {
-		if (categoriaRepository.findById(id).get() != null) {
-			throw new EntityNotFoundException("Esse categoria não existe");
-		} else {
-			return categoriaRepository.findById(id).get();
-		}
+	public CategoriaRespostaDTO acharId(Integer id) {
+		CategoriaRespostaDTO categoriaResposta = parseDeCategoriaRespostaDTO(categoriaRepository.findById(id).get());
+
+		return categoriaResposta;
 	}
 
-	public List<Categoria> listar() {
-		return categoriaRepository.findAll();
+	public List<CategoriaRespostaDTO> listar() {
+		List<CategoriaRespostaDTO> categoriasResposta = new ArrayList<>();
+		List<Categoria> categorias = categoriaRepository.findAll();
+
+		for (Categoria categoria : categorias) {
+			categoriasResposta.add(parseDeCategoriaRespostaDTO(categoria));
+		}
+
+		return categoriasResposta;
 	}
 
 	public void deletarlogico(Integer id) {
 		if (categoriaRepository.findById(id).get() != null) {
 			throw new EntityNotFoundException("Esse categoria não existe");
 		} else {
-			Categoria objTeste = acharId(id);
+			Optional<Categoria> objTeste = categoriaRepository.findById(id);
 			if (objTeste != null) {
-				objTeste.setAtivo(false);
-				categoriaRepository.save(objTeste);
+				objTeste.get().setAtivo(false);
+				categoriaRepository.save(objTeste.get());
 			}
 		}
 	}
@@ -64,21 +82,21 @@ public class CategoriaService {
 		if (categoriaRepository.findById(id).get() != null) {
 			throw new EntityNotFoundException("Esse categoria não existe");
 		} else {
-			Categoria registroAntigo = acharId(id);
+			Optional<Categoria> registroAntigo = categoriaRepository.findById(id);
 			Categoria objeto = parseDeCategoria(objetoTeste);
 
 			if (objeto.getAtivo() != null) {
-				registroAntigo.setAtivo(objeto.getAtivo());
+				registroAntigo.get().setAtivo(objeto.getAtivo());
 			}
 
 			if (objeto.getNome() != null) {
-				registroAntigo.setNome(objeto.getNome());
+				registroAntigo.get().setNome(objeto.getNome());
 			}
 			if (objeto.getDescricao() != null) {
-				registroAntigo.setDescricao(objeto.getDescricao());
+				registroAntigo.get().setDescricao(objeto.getDescricao());
 			}
-			registroAntigo.setId(id);
-			return categoriaRepository.save(registroAntigo);
+			registroAntigo.get().setId(id);
+			return categoriaRepository.save(registroAntigo.get());
 		}
 	}
 
@@ -86,10 +104,10 @@ public class CategoriaService {
 		if (categoriaRepository.findById(id).get() != null) {
 			throw new EntityNotFoundException("Esse categoria não existe");
 		} else {
-			Categoria objTeste = acharId(id);
+			Optional<Categoria> objTeste = categoriaRepository.findById(id);
 			if (objTeste != null) {
-				objTeste.setAtivo(true);
-				categoriaRepository.save(objTeste);
+				objTeste.get().setAtivo(true);
+				categoriaRepository.save(objTeste.get());
 			}
 		}
 	}
