@@ -1,5 +1,6 @@
 package br.com.api.g4.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.api.g4.dto.UsuarioDTO;
+import br.com.api.g4.dto.UsuarioRespostaDTO;
 import br.com.api.g4.entities.Endereco;
 import br.com.api.g4.entities.Role;
 import br.com.api.g4.entities.Usuario;
 import br.com.api.g4.enums.TipoRoleEnum;
+import br.com.api.g4.repositories.EnderecoRepository;
 import br.com.api.g4.repositories.UsuarioRepository;
 
 @Service
@@ -23,6 +26,9 @@ public class UsuarioService {
 	UsuarioRepository usuarioRepository;
 	@Autowired
 	EnderecoService listarEndereco;
+	@Autowired
+	EnderecoRepository enderecoRepository;
+	
 
 	public Usuario parseDeUsuario(UsuarioDTO objeto) {
 		Usuario usuarioNovo = new Usuario();
@@ -64,9 +70,42 @@ public class UsuarioService {
 		}
 	}
 
-	public List<Usuario> listar() {
-		return usuarioRepository.findAll();
+	public List<UsuarioRespostaDTO> listar() {
+		List<UsuarioRespostaDTO> infoUsuario = new ArrayList<>();
+		List<Usuario>usuarios = usuarioRepository.findAll();
+		List<Endereco>enderecos = enderecoRepository.findAll();
+		
+		for(Usuario usuario : usuarios) {
+			infoUsuario.add(converteUsuarioDTO(usuario));
+		}
+		for(Endereco endereco : enderecos) {
+			
+			infoUsuario.add(converteUsuarioDTO2(endereco));
+		}
+		return infoUsuario;
 	}
+	
+	public UsuarioRespostaDTO converteUsuarioDTO(Usuario usuario) {
+		UsuarioRespostaDTO usuarioConvertido = new UsuarioRespostaDTO();
+		usuarioConvertido.setNome(usuario.getNome());
+		usuarioConvertido.setNomeUsuario(usuario.getNomeUsuario());
+		usuarioConvertido.setEmail(usuario.getEmail());
+		
+		return usuarioConvertido;
+	}
+	
+	public UsuarioRespostaDTO converteUsuarioDTO2(Endereco endereco) {
+		UsuarioRespostaDTO usuarioConvertido = new UsuarioRespostaDTO();
+		usuarioConvertido.setCep(endereco.getCep());
+		usuarioConvertido.setLocalidade(endereco.getLocalidade());
+		usuarioConvertido.setBairro(endereco.getBairro());
+		usuarioConvertido.setLogradouro(endereco.getLogradouro());
+		usuarioConvertido.setComplemento(endereco.getComplemento());
+		usuarioConvertido.setNumero(endereco.getNumero());
+		
+		return usuarioConvertido;
+	}
+	
 
 	public void deletarLogico(Integer id) {
 		if (usuarioRepository.findById(id).get() != null) {

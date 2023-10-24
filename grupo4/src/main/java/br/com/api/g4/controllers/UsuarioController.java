@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -24,8 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.g4.config.JWTUtil;
 import br.com.api.g4.dto.LoginDTO;
-import br.com.api.g4.dto.MessageResponseDTO;
 import br.com.api.g4.dto.UsuarioDTO;
+import br.com.api.g4.dto.UsuarioRespostaDTO;
 import br.com.api.g4.entities.Endereco;
 import br.com.api.g4.entities.Role;
 import br.com.api.g4.entities.Usuario;
@@ -77,7 +76,7 @@ public class UsuarioController {
 	}
 
 	@GetMapping("/listar")
-	public List<Usuario> listar() {
+	public List<UsuarioRespostaDTO> listar() {
 		return usuarioService.listar();
 	}
 
