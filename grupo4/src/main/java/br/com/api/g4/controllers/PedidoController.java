@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.g4.dto.PedidoDeProdutoDTO;
+import br.com.api.g4.dto.PedidoRespostaDTO;
 import br.com.api.g4.entities.Pedido;
 import br.com.api.g4.services.EmailService;
 import br.com.api.g4.services.PedidoService;
@@ -37,18 +38,18 @@ public class PedidoController {
 	}
 
 	@PostMapping("/salvar")
-	public Pedido salvar(@RequestBody PedidoDeProdutoDTO objetoPedido,@RequestParam String email) {
+	public Pedido salvar(@RequestBody PedidoDeProdutoDTO objetoPedido, @RequestParam String email) {
 		emailService.envioEmailPedido(objetoPedido);
 		return pedidoService.salvar(objetoPedido, email);
 	}
 
 	@GetMapping("/{id}")
-	public Pedido acharId(@PathVariable Integer id) {
+	public PedidoRespostaDTO acharId(@PathVariable Integer id) {
 		return pedidoService.acharId(id);
 	}
 
 	@GetMapping("/listar")
-	public List<Pedido> listar() {
+	public List<PedidoRespostaDTO> listar() {
 		return pedidoService.listar();
 	}
 
