@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.g4.config.JWTUtil;
 import br.com.api.g4.dto.LoginDTO;
+import br.com.api.g4.dto.MessageResponseDTO;
 import br.com.api.g4.dto.UsuarioDTO;
 import br.com.api.g4.entities.Endereco;
 import br.com.api.g4.entities.Role;
@@ -69,12 +71,18 @@ public class UsuarioController {
 		return usuarioService.getCount();
 	}
 
+//	@PostMapping("/salvar")
+//	public Usuario salvar(@RequestBody UsuarioDTO objetousuario) {
+//
+//		return usuarioService.salvar(objetousuario);
+//	}
+
 	@PostMapping("/salvar")
-	public Usuario salvar(@RequestBody UsuarioDTO objetousuario) {
-
-		return usuarioService.salvar(objetousuario);
+	public ResponseEntity<MessageResponseDTO> salvar(@RequestBody UsuarioDTO objetousuario){
+		
+		return ResponseEntity.ok(new MessageResponseDTO("Parabens você finalizou o trabalho com muito custo!"));
 	}
-
+	
 	@GetMapping("/{id}")
 	public Usuario acharId(@PathVariable Integer id) {
 		return usuarioService.acharId(id);
