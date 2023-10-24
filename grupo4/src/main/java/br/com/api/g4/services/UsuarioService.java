@@ -28,7 +28,6 @@ public class UsuarioService {
 	EnderecoService listarEndereco;
 	@Autowired
 	EnderecoRepository enderecoRepository;
-	
 
 	public Usuario parseDeUsuario(UsuarioDTO objeto) {
 		Usuario usuarioNovo = new Usuario();
@@ -53,6 +52,17 @@ public class UsuarioService {
 		return usuarioNovo;
 	}
 
+	public UsuarioRespostaDTO parseDeUsuarioResposta(Usuario usuario) {
+		UsuarioRespostaDTO usuarioResposta = new UsuarioRespostaDTO();
+
+		usuarioResposta.setNome(usuario.getNome());
+		usuarioResposta.setNomeUsuario(usuario.getNomeUsuario());
+		usuarioResposta.setEmail(usuario.getEmail());
+		usuarioResposta.setEndereco(usuario.getEndereco());
+
+		return usuarioResposta;
+	}
+
 	public Integer getCount() {
 		return usuarioRepository.contar();
 	}
@@ -62,56 +72,26 @@ public class UsuarioService {
 		return usuarioRepository.save(parseDeUsuario(objetoUsuario));
 	}
 
-	public Usuario acharId(Integer id) {
-		if (usuarioRepository.findById(id).get() != null) {
-			throw new EntityNotFoundException("Esse usuario não existe");
-		} else {
-			return usuarioRepository.findById(id).get();
-		}
+	public UsuarioRespostaDTO acharId(Integer id) {
+		UsuarioRespostaDTO UsuarioResposta = parseDeUsuarioResposta(usuarioRepository.findById(id).get());
+		return UsuarioResposta;
 	}
 
 	public List<UsuarioRespostaDTO> listar() {
-		List<UsuarioRespostaDTO> infoUsuario = new ArrayList<>();
-		List<Usuario>usuarios = usuarioRepository.findAll();
-		List<Endereco>enderecos = enderecoRepository.findAll();
-		
-		for(Usuario usuario : usuarios) {
-			infoUsuario.add(converteUsuarioDTO(usuario));
+		List<UsuarioRespostaDTO> usuarioResposta = new ArrayList<>();
+		List<Usuario> usuarios = usuarioRepository.findAll();
+
+		for (Usuario usuario : usuarios) {
+			usuarioResposta.add(parseDeUsuarioResposta(usuario));
 		}
-		for(Endereco endereco : enderecos) {
-			
-			infoUsuario.add(converteUsuarioDTO2(endereco));
-		}
-		return infoUsuario;
+		return usuarioResposta;
 	}
-	
-	public UsuarioRespostaDTO converteUsuarioDTO(Usuario usuario) {
-		UsuarioRespostaDTO usuarioConvertido = new UsuarioRespostaDTO();
-		usuarioConvertido.setNome(usuario.getNome());
-		usuarioConvertido.setNomeUsuario(usuario.getNomeUsuario());
-		usuarioConvertido.setEmail(usuario.getEmail());
-		
-		return usuarioConvertido;
-	}
-	
-	public UsuarioRespostaDTO converteUsuarioDTO2(Endereco endereco) {
-		UsuarioRespostaDTO usuarioConvertido = new UsuarioRespostaDTO();
-		usuarioConvertido.setCep(endereco.getCep());
-		usuarioConvertido.setLocalidade(endereco.getLocalidade());
-		usuarioConvertido.setBairro(endereco.getBairro());
-		usuarioConvertido.setLogradouro(endereco.getLogradouro());
-		usuarioConvertido.setComplemento(endereco.getComplemento());
-		usuarioConvertido.setNumero(endereco.getNumero());
-		
-		return usuarioConvertido;
-	}
-	
 
 	public void deletarLogico(Integer id) {
 		if (usuarioRepository.findById(id).get() != null) {
 			throw new EntityNotFoundException("Esse usuario não existe");
 		} else {
-			Usuario obgUsuario = acharId(id);
+			Usuario obgUsuario = usuarioRepository.findById(id).get();
 			if (obgUsuario != null) {
 				obgUsuario.setAtivo(false);
 				usuarioRepository.save(obgUsuario);
@@ -123,7 +103,7 @@ public class UsuarioService {
 		if (usuarioRepository.findById(id).get() != null) {
 			throw new EntityNotFoundException("Esse usuario não existe");
 		} else {
-			Usuario registroAntigo = acharId(id);
+			Usuario registroAntigo = usuarioRepository.findById(id).get();
 			Usuario usuario = parseDeUsuario(objetoUsuario);
 
 			if (usuario.getAtivo() != null) {
@@ -157,7 +137,7 @@ public class UsuarioService {
 		if (usuarioRepository.findById(id).get() != null) {
 			throw new EntityNotFoundException("Esse usuario não existe");
 		} else {
-			Usuario objTeste = acharId(id);
+			Usuario objTeste = usuarioRepository.findById(id).get();
 			if (objTeste != null) {
 				objTeste.setPassword(senha);
 				usuarioRepository.save(objTeste);
@@ -169,7 +149,7 @@ public class UsuarioService {
 		if (usuarioRepository.findById(id).get() != null) {
 			throw new EntityNotFoundException("Esse usuario não existe");
 		} else {
-			Usuario obgUsuario = acharId(id);
+			Usuario obgUsuario = usuarioRepository.findById(id).get();
 			if (obgUsuario != null) {
 				obgUsuario.setAtivo(true);
 				usuarioRepository.save(obgUsuario);

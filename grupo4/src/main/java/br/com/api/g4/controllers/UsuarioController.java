@@ -71,7 +71,7 @@ public class UsuarioController {
 	}
 
 	@GetMapping("/{id}")
-	public Usuario acharId(@PathVariable Integer id) {
+	public UsuarioRespostaDTO acharId(@PathVariable Integer id) {
 		return usuarioService.acharId(id);
 	}
 
@@ -82,7 +82,7 @@ public class UsuarioController {
 
 	@DeleteMapping("/deletarLogico/{id}")
 	public void deletarLogico(@PathVariable Integer id) {
-		emailService.envioEmailDelete(acharId(id));
+		emailService.envioEmailDelete(usuarioRepository.findById(id).get());
 		usuarioService.deletarLogico(id);
 	}
 
@@ -96,17 +96,16 @@ public class UsuarioController {
 		return usuarioService.listarEndereco();
 	}
 
-	// TODO verificar a mensagem de recuperaçao de senha é valida
 	@PutMapping("/recuperarSenha/{id}")
 	public void recuperarSenha(@PathVariable Integer id, @RequestParam String senha) {
 		usuarioService.recuperarSenha(id, senha);
-		emailService.envioEmailRecuperacaoSenha(acharId(id));
+		emailService.envioEmailRecuperacaoSenha(usuarioRepository.findById(id).get());
 	}
 
 	@PutMapping("/recuperarConta/{id}")
 	public void recuperarConta(@PathVariable Integer id) {
 		usuarioService.recuperarConta(id);
-		emailService.envioEmailRecuperacaoConta(acharId(id));
+		emailService.envioEmailRecuperacaoConta(usuarioRepository.findById(id).get());
 	}
 
 	// Registro de usuario
