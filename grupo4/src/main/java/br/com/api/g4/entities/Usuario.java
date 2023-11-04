@@ -37,11 +37,11 @@ public class Usuario {
 	@Column( length = 11)
 	@NotBlank
 	private String cpf;
-	@Column( length = 10)
-	@NotBlank
+//	@Column( length = 10)
+//	@NotBlank
 	private LocalDate dataNascimento;
 	@Column(nullable = false)
-	@NotBlank
+//	@NotBlank
 	private Boolean ativo;
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@NotBlank

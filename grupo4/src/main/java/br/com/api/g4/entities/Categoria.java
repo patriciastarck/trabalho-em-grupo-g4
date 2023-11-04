@@ -27,7 +27,7 @@ public class Categoria {
 	@NotBlank
 	private String descricao;
 	@Column()
-	@NotBlank
+//	@NotBlank
 	private Boolean ativo;
 	@OneToMany
 	@JoinColumn(name = "categoria_id")

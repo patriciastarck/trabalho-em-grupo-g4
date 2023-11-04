@@ -34,7 +34,7 @@ public class Endereco {
     @NotBlank
     private String uf;
     @Column()
-    @NotBlank
+//    @NotBlank
     private Boolean ativo;
     @Column(length = 10)
     @NotBlank

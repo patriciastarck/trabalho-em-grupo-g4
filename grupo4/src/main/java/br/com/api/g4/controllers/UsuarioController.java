@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ import br.com.api.g4.services.EmailService;
 import br.com.api.g4.services.EnderecoService;
 import br.com.api.g4.services.UsuarioService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
