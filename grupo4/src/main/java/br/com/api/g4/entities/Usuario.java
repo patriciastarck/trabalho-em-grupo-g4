@@ -41,7 +41,6 @@ public class Usuario {
 	@NotBlank
 	private LocalDate dataNascimento;
 	@Column(nullable = false)
-	@NotBlank
 	private Boolean ativo;
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@NotBlank
