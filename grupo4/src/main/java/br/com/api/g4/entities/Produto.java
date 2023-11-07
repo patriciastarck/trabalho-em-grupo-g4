@@ -23,10 +23,9 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // informa q é pk
 	private Integer id;
-	@Size(max = 60)
 	private String nome;
+	private String imagem;
 	private String descricao;
-	@Size(max = 10)
 	private LocalDate dataFabricacao;
 	private Integer qntdEstoque;
 	private Double valorUnitario;
@@ -41,11 +40,12 @@ public class Produto {
 		super();
 	}
 
-	public Produto(Integer id, String nome, String descricao, LocalDate dataFabricacao, Integer qntdEstoque,
-			Double valorUnitario, Boolean ativo, Map<Pedido, PedidoProdutoEntry> itemQuantidade) {
+	public Produto(Integer id, String nome, String imagem, String descricao, LocalDate dataFabricacao,
+			Integer qntdEstoque, Double valorUnitario, Boolean ativo, Map<Pedido, PedidoProdutoEntry> itemQuantidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.imagem = imagem;
 		this.descricao = descricao;
 		this.dataFabricacao = dataFabricacao;
 		this.qntdEstoque = qntdEstoque;
@@ -68,6 +68,14 @@ public class Produto {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
 	}
 
 	public String getDescricao() {
@@ -120,9 +128,11 @@ public class Produto {
 
 	@Override
 	public String toString() {
-		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao +
-				", qntdEstoque=" + qntdEstoque + ", valorUnitario=" + valorUnitario + ", ativo="
-				+ ativo + ", itemQuantidade=" + itemQuantidade + "]";
+		return "Produto [id=" + id + ", nome=" + nome + ", imagem=" + imagem + ", descricao=" + descricao
+				+ ", dataFabricacao=" + dataFabricacao + ", qntdEstoque=" + qntdEstoque + ", valorUnitario="
+				+ valorUnitario + ", ativo=" + ativo + ", itemQuantidade=" + itemQuantidade + "]";
 	}
+
+	
 
 }

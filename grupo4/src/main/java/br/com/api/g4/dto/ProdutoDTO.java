@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class ProdutoDTO {
 
 	private String nome;
+	private String imagem;
 	private String descricao;
 	private LocalDate dataFabricacao;
 	private Integer qntdEstoque;
@@ -14,10 +15,11 @@ public class ProdutoDTO {
 		super();
 	}
 
-	public ProdutoDTO(String nome, String descricao, LocalDate dataFabricacao, Integer qntdEstoque,
+	public ProdutoDTO(String nome, String imagem, String descricao, LocalDate dataFabricacao, Integer qntdEstoque,
 			Double valorUnitario) {
 		super();
 		this.nome = nome;
+		this.imagem = imagem;
 		this.descricao = descricao;
 		this.dataFabricacao = dataFabricacao;
 		this.qntdEstoque = qntdEstoque;
@@ -30,6 +32,14 @@ public class ProdutoDTO {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
 	}
 
 	public String getDescricao() {
@@ -64,4 +74,5 @@ public class ProdutoDTO {
 		this.valorUnitario = valorUnitario;
 	}
 
+	
 }

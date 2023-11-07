@@ -39,7 +39,7 @@ public class ProdutoService {
 		produto.setQntdEstoque(objeto.getQntdEstoque());
 		produto.setValorUnitario(objeto.getValorUnitario());
 		produto.setDataFabricacao(objeto.getDataFabricacao());
-
+		produto.setImagem(objeto.getImagem());
 		return produto;
 	}
 
@@ -60,20 +60,20 @@ public class ProdutoService {
 		return produtoRepository.contar();
 	}
 
-	public void salvar(ProdutoDTO objetoproduto, String nome, String email) {
+	public void salvar(ProdutoDTO objetoproduto) {
 		Produto produtoNovo = parseDeProduto(objetoproduto);
 
 		produtoNovo.setAtivo(true);
 
-		Optional<Categoria> categoria = categoriaRepository.findByNome(nome);
-		categoria.get().getProdutos().add(produtoNovo);
-
-		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
-		usuario.get().getProdutos().add(produtoNovo);
+//		Optional<Categoria> categoria = categoriaRepository.findByNome(nome);
+//		categoria.get().getProdutos().add(produtoNovo);
+//
+//		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+//		usuario.get().getProdutos().add(produtoNovo);
 
 		produtoRepository.save(produtoNovo);
-		categoriaRepository.save(categoria.get());
-		usuarioRepository.save(usuario.get());
+//		categoriaRepository.save(categoria.get());
+//		usuarioRepository.save(usuario.get());
 	}
 
 	public ProdutoRespostaDTO acharId(Integer id) {
